@@ -1,24 +1,15 @@
-<!doctype html>
-<html>
-<head>
-	<title>test</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
-	<link href="https://fonts.googleapis.com/css?family=Amiko" rel="stylesheet">
-	<link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-	<header>
-		<nav class="navbar navbar-expand-lg bgDark">
-			<div class="navbar-collapse collapse" id="navbarColors01">
-				<ul class="navbar-nav mr-auto">
-					<li class="nav-item"><a class="nav-link" href="#">Bouton 1</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">Bouton 2</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">Bouton 3</a></li>
-				</ul>
-			</div>
-		</nav>
-	</header>
-	<div class="content bgDark">
+<?php
+
+include_once("php/layout.class.php");
+include_once("php/autoload.include.php");
+
+
+$p = new BootstrapPage("Index");
+$nav = Layout::nav();
+$p->setLanguage("fr");
+$p->appendContent($nav);
+$p->appendContent(<<<HTML
+	
 		<div class="container text-center no-reveal">
 			<div class="alert">
 				<a href="#">Ceci est un test</a> d'alerte !
@@ -99,10 +90,11 @@
 			</div>
 		</div>
 	</div>
-	<footer class="bgDark text-center">
-		<div >
-			<p>Ceci est un test de footer</p>
-		</div>
-	</footer>
-</body>
-</html>
+
+HTML
+);
+
+$p->appendContent(Layout::footer());
+
+
+echo $p->toHTML();
