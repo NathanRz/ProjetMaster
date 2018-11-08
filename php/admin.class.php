@@ -112,13 +112,24 @@ SQL
 
         $stmt->execute(array(':hashedPass' => password_hash($data['pass'], PASSWORD_BCRYPT)));
         // Test de réussite de la sélection
-        $stmt->setFetchMode(PDO::FETCH_CLASS, __CLASS__) ;
-        if (($admin = $stmt->fetch()) !== false) {
-            return $utilisateur ;
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        if($row !== false){
+        	$validPassword = password_verify($data['password'], $row['password']);
+        	if($validPassword){
+        		echo "password correct";
+        		$stmt->setFetchMode(PDO::FETCH_CLASS, __CLASS__) ;
+		        if (($admin = $stmt->fetch()) !== false) {
+		        	
+		            return $admin ;
+		        }
+		        else {
+		        	
+		            throw new AuthenticationException("Login/pass incorrect") ;
+		        }
+        	}
+			
         }
-        else {
-            throw new AuthenticationException("Login/pass incorrect") ;
-        }
+        
     }
 
     /**
