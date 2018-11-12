@@ -111,9 +111,8 @@ SQL
         if($row !== false){
         	$validPassword = password_verify($data['pass'], $row['password']);
         	if($validPassword){
-        		echo "valide";
         		$stmt = myPDO::getInstance()->prepare(<<<SQL
-				    SELECT idAdmin,username,password
+				    SELECT idAdmin,username
 				    FROM admin
 				    WHERE username = :user
 SQL
@@ -130,7 +129,7 @@ SQL
         	}
 			
         }else {
-        
+
 		    throw new AuthenticationException("Login/pass incorrect") ;
 		}
         
