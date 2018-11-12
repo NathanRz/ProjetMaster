@@ -7,11 +7,13 @@ $pdo = myPDO::getInstance();
 
 try{
 	$admin = Admin::createFromAuth($_POST);
+	$admin->saveIntoSession();
 
-	//$admin->saveIntoSession();
-	//header("Location: index.php");
+	if(Admin::isConnected())
+		header("Location: index.php");
+
 }catch(AuthenticationException $e){
-	
+	header("Location: index.php");
 }
 
 //header("Location: index.php");

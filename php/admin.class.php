@@ -36,7 +36,6 @@ class Admin {
     protected $username = null;
 
 
-
     /**
      * Clé de session à partir de laquelle les données sont stockées
      */
@@ -58,11 +57,6 @@ class Admin {
         return $this->username;
     }
    
-
-    //Setters
-    public function setMail($username){
-        $this->username = $username;
-    }
 
     /**
      * Production d'un formulaire de connexion contenant un challenge et une méthode JavaScript de hachage
@@ -106,29 +100,39 @@ HTML;
         $stmt = myPDO::getInstance()->prepare(<<<SQL
     SELECT idAdmin,username,password
     FROM admin
-    WHERE password = :hashedPass
+    WHERE username = :user
 SQL
     ) ;
 
-        $stmt->execute(array(':hashedPass' => password_hash($data['pass'], PASSWORD_BCRYPT)));
+        $stmt->execute(array(':user' => $data['login']));
         // Test de réussite de la sélection
+        
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         if($row !== false){
-        	$validPassword = password_verify($data['password'], $row['password']);
+        	$validPassword = password_verify($data['pass'], $row['password']);
         	if($validPassword){
-        		echo "password correct";
-        		$stmt->setFetchMode(PDO::FETCH_CLASS, __CLASS__) ;
+        		echo "valide";
+        		$stmt = myPDO::getInstance()->prepare(<<<SQL
+				    SELECT idAdmin,username,password
+				    FROM admin
+				    WHERE username = :user
+SQL
+    ) ;
+				$stmt->execute(array(':user' => $data['login']));
+				$stmt->setFetchMode(PDO::FETCH_CLASS, __CLASS__);
 		        if (($admin = $stmt->fetch()) !== false) {
 		        	
 		            return $admin ;
 		        }
-		        else {
-		        	
-		            throw new AuthenticationException("Login/pass incorrect") ;
-		        }
+		        
+        	}else{
+        		throw new AuthenticationException("Login/pass incorrect") ;
         	}
 			
-        }
+        }else {
+        
+		    throw new AuthenticationException("Login/pass incorrect") ;
+		}
         
     }
 

@@ -17,7 +17,7 @@ class Layout{
 HTML;
 		if(Admin::isConnected()){
 			$a = Admin::createFromSession();
-			$nav .= "<li class='nav-item'><a class='nav-link' href='logout.php'>Déconnexion</a></li>";
+			$nav .= "<li class='nav-item'>". Admin::logoutForm("Déconnexion", "logout.php") ."</li>";
 		}else{
 			$nav .= "<li class='nav-item'><a class='nav-link' href='formLogin.php'>Administration</a></li>";
 		}
