@@ -9,29 +9,42 @@ $pdo = myPDO::getInstance();
 
 $p->appendContent(Layout::nav());
 $mods = Module::getModules();
-$modsHtml = "<div class='container container-mod'>\n<div class='row pt-2'>";
+$modsHtml = "<div class='container container-mod'>\n<h1 style='text-align:center'>Liste des modules</h1>\n<div class='row pt-2'>";
 $c = 0;
 $gestion ="";
-if(Admin::isConnected()){
-	$gestion .= <<<HTML
-		<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-		<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-HTML;
-}
+
 
 foreach ($mods as $m) {
+	if(Admin::isConnected()){
+		$gestion = <<<HTML
+			
+			<ul class="modGest">
+				<li>
+					<a href="php/removeModule.php?idMod={$m->getId()}">
+						<img src="img/remove.png" width="16" height="16" alt="Supprimer un module">
+					</a>
+				</li>
+				<li>
+					<a href="#" data-toggle="modal" data-target="#myModal">
+						<img src="img/edit.svg" width="20" height="20" alt="Supprimer un module">
+					</a>
+				</li>
+			</span>		
+HTML;
+	}
 
 	if($c < 3){
 		$modsHtml .= <<<HTML
 		
 					<div class="col-lg mt-3">
 							<div class="modules">
-								<a href="module.php?id={$m->getId()}">
-								<div class="modules-body">
 								{$gestion}
-									<h4 class="modules-title">{$m->getLibModule()}</h4>
-									<p>{$m->getDesc()}</p>
-								</div>
+								<a href="module.php?id={$m->getId()}">
+									
+									<div class="modules-body">
+										<h4 class="modules-title">{$m->getLibModule()}</h4>
+										<p>{$m->getDesc()}</p>
+									</div>
 								</a>
 							</div>
 					</div>
@@ -44,12 +57,14 @@ HTML;
 			<div class="row pt-2">
 				<div class="col-lg mt-3">
 						<div class="modules">
-							<a href="module.php?id={$m->getId()}">
-							<div class="modules-body">
 							{$gestion}
-								<h4 class="modules-title">{$m->getLibModule()}</h4>
-								<p>{$m->getDesc()}</p>
-							</div>
+							<a href="module.php?id={$m->getId()}">
+								
+								<div class="modules-body">
+								
+									<h4 class="modules-title">{$m->getLibModule()}</h4>
+									<p>{$m->getDesc()}</p>
+								</div>
 							</a>
 						</div>
 				</div>
@@ -113,7 +128,6 @@ $p->appendContent(<<<HTML
 	      <!-- Modal Header -->
 	      <div class="modal-header">
 	        <h4 class="modal-title">Ajout d'un module</h4>
-	        <button type="button" class="close" data-dismiss="modal">&times;</button>
 	      </div>
 
 	      <form name="addMod" method="POST" action="php/addModule.php">
@@ -140,6 +154,27 @@ $p->appendContent(<<<HTML
 	      </div>
 	      </form>
 
+	    </div>
+	  </div>
+	</div>
+
+	<div class="modal" id="myModal">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+
+		<!-- Modal Header -->
+		<div class="modal-header">
+			<h4 class="modal-title">Ajout d'un module</h4>
+		</div>
+
+		<!-- Modal body -->
+		<div class="modal-body">
+			<form name="delMod" method="POST" action="php/removeModule.php">
+				<input type="hidden" value="">
+				<button type="submit" class="btn btn-success">Valider</button>
+				<button type="button" class="btn btn-danger" data-dismiss="modal">Annuler</button>
+			</form>
+		</div>
 	    </div>
 	  </div>
 	</div>

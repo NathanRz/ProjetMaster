@@ -125,3 +125,11 @@ a:hover{
     border-radius: 2px;
     color:white;
 }
+
+.modGest{
+    list-style: none;
+}
+
+.modGest li{
+    float:right;
+}
