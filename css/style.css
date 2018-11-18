@@ -100,13 +100,28 @@ a:hover{
 
 }
 
-.module-img-top {
+.modimg-top{
+    margin-top: 4%;
     width: 100%;
-    border-top-left-radius: calc(.25rem - 1px);
-    border-top-right-radius: calc(.25rem - 1px);
 }
 
+.modal-content {
+    background-color: #1b1d35;
+    border: 1px solid #0fd9b6;
+    box-shadow: 0 0 30px 0 rgba(15,217,182,.36);
+}
 
-.hidden-form{
-    display: none;
+.modal-footer {
+    border-top: 1px solid #0fd9b6;
+}
+
+.modal-header {
+    border-bottom: 1px solid #0fd9b6;
+}
+
+.fancy-input {
+    background-color: #343844;
+    border: none;
+    border-radius: 2px;
+    color:white;
 }

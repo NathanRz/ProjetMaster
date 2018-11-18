@@ -169,9 +169,9 @@ HTML;
         <head>
           <meta charset="utf-8">
           <meta http-equiv="X-UA-Compatible" content="IE=edge">
+          {$this->head}
           <link rel="stylesheet" href="css/style.css">
           <title>{$this->title}</title>
-          {$this->head}
         </head>
         <body>
           {$this->body}

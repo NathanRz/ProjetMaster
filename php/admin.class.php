@@ -73,8 +73,8 @@ class Admin {
         return <<<HTML
 <form name='auth' action='$action' method='POST' autocomplete='off'>
     <div class="form-group">
-        <label for="Login">E-mail:</label>
-        <input class="form-control" type='text' name='login' onClick="if (this.value == '$texte_par_defaut') this.value = ''" onFocus="if (this.value == '$texte_par_defaut') this.value = ''" placeholder="E-mail">
+        <label for="Login">Login:</label>
+        <input class="form-control" type='text' name='login' onClick="if (this.value == '$texte_par_defaut') this.value = ''" onFocus="if (this.value == '$texte_par_defaut') this.value = ''" placeholder="Login">
     <div>
     <div class="form-group">
         <label for="Password">Mot de passe:</label>
