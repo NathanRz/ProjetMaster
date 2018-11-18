@@ -7,6 +7,7 @@ class Module{
 	protected $idModule;
 	protected $libModule;
 	protected $idDatePrj;
+	protected $descModule;
 	protected $passModule;
 
 
@@ -16,6 +17,10 @@ class Module{
 
 	public function getId(){
 		return $this->idModule;
+	}
+
+	public function getDesc(){
+		return $this->descModule;
 	}
 
 	static public function getModuleById(int $id){
@@ -44,7 +49,7 @@ SQL
 );
 		$stmt->execute();
 		$stmt->setFetchMode(PDO::FETCH_CLASS, 'Module');
-		$res = $stmt->fetch();
+		$res = $stmt->fetchAll();
 
 		return $res;
 	}
