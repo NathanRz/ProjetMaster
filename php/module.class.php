@@ -39,7 +39,7 @@ SQL
 	}
 
 	static public function getModules(){
-		 
+
 
 		$stmt = myPDO::getInstance()->prepare(<<<SQL
 
