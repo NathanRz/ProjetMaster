@@ -5,7 +5,7 @@ body{
 	font-size: 1rem;
 	font-weight: 400;
 	line-height: 1.5;
-	color:#8082a0; 
+	color:#8082a0;
 	background:#03041a;
 }
 
@@ -27,7 +27,7 @@ h1,h2,h3,h4{
     font-weight: 500;
     line-height: 1.1;
     color: #d4d4d4;
-	text-shadow: 0 0 8px hsla(0,0%,100%,.3);
+	text-shadow: 0 0 8px hsla(0,0%,100%);
 }
 
 div{
@@ -77,7 +77,7 @@ a:hover{
 	padding: 6rem 0;
 }
 .modules{
-	
+
 	position: relative;
     display: flex;
     flex-direction: column;
@@ -132,4 +132,18 @@ a:hover{
 
 .modGest li{
     float:right;
+}
+
+.cmPart{
+	position: relative;
+	padding: 1rem;
+		background-color:#15162c;
+		background-clip: border-box;
+	border: 1px solid rgba(0,0,0,.125);
+		border-radius: .25rem;
+		text-align: center;
+}
+
+#hrMod:after{
+	color: #F00;
 }
