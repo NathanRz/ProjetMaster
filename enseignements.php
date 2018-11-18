@@ -20,7 +20,7 @@ foreach ($mods as $m) {
 			
 			<ul class="modGest">
 				<li>
-					<a href="php/removeModule.php?idMod={$m->getId()}">
+					<a data-id="{$m->getId()}" href="#" data-toggle="modal" data-target="#removeModal">
 						<img src="img/remove.png" width="16" height="16" alt="Supprimer un module">
 					</a>
 				</li>
@@ -29,7 +29,7 @@ foreach ($mods as $m) {
 						<img src="img/edit.svg" width="20" height="20" alt="Supprimer un module">
 					</a>
 				</li>
-			</span>		
+			</ul>		
 HTML;
 	}
 
@@ -40,7 +40,7 @@ HTML;
 							<div class="modules">
 								{$gestion}
 								<a href="module.php?id={$m->getId()}">
-									
+									<img src="{$m->getImgMod()}">
 									<div class="modules-body">
 										<h4 class="modules-title">{$m->getLibModule()}</h4>
 										<p>{$m->getDesc()}</p>
@@ -59,7 +59,7 @@ HTML;
 						<div class="modules">
 							{$gestion}
 							<a href="module.php?id={$m->getId()}">
-								
+								<img src="{$m->getImgMod()}">
 								<div class="modules-body">
 								
 									<h4 class="modules-title">{$m->getLibModule()}</h4>
@@ -130,7 +130,7 @@ $p->appendContent(<<<HTML
 	        <h4 class="modal-title">Ajout d'un module</h4>
 	      </div>
 
-	      <form name="addMod" method="POST" action="php/addModule.php">
+	      <form name="addMod" method="POST" action="php/addModule.php" enctype="multipart/form-data">
 	      <!-- Modal body -->
 	      <div class="modal-body">
 	      	<div class="form-group">
@@ -140,6 +140,10 @@ $p->appendContent(<<<HTML
 	       	<div class="form-group">
 		       	<label for="lib">Description:</label>
 		       	<input class="fancy-input" type="text" name="desc">
+	       	</div>
+	       	<div class="form-group">
+		       	<label for="img">Image:</label>
+		       	<input class="fancy-input" type="file" name="img">
 	       	</div>
 	       	<div class="form-group">
 		       	<label for="lib">Mot de passe:</label>
@@ -158,19 +162,19 @@ $p->appendContent(<<<HTML
 	  </div>
 	</div>
 
-	<div class="modal" id="myModal">
+	<div class="modal" id="removeModal">
 	  <div class="modal-dialog">
 	    <div class="modal-content">
 
 		<!-- Modal Header -->
 		<div class="modal-header">
-			<h4 class="modal-title">Ajout d'un module</h4>
+			<h4 class="modal-title">Etes-vous sûr ?</h4>
 		</div>
 
 		<!-- Modal body -->
 		<div class="modal-body">
 			<form name="delMod" method="POST" action="php/removeModule.php">
-				<input type="hidden" value="">
+				<input type="hidden" name="idMod" value="">
 				<button type="submit" class="btn btn-success">Valider</button>
 				<button type="button" class="btn btn-danger" data-dismiss="modal">Annuler</button>
 			</form>
@@ -179,6 +183,14 @@ $p->appendContent(<<<HTML
 	  </div>
 	</div>
 HTML
+);
+
+$p->appendJs(<<<JAVASCRIPT
+	$('#removeModal').on('show.bs.modal',function(e){
+		var idMod = $(e.relatedTarget).data('id');
+		$(e.currentTarget).find('input[name="idMod"]').val(idMod);
+	});
+JAVASCRIPT
 );
 $p->appendContent(Layout::footer());
 

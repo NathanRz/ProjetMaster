@@ -8,6 +8,7 @@ class Module{
 	protected $libModule;
 	protected $idDatePrj;
 	protected $descModule;
+	protected $imgMod;
 	protected $passModule;
 
 
@@ -21,6 +22,10 @@ class Module{
 
 	public function getDesc(){
 		return $this->descModule;
+	}
+
+	public function getImgMod(){
+		return $this->imgMod;
 	}
 
 	static public function getModuleById(int $id){
