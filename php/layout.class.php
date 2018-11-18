@@ -40,5 +40,6 @@ HTML;
 				</div>
 			</footer>
 HTML;
+		return $footer;
 	}
 }

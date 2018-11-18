@@ -9,6 +9,15 @@ class Module{
 	protected $idDatePrj;
 	protected $passModule;
 
+
+	public function getLibModule(){
+		return $this->libModule;
+	}
+
+	public function getId(){
+		return $this->idModule;
+	}
+
 	static public function getModuleById(int $id){
 		$stmt = myPDO::getInstance()->prepare(<<<SQL
 

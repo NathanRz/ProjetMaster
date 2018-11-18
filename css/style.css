@@ -99,3 +99,8 @@ a:hover{
 	color:#d4d4d4;
 
 }
+
+
+.hidden-form{
+    display: none;
+}
