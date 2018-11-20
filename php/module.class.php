@@ -1,6 +1,6 @@
 <?php
 
-include_once("php/autoload.include.php");
+include_once("autoload.include.php");
 
 class Module{
 
@@ -28,7 +28,7 @@ class Module{
 		return $this->imgMod;
 	}
 
-	static public function getModuleById(int $id){
+	static public function getModuleById($id){
 		$stmt = myPDO::getInstance()->prepare(<<<SQL
 
 			SELECT *

@@ -12,7 +12,7 @@ $mods = Module::getModules();
 $modsHtml = "<div class='container container-mod'>\n<h1 style='text-align:center'>Liste des modules</h1>\n<div class='row pt-2'>";
 $c = 0;
 $gestion ="";
-
+$imgMod = "";
 
 foreach ($mods as $m) {
 	if(Admin::isConnected()){
@@ -32,22 +32,23 @@ foreach ($mods as $m) {
 			</ul>		
 HTML;
 	}
-
+	if($m->getImgMod() !== null)
+		$imgMod = "<img src='".$m->getImgMod()."' width='50' height='50'>";
 	if($c < 3){
 		$modsHtml .= <<<HTML
 		
-					<div class="col-lg mt-3">
-							<div class="modules">
-								{$gestion}
-								<a href="module.php?id={$m->getId()}">
-									<img src="{$m->getImgMod()}">
-									<div class="modules-body">
-										<h4 class="modules-title">{$m->getLibModule()}</h4>
-										<p>{$m->getDesc()}</p>
-									</div>
-								</a>
+			<div class="col-lg mt-3">
+					<div class="modules">
+						{$gestion}
+						<a href="module.php?id={$m->getId()}">
+							{$imgMod}
+							<div class="modules-body">
+								<h4 class="modules-title">{$m->getLibModule()}</h4>
+								<p>{$m->getDesc()}</p>
 							</div>
+						</a>
 					</div>
+			</div>
 
 HTML;
 		$c++;
@@ -59,7 +60,7 @@ HTML;
 						<div class="modules">
 							{$gestion}
 							<a href="module.php?id={$m->getId()}">
-								<img src="{$m->getImgMod()}">
+								{$imgMod}
 								<div class="modules-body">
 								
 									<h4 class="modules-title">{$m->getLibModule()}</h4>
@@ -131,31 +132,31 @@ $p->appendContent(<<<HTML
 	      </div>
 
 	      <form name="addMod" method="POST" action="php/addModule.php" enctype="multipart/form-data">
-	      <!-- Modal body -->
-	      <div class="modal-body">
-	      	<div class="form-group">
-		       	<label for="lib">Libellé:</label>
-		       	<input class="fancy-input" type="text" name="lib">
-	       	</div>
-	       	<div class="form-group">
-		       	<label for="lib">Description:</label>
-		       	<input class="fancy-input" type="text" name="desc">
-	       	</div>
-	       	<div class="form-group">
-		       	<label for="img">Image:</label>
-		       	<input class="fancy-input" type="file" name="img">
-	       	</div>
-	       	<div class="form-group">
-		       	<label for="lib">Mot de passe:</label>
-		       	<input class="fancy-input" type="text" name="mdp">
-	       	</div>
-	      </div>
+		      <!-- Modal body -->
+		      <div class="modal-body">
+		      	<div class="form-group">
+			       	<label for="lib">Libellé:</label>
+			       	<input class="fancy-input" type="text" name="lib">
+		       	</div>
+		       	<div class="form-group">
+			       	<label for="lib">Description:</label>
+			       	<input class="fancy-input" type="text" name="desc">
+		       	</div>
+		       	<div class="form-group">
+			       	<label for="img">Image:</label>
+			       	<input class="fancy-input" type="file" name="img" accept=".jpg, .jpeg, .png, .gif, .svg">
+		       	</div>
+		       	<div class="form-group">
+			       	<label for="lib">Mot de passe:</label>
+			       	<input class="fancy-input" type="text" name="mdp">
+		       	</div>
+		      </div>
 
-	      <!-- Modal footer -->
-	      <div class="modal-footer">
-	      	<button type="submit" class="btn btn-success">Valider</button>
-	        <button type="button" class="btn btn-danger" data-dismiss="modal">Annuler</button>
-	      </div>
+		      <!-- Modal footer -->
+		      <div class="modal-footer">
+		      	<button type="submit" class="btn btn-success">Valider</button>
+		        <button type="button" class="btn btn-danger" data-dismiss="modal">Annuler</button>
+		      </div>
 	      </form>
 
 	    </div>
