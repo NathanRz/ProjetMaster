@@ -137,13 +137,23 @@ a:hover{
 .cmPart{
 	position: relative;
 	padding: 1rem;
-		background-color:#15162c;
-		background-clip: border-box;
-	border: 1px solid rgba(0,0,0,.125);
-		border-radius: .25rem;
-		text-align: center;
+	background-color:#15162c;
+	border-radius: .25rem;
+	/*text-align: center;*/
 }
 
-#hrMod:after{
-	color: #F00;
+.part{
+	position: relative;
+	padding: 1rem;
+	background-color:#15162c;
+	border-radius: .25rem;
+	margin-bottom: 40px;
+}
+
+.hrPart{
+	 background: #8082a0;/* border-top:1px blue dashed*/
+}
+
+.hrFiles{
+	background: #d4d4d4;
 }

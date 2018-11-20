@@ -17,6 +17,10 @@ class Fichier{
     return $this->descFichier;
   }
 
+  public function getTypeFichier(){
+    return $this->typeFichier;
+  }
+
   static public function getFichiersByModule(int $id){
     $stmt = myPDO::getInstance()->prepare(<<<SQL
       SELECT *
