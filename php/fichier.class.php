@@ -7,6 +7,7 @@ class Fichier{
   protected $nomFichier;
   protected $descFichier;
   protected $typeFichier;
+  protected $cheminFichier;
 
 
   public function getNomFichier(){
@@ -19,6 +20,10 @@ class Fichier{
 
   public function getTypeFichier(){
     return $this->typeFichier;
+  }
+
+  public function getCheminFichier(){
+    return $this->cheminFichier;
   }
 
   static public function getFichiersByModule(int $id){

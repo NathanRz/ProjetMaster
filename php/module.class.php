@@ -1,6 +1,6 @@
 <?php
 
-include_once("php/autoload.include.php");
+include_once("autoload.include.php");
 
 class Module{
 
@@ -39,7 +39,7 @@ SQL
 	}
 
 	static public function getModules(){
-		
+
 		$stmt = myPDO::getInstance()->prepare(<<<SQL
 
 			SELECT *
