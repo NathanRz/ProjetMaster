@@ -10,6 +10,10 @@ class Fichier{
   protected $cheminFichier;
 
 
+  public function getId(){
+    return $this->idFichier;
+  }
+
   public function getNomFichier(){
     return $this->nomFichier;
   }
@@ -33,12 +37,25 @@ class Fichier{
       WHERE idModule = :idMod
 SQL
 );
-  $stmt->execute(array(':idMod' => $id));
-  $stmt->setFetchMode(PDO::FETCH_CLASS, 'Fichier');
-  $res = $stmt->fetchAll();
+    $stmt->execute(array(':idMod' => $id));
+    $stmt->setFetchMode(PDO::FETCH_CLASS, 'Fichier');
+    $res = $stmt->fetchAll();
 
-  return $res;
+    return $res;
   }
 
+  static public function getFichierById($id){
+    $stmt = myPDO::getInstance()->prepare(<<<SQL
+      SELECT *
+      FROM fichier
+      WHERE idFichier = :id
+SQL
+);
+    $stmt->execute(array(':id' => $id));
+    $stmt->setFetchMode(PDO::FETCH_CLASS, 'Fichier');
+    $res = $stmt->fetch();
+
+    return $res;
+  }
 
 }

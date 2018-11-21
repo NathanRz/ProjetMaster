@@ -20,10 +20,10 @@ if(Admin::isConnected()){
     }
 
     $target_dir = "../docs/" . $mod->getLibModule() . "/" . $folder;
-    $target_file = $target_dir . basename($_FILES["cmFile"]["name"]);
-    $path = "docs/" . $mod->getLibModule() ."/" . $folder  . $_FILES["cmFile"]["name"];
+    $target_file = $target_dir . basename($_FILES["addedFile"]["name"]);
+    $path = "docs/" . $mod->getLibModule() ."/" . $folder  . $_FILES["addedFile"]["name"];
 
-    if(move_uploaded_file($_FILES["cmFile"]["tmp_name"], $target_file)){
+    if(move_uploaded_file($_FILES["addedFile"]["tmp_name"], $target_file)){
       $stmt = myPDO::getInstance()->prepare(<<<SQL
         INSERT INTO fichier
         VALUES(null,:idModule, :nomFichier, :descFichier, :typeFichier, :cheminFichier);
@@ -31,7 +31,7 @@ SQL
   );
 
       $stmt->execute(array(':idModule' => $_POST["idModule"],
-                        ':nomFichier' => $_FILES["cmFile"]["name"],
+                        ':nomFichier' => $_FILES["addedFile"]["name"],
                         ':descFichier' => $_POST["descFile"],
                         ':typeFichier' => $_POST["typeFile"],
                         ':cheminFichier' => $path));
@@ -40,4 +40,4 @@ SQL
 }
 
 
-//header("Location: ../module.php");
+header("Location: ../module.php?id={$_POST["idModule"]}");
