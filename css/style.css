@@ -156,10 +156,44 @@ a:hover{
 	right: 10px;
 }
 
+.part img:nth-child(2){
+	position: absolute;
+	top: 20px;
+	right: 52px;
+}
+
+ .part input[type="image"]{
+	position: absolute;
+	top: 20px;
+	right: 52px;
+}
+
 .hrPart{
-	 background: #8082a0;/* border-top:1px blue dashed*/
+	 background: #8082a0;
 }
 
 .hrFiles{
 	background: #d4d4d4;
 }
+
+
+
+/*TEST DRAG DROP */
+#drop_file_zone {
+        background-color: #EEE;
+        border: #999 5px dashed;
+        width: 290px;
+        height: 200px;
+        padding: 8px;
+        font-size: 18px;
+    }
+    #drag_upload_file {
+        width:50%;
+        margin:0 auto;
+    }
+    #drag_upload_file p {
+        text-align: center;
+    }
+    #drag_upload_file #selectfile {
+        display: none;
+    }

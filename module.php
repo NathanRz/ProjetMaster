@@ -17,12 +17,13 @@ $p->appendContent($title);
 /************* ADMIN *************/
 if(Admin::isConnected()){
   $cmPart = <<<HTML
-    <div class = "part">
+    <div class = "part" id="dropCM">
       <h2> Cours magistraux </h2>
       <a href="#" data-toggle="modal" data-target="#myModalCM">
         <img src="img/document_add.png" width="32" height="32" alt="Ajouter un CM">
       </a>
       <hr class="hrPart"/>
+      <div class="cours">
 HTML;
 
   $tdPart = <<<HTML
@@ -89,7 +90,7 @@ HTML;
 HTML;
     }
   }
-  $p->appendContent($cmPart . "</div>");
+  $p->appendContent($cmPart . "</div>" . "</div>");
   $p->appendContent($tdPart . "</div>");
   $p->appendContent($tpPart . "</div>\n</div>");
 
@@ -289,4 +290,132 @@ HTML;
   $p->appendContent($tpPart . "</div>\n</div>");
 }
 
+
+
+
+
+
+/*********************TEST DRAG DROP ***************************/
+
+$drag = <<<HTML
+<div id="drop_file_zone" ondrop="upload_file(event)" ondragover="return false">
+  <div id="drag_upload_file">
+      <p>Drop file here</p>
+      <p>or</p>
+      <p><input type="button" value="Select File" onclick="file_explorer();"></p>
+      <input type="file" id="selectfile">
+  </div>
+</div>
+HTML;
+
+$jquery =<<<JAVASCRIPT
+
+var contentCM = $(".cours").html();
+var cpt = 0;
+$("#dropCM").on('dragenter', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    var width = $("#dropCM").width();
+    var height = $("#dropCM").height();
+    $(".cours").empty();
+    $("#dropCM").width(width);
+    $("#dropCM").height(height);
+    cpt++;
+
+    $("#dropCM").css('border', '3px dashed red');
+  });
+
+$("#dropCM").bind('dragleave', function(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  $(".cours").append(contentCM);
+  $("#dropCM").css('border','');
+});
+
+$("#dropCM").on('dragover', function(e) {
+  e.preventDefault();
+  e.stopPropagation();
+});
+var fileobj;
+$("#dropCM").on('drop', function(e) {
+  if(e.originalEvent.dataTransfer && e.originalEvent.dataTransfer.files.length) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    $(".cours").append(contentCM);
+    fileobj = e.originalEvent.dataTransfer.files[0];
+    var newDiv = "<div class='cmPart'>"+
+    "<form name ='validateFile' action='php/addFile.php'>"+
+      "<img id='cancelNewFile'src='img/remove.png' width='32' height='32'>"+
+      "<input type ='image' id='validateNewFile' src='img/validate.png' width='32' height='32'>"+
+      "<input type='hidden' name='idModule' value='{$_GET["id"]}'>"+
+      "<input type='file' name='addedFile'>"+
+
+      "<h4>"
+        + fileobj["name"] +
+      "</h4>";
+    var form ="<input type='text' name='descFile' placeholder='Description du fichier'>";
+    var input = document.querySelector("div.classPart input[type="fichier"]");
+
+    newDiv += form;
+    newDiv += "</div>";
+    $(".cours").append(newDiv);
+    var temp =   $("#dropCM").html();
+    $("#dropCM").empty();
+    $("#dropCM").css('width','');
+    $("#dropCM").css('height','');
+    $("#dropCM").append(temp);
+  }
+});
+
+
+
+var fileobj;
+ function upload_file(e) {
+     e.preventDefault();
+     fileobj = e.dataTransfer.files[0];
+     ajax_file_upload(fileobj);
+ }
+
+ function file_explorer() {
+     document.getElementById('selectfile').click();
+     document.getElementById('selectfile').onchange = function() {
+         fileobj = document.getElementById('selectfile').files[0];
+         ajax_file_upload(fileobj);
+     };
+ }
+
+ function ajax_file_upload(file_obj) {
+  // console.log(file_obj);
+     if(file_obj != undefined) {
+         var form_data = new FormData();
+
+         form_data.append('file', file_obj, 'lol.lol');
+         console.log(form_data.get('file'));
+         $.ajax({
+             type: 'POST',
+             url: 'php/test.php',
+             contentType: false,
+             processData: false,
+             data: form_data,
+             success:function(response) {
+                 alert(response);
+                 $('#selectfile').val('');
+             }
+         });
+     }
+ }
+
+ $(document).on("click", 'img#validateNewFile', function(e){
+
+ });
+
+ $(document).on("click", 'img#cancelNewFile', function(e){
+   console.log("ALLO");
+   $('.cours div').last().remove();
+ });
+JAVASCRIPT;
+
+$p->appendContent($drag);
+$p->appendJs($jquery);
 echo $p->toHTML();
