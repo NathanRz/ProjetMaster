@@ -17,7 +17,7 @@ $imgMod = "";
 foreach ($mods as $m) {
 	if(Admin::isConnected()){
 		$gestion = <<<HTML
-			
+
 			<ul class="modGest">
 				<li>
 					<a data-id="{$m->getId()}" href="#" data-toggle="modal" data-target="#removeModal">
@@ -25,18 +25,18 @@ foreach ($mods as $m) {
 					</a>
 				</li>
 				<li>
-					<a href="#" data-toggle="modal" data-target="#myModal">
-						<img src="img/edit.svg" width="20" height="20" alt="Supprimer un module">
+					<a href="modifyModule.php?id={$m->getId()}">
+						<img src="img/edit.svg" width="20" height="20" alt="Editer un module">
 					</a>
 				</li>
-			</ul>		
+			</ul>
 HTML;
 	}
 	if($m->getImgMod() !== null)
 		$imgMod = "<img src='".$m->getImgMod()."' width='50' height='50'>";
 	if($c < 3){
 		$modsHtml .= <<<HTML
-		
+
 			<div class="col-lg mt-3">
 					<div class="modules">
 						{$gestion}
@@ -62,14 +62,14 @@ HTML;
 							<a href="module.php?id={$m->getId()}">
 								{$imgMod}
 								<div class="modules-body">
-								
+
 									<h4 class="modules-title">{$m->getLibModule()}</h4>
 									<p>{$m->getDesc()}</p>
 								</div>
 							</a>
 						</div>
 				</div>
-			
+
 
 HTML;
 		$c = 0;
@@ -103,7 +103,7 @@ HTML;
 				<div class="col-lg mt-3">
 					<div class="modules">
 					<a href="#" data-toggle="modal" data-target="#myModal">
-						<div class="modimg-top"> 
+						<div class="modimg-top">
 							<img src="img/add.svg" width="50" height="50" alt="Ajouter un module">
 						</div>
 						<div class="modules-body">
@@ -115,7 +115,7 @@ HTML;
 			</div>
 HTML;
 	}
-	
+
 }
 
 

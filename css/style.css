@@ -5,7 +5,7 @@ body{
 	font-size: 1rem;
 	font-weight: 400;
 	line-height: 1.5;
-	color:#8082a0; 
+	color:#8082a0;
 	background:#03041a;
 }
 
@@ -55,13 +55,17 @@ a:hover{
 }
 
 .fancy-button{
-	background-image: linear-gradient(-80deg,#0be49b,#14cbd9);
+		background-image: linear-gradient(-80deg,#0be49b,#14cbd9);
     box-shadow: 0 0 25px 0 #0c7563;
     border-radius: 2px;
     padding: 11px 20px 9px 23px;
-    color: #fff;
+    color: white !important;
     letter-spacing: .01px;
     cursor: pointer;
+}
+
+.fancy-button:hover{
+	color:#8082a0 !important;
 }
 
 .alert{
@@ -78,7 +82,7 @@ a:hover{
 }
 
 .modules{
-	
+
 	position: relative;
     display: flex;
     flex-direction: column;
@@ -122,7 +126,8 @@ a:hover{
 
 .fancy-input {
     background-color: #343844;
-    border: none;
+		box-shadow: 0 0 10px 0 #0c7563;
+		border: 1px solid #0c7563;
     border-radius: 2px;
     color:white;
 }
@@ -133,4 +138,26 @@ a:hover{
 
 .modGest li{
     float:right;
+}
+
+.editMod{
+	margin-top: 3%;
+}
+
+.editMod::after{
+	margin-bottom: 3%;
+}
+
+.editTitle{
+	margin-top: 2%;
+}
+
+.imgEdit{
+	border:5px dashed #ADADAD;
+	border-radius: 20px;
+	padding: 1.25rem 1.25rem;
+}
+
+.padRow{
+	margin-top:0.75rem;
 }

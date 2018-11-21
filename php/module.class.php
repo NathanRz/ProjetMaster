@@ -1,15 +1,17 @@
 <?php
 
 include_once("autoload.include.php");
+require_once("utils.php");
 
 class Module{
 
 	protected $idModule;
 	protected $libModule;
-	protected $idDatePrj;
 	protected $descModule;
 	protected $imgMod;
 	protected $passModule;
+	protected $startDate;
+	protected $endDate;
 
 
 	public function getLibModule(){
@@ -28,6 +30,14 @@ class Module{
 		return $this->imgMod;
 	}
 
+	public function getStartDate(){
+		return $this->startDate;
+	}
+
+	public function getEndDate(){
+		return $this->endDate;
+	}
+
 	static public function getModuleById($id){
 		$stmt = myPDO::getInstance()->prepare(<<<SQL
 
@@ -36,7 +46,8 @@ class Module{
 			WHERE idModule = :idMod
 SQL
 );
-		$stmt->execute(array( ':idMod' => $id));
+
+		$stmt->execute(array( ':idMod' => secureInput($id)));
 		$stmt->setFetchMode(PDO::FETCH_CLASS, 'Module');
 		$res = $stmt->fetch();
 
@@ -44,7 +55,7 @@ SQL
 	}
 
 	static public function getModules(){
-		 
+
 
 		$stmt = myPDO::getInstance()->prepare(<<<SQL
 
@@ -58,4 +69,5 @@ SQL
 
 		return $res;
 	}
+
 }
