@@ -20,33 +20,35 @@ if(Admin::isConnected()){
 
 		if($uploadOk && file_exists($target_file))
 			$uploadOk = false;
-		
+
 		if($uploadOk && $_FILES["img"]["size"] > 5000000)
 			$uploadOk = false;
 
 		if(move_uploaded_file($_FILES["img"]["tmp_name"], $target_file)){
 			$stmt = myPDO::getInstance()->prepare(<<<SQL
-				INSERT INTO module VALUES(null,null,:lib,:descrip,:img,:pass)
+				INSERT INTO module VALUES(null,:lib,:descrip,:img,:pass,:startDate,:endDate)
 SQL
 );
 
 			$stmt->execute(array(':lib' 	=> secureInput($_POST['lib']),
 							 ':descrip' => secureInput($_POST['desc']),
 							 ':img' => secureInput($dir),
-							 ':pass' 	=> secureInput($_POST['mdp'])));
+							 ':pass' 	=> secureInput($_POST['mdp']),
+						 	 ':startDate' => secureInput($_POST['startDate']),
+						   ':endDate' => secureInput($_POST['endDate'])));
 
 			if(mkdir($dirNewFold)){
 				mkdir($dirNewFold . "TD/");
 				mkdir($dirNewFold . "TP/");
 				mkdir($dirNewFold . "CM/");
 			}
-			
+
 		}else{
 
 		}
 
-		
-		
+
+
 	}
 
 

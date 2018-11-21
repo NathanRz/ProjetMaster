@@ -64,11 +64,11 @@ HTML
 );
     $p->appendJs(<<<JAVASCRIPT
       $( function() {
-        $( "#dateP1" ).datepicker();
+        $( "#dateP1" ).datepicker({ dateFormat: 'yy-mm-dd' });
       });
 
       $( function() {
-        $( "#dateP2" ).datepicker();
+        $( "#dateP2" ).datepicker({ dateFormat: 'yy-mm-dd' });
       });
 
 

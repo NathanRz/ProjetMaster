@@ -150,6 +150,15 @@ $p->appendContent(<<<HTML
 			       	<label for="lib">Mot de passe:</label>
 			       	<input class="fancy-input" type="text" name="mdp">
 		       	</div>
+						<div class="form-group">
+							<label for="startDate">Date d'ouverture : </label>
+							<input id="dateP1" class="fancy-input" type="text" name="startDate">
+						</div>
+						<div class="form-group">
+							<label for="endDate">Date de fermeture : </label>
+							<input id="dateP2" class="fancy-input" type="text" name="endDate">
+						</div>
+
 		      </div>
 
 		      <!-- Modal footer -->
@@ -191,6 +200,16 @@ $p->appendJs(<<<JAVASCRIPT
 		var idMod = $(e.relatedTarget).data('id');
 		$(e.currentTarget).find('input[name="idMod"]').val(idMod);
 	});
+
+	$( function() {
+		$( "#dateP1" ).datepicker({ dateFormat: 'yy-mm-dd' });
+	});
+
+	$( function() {
+		$( "#dateP2" ).datepicker({ dateFormat: 'yy-mm-dd' });
+	});
+
+
 JAVASCRIPT
 );
 $p->appendContent(Layout::footer());
