@@ -139,6 +139,21 @@ a:hover{
 	padding: 1rem;
 	background-color:#15162c;
 	border-radius: .25rem;
+}
+
+.tdPart{
+	position: relative;
+	padding: 1rem;
+	background-color:#15162c;
+	border-radius: .25rem;
+	/*text-align: center;*/
+}
+
+.tpPart{
+	position: relative;
+	padding: 1rem;
+	background-color:#15162c;
+	border-radius: .25rem;
 	/*text-align: center;*/
 }
 

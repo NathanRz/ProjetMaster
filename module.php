@@ -17,7 +17,7 @@ $p->appendContent($title);
 /************* ADMIN *************/
 if(Admin::isConnected()){
   $cmPart = <<<HTML
-    <div class = "part" id="dropCM">
+    <div class = "part dropCM" id="CM">
       <h2> Cours magistraux </h2>
       <a href="#" data-toggle="modal" data-target="#myModalCM">
         <img src="img/document_add.png" width="32" height="32" alt="Ajouter un CM">
@@ -27,7 +27,7 @@ if(Admin::isConnected()){
 HTML;
 
   $tdPart = <<<HTML
-    <div class = "part">
+    <div class = "part" id="TD">
       <h2> Travaux dirigés </h2>
       <a href="#" data-toggle="modal" data-target="#myModalTD">
         <img src="img/document_add.png" width="32" height="32" alt="Ajouter un TD">
@@ -36,7 +36,7 @@ HTML;
 HTML;
 
 $tpPart = <<<HTML
-  <div class = "part">
+  <div class = "part" id="TP">
     <h2> Travaux pratiques </h2>
     <a href="#" data-toggle="modal" data-target="#myModalTP">
       <img src="img/document_add.png" width="32" height="32" alt="Ajouter un TP">
@@ -63,7 +63,7 @@ HTML;
     }
     else if($f->getTypeFichier() == "TD"){
       $tdPart .= <<<HTML
-      <div class="cmPart">
+      <div class="tdPart">
         <a  data-id="{$f->getId()}" href="#" data-toggle="modal" data-target ="#modalRemove">
           <img src="img/remove.png" width="32" height="32">
         </a>
@@ -77,7 +77,7 @@ HTML;
     }
     else if($f->getTypeFichier() == "TP"){
       $tpPart .= <<<HTML
-      <div class="cmPart">
+      <div class="tpPart">
         <a  data-id="{$f->getId()}" href="#" data-toggle="modal" data-target ="#modalRemove">
           <img src="img/remove.png" width="32" height="32">
         </a>
@@ -264,7 +264,7 @@ HTML;
     }
     else if($f->getTypeFichier() == "TD"){
       $tdPart .= <<<HTML
-      <div class="cmPart">
+      <div class="tdPart">
         <a href="{$f->getCheminFichier()}">
           <h4>{$f->getNomFichier()}</h4>
           <p>{$f->getDescFichier()}</p>
@@ -275,7 +275,7 @@ HTML;
     }
     else if($f->getTypeFichier() == "TP"){
       $tpPart .= <<<HTML
-      <div class="cmPart">
+      <div class="tpPart">
         <a href="{$f->getCheminFichier()}">
           <h4>{$f->getNomFichier()}</h4>
           <p>{$f->getDescFichier()}</p>
@@ -290,87 +290,67 @@ HTML;
   $p->appendContent($tpPart . "</div>\n</div>");
 }
 
-
-
-
-
-
 /*********************TEST DRAG DROP ***************************/
-
-$drag = <<<HTML
-<div id="drop_file_zone" ondrop="upload_file(event)" ondragover="return false">
-  <div id="drag_upload_file">
-      <p>Drop file here</p>
-      <p>or</p>
-      <p><input type="button" value="Select File" onclick="file_explorer();"></p>
-      <input type="file" id="selectfile">
-  </div>
-</div>
-HTML;
-
 $jquery =<<<JAVASCRIPT
 
 var contentCM = $(".cours").html();
 var cpt = 0;
-$("#dropCM").on('dragenter', function(e) {
+
+$(".dropCM").on('dragenter', function(e) {
     e.preventDefault();
     e.stopPropagation();
-    var width = $("#dropCM").width();
-    var height = $("#dropCM").height();
+    var width = $(".dropCM").width();
+    var height = $(".dropCM").height();
     $(".cours").empty();
-    $("#dropCM").width(width);
-    $("#dropCM").height(height);
+    $(".dropCM").width(width);
+    $(".dropCM").height(height);
     cpt++;
 
-    $("#dropCM").css('border', '3px dashed red');
+    $(".dropCM").css('border', '3px dashed red');
   });
 
-$("#dropCM").bind('dragleave', function(e) {
+$(".dropCM").bind('dragleave', function(e) {
   e.preventDefault();
   e.stopPropagation();
   $(".cours").append(contentCM);
-  $("#dropCM").css('border','');
+  $(".dropCM").css('border','');
 });
 
-$("#dropCM").on('dragover', function(e) {
+$(".dropCM").on('dragover', function(e) {
   e.preventDefault();
   e.stopPropagation();
 });
 var fileobj;
-$("#dropCM").on('drop', function(e) {
+
+$(".dropCM").on('drop', function(e) {
   if(e.originalEvent.dataTransfer && e.originalEvent.dataTransfer.files.length) {
     e.preventDefault();
     e.stopPropagation();
 
     $(".cours").append(contentCM);
     fileobj = e.originalEvent.dataTransfer.files[0];
-    var newDiv = "<div class='cmPart'>"+
-    "<form name ='validateFile' action='php/addFile.php'>"+
+    var type = $(".dropCM").attr("id");
+    var newDiv = "<div class='cmPart' id='hide'>"+
+    "<h4>"+ fileobj["name"] +"</h4>"+
+    "<form name ='validateFileDrop' action='php/addFile.php'>"+
       "<img id='cancelNewFile'src='img/remove.png' width='32' height='32'>"+
-      "<input type ='image' id='validateNewFile' src='img/validate.png' width='32' height='32'>"+
-      "<input type='hidden' name='idModule' value='{$_GET["id"]}'>"+
-      "<input type='file' name='addedFile'>"+
+      "<img id='validateNewFile' src='img/validate.png' width='32' height='32'>"+
+      "<input type='hidden' name='idModuleDrop' value='{$_GET["id"]}'>"+
+      "<input type='hidden' name='typeFileDrop' value='"+type+"'>"+
+      "<input type='text' name='descFileDrop' placeholder='Description du fichier'>";
+      //"</form>"+
+      //"</div>";
 
-      "<h4>"
-        + fileobj["name"] +
-      "</h4>";
-    var form ="<input type='text' name='descFile' placeholder='Description du fichier'>";
-    var input = document.querySelector("div.classPart input[type="fichier"]");
 
-    newDiv += form;
-    newDiv += "</div>";
     $(".cours").append(newDiv);
-    var temp =   $("#dropCM").html();
-    $("#dropCM").empty();
-    $("#dropCM").css('width','');
-    $("#dropCM").css('height','');
-    $("#dropCM").append(temp);
+    var temp = $(".dropCM").html();
+    $(".dropCM").empty();
+    $(".dropCM").css('width','');
+    $(".dropCM").css('height','');
+    $(".dropCM").append(temp);
   }
 });
 
-
-
-var fileobj;
  function upload_file(e) {
      e.preventDefault();
      fileobj = e.dataTransfer.files[0];
@@ -386,36 +366,36 @@ var fileobj;
  }
 
  function ajax_file_upload(file_obj) {
-  // console.log(file_obj);
      if(file_obj != undefined) {
          var form_data = new FormData();
-
-         form_data.append('file', file_obj, 'lol.lol');
-         console.log(form_data.get('file'));
+         form_data.append('idModule', $('input[name=idModuleDrop]').val());
+         form_data.append('descFile', $('input[name=descFileDrop]').val());
+         form_data.append('typeFile', $('input[name=typeFileDrop]').val());
+         form_data.append('file', file_obj, file_obj["name"]);
          $.ajax({
              type: 'POST',
-             url: 'php/test.php',
+             url: 'php/addFileDrop.php',
              contentType: false,
              processData: false,
              data: form_data,
              success:function(response) {
-                 alert(response);
-                 $('#selectfile').val('');
+               $(".dropCM").css('border', '');
+               $
              }
          });
      }
  }
 
  $(document).on("click", 'img#validateNewFile', function(e){
-
+   ajax_file_upload(fileobj);
  });
 
  $(document).on("click", 'img#cancelNewFile', function(e){
-   console.log("ALLO");
    $('.cours div').last().remove();
+   $(".dropCM").css('border','');
  });
 JAVASCRIPT;
 
-$p->appendContent($drag);
+//$p->appendContent($drag);
 $p->appendJs($jquery);
 echo $p->toHTML();
