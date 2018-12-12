@@ -34,7 +34,7 @@ HTML;
 		$footer = <<<HTML
 			<footer class="bgDark text-center">
 				<div >
-					<p>Ceci est un test de footer</p>
+					<p>Footer</p>
 				</div>
 			</footer>
 HTML;

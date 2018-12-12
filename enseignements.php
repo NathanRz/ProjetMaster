@@ -25,7 +25,7 @@ foreach ($mods as $m) {
 					</a>
 				</li>
 				<li>
-					<a href="modifyModule.php?id={$m->getId()}">
+					<a href="editModule.php?id={$m->getId()}">
 						<img src="img/edit.svg" width="20" height="20" alt="Editer un module">
 					</a>
 				</li>
@@ -34,6 +34,9 @@ HTML;
 	}
 	if($m->getImgMod() !== null)
 		$imgMod = "<img src='".$m->getImgMod()."' width='50' height='50'>";
+	else
+		$imgMod = "";
+
 	if($c < 3){
 		$modsHtml .= <<<HTML
 
