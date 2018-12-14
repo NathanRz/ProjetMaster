@@ -19,6 +19,7 @@ p {
 
 footer{
 	border-top: 1px solid #2d2f54;
+	background-color: #3e418e;
 }
 
 h1,h2,h3,h4{
@@ -36,6 +37,7 @@ div{
 
 nav{
 	border-bottom: 1px solid #2d2f54;
+	background-color: #3e418e;
 }
 
 a:hover{
@@ -161,4 +163,8 @@ a:hover{
 
 .padRow{
 	margin-top:0.75rem;
+}
+
+#listgrp{
+	overflow-y: auto;
 }

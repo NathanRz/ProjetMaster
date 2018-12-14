@@ -96,5 +96,4 @@ SQL
 
 }
 
-
-//header("Location: ../enseignements.php");
+header("Location: ../enseignements.php");

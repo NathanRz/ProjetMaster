@@ -6,7 +6,7 @@ class Layout{
 	public static function nav(){
 		$nav = <<<HTML
 		<header>
-			<nav class="navbar navbar-expand-lg bgDark">
+			<nav class="navbar navbar-expand-lg">
 				<div class="navbar-collapse collapse" id="navbarColors01">
 					<ul class="navbar-nav mr-auto">
 						<li class="nav-item"><a class="nav-link" href="index.php">Accueil</a></li>
@@ -32,7 +32,7 @@ HTML;
 
 	public static function footer(){
 		$footer = <<<HTML
-			<footer class="bgDark text-center">
+			<footer class="text-center">
 				<div >
 					<p>Footer</p>
 				</div>

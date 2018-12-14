@@ -9,6 +9,8 @@ $p = new BootstrapPage("Index");
 $nav = Layout::nav();
 $p->setLanguage("fr");
 $p->appendContent($nav);
+
+$pass = password_hash("test",PASSWORD_BCRYPT);
 $p->appendContent(<<<HTML
 	
 		<div class="container text-center no-reveal">
@@ -24,7 +26,7 @@ $p->appendContent(<<<HTML
 				<div class="col-lg mt-3">
 					<div class="modules">
 						<div class="modules-body">
-							<h4 class="modules-title">Titre 1</h4>
+							<h4 class="modules-title">Titre 2</h4>
 							<p>test dsq iudsq hgdsqid  qsd guqydgqsdu gqsudg quygdq</p>
 						</div>
 					</div>

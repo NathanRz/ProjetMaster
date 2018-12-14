@@ -10,6 +10,7 @@ if(Admin::isConnected()){
       $img = "img/notfound.png";
     }
     $p->appendContent(Layout::nav());
+    $p->appendJsUrl("js/scripts/editmodule.js");
     $p->appendContent(<<<HTML
       <div class='container container-mod'>
         <h1>Module : {$m->getLibModule()}</h1>
@@ -59,63 +60,31 @@ if(Admin::isConnected()){
           <div class="row">
             <button type="submit" class="fancy-button">Valider</a>
           </div>
+          </form>
+          <div class="row">
+            <div class="col-8">
+              <h4>Ajouter des groupes de TD/TP</h4>
+              <form onsubmit="return false;" name="addGrp">
+                <label for="title">Libellé groupe: </label>
+                <input class="fancy-input" type="text" name="title">
+                <label for="">Type : </label>
+                <select name="type">
+                  <option value="TD">TD</option>
+                  <option value="TP">TP</option>
+                </select>
+                <input type="hidden" name="idMod" value="{$m->getId()}">
+                <button id="addgrp" type="submit" class="fancy-button">Ajouter</button>
+              </form>
+            </div>
+            <div id="listgrp" class="col-4">
+            </div>
+          </div>
 
-        </form>
+
+
 
 
 HTML
-);
-    $p->appendJs(<<<JAVASCRIPT
-      $( function() {
-        $( "#dateP1" ).datepicker({ dateFormat: 'yy-mm-dd' });
-      });
-
-      $( function() {
-        $( "#dateP2" ).datepicker({ dateFormat: 'yy-mm-dd' });
-      });
-
-      var form = $('.edit');
-      var box = $('.box');
-      var droppedFile = false;
-      box.on('drag dragstart dragend dragover dragenter dragleave drop', function(e){
-        e.preventDefault();
-        e.stopPropagation();
-      })
-      .on('dragover dragenter',function(){
-        box.addClass('is-dragover');
-      })
-      .on('dragleave dragend drop', function(){
-        box.removeClass('is-dragover');
-      })
-      .on('drop', function(e){
-        droppedFile = e.originalEvent.dataTransfert.files;
-      });
-
-      var valid = $('.fancy-button');
-      valid.on('click',function(){
-        var formData = new FormData(form);
-        formData.append(form.get(0));
-        console.log(formData);
-      })
-      form.on('submit', function(e){
-        if(form.hasClass('is-uploading')) return false;
-
-        form.addClass('is-uploading').removeClass('is-error');
-
-        //ajax
-
-        e.preventDefault();
-        var formData = new FormData(form);
-        console.log(formData);
-        if(droppedFile){
-          formData.append($.input.attr(''))
-        }
-
-      })
-
-
-
-JAVASCRIPT
 );
     echo $p->toHTML();
   }
