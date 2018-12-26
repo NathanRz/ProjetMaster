@@ -91,6 +91,16 @@ SQL
 
     }
 
+		if(isset($_POST['duree']) && !empty($_POST['duree'])){
+			$stmt = myPDO::getInstance()->prepare(<<<SQL
+				UPDATE module SET duree = :dureePrj
+				WHERE idModule = :id
+SQL
+);
+			$stmt->execute(array(':dureePrj' => secureInput($_POST['duree']),
+													 ':id' => secureInput($_POST['idMod'])));
+		}
+
 	}
 
 

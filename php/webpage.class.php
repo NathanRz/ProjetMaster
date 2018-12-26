@@ -3,7 +3,7 @@
 require_once "autoload.include.php";
 
 /**
- * This class provides methods in order to ease 
+ * This class provides methods in order to ease
  * the production of a HTML5 Web page
  *
  * @author Jérôme Cutrona (jerome.cutrona@univ-reims.fr)
@@ -25,7 +25,7 @@ class WebPage {
    * @var string Content nested in the <head> element (mainly CSS code)
    */
   protected $head  = null;
-    
+
   /**
    * @var string Content nested in the <body> element
    */
@@ -172,6 +172,7 @@ HTML;
           {$this->head}
           <link rel="stylesheet" href="css/style.css">
           <title>{$this->title}</title>
+          <meta name="viewport" content="width=device-width">
         </head>
         <body>
           {$this->body}

@@ -9,6 +9,15 @@ if(Admin::isConnected()){
     if($img === null){
       $img = "img/notfound.png";
     }
+
+    //On génère le tableau de groupes
+    $grps = Groupe::getAllGrpForModule($m->getId());
+    $tab = "";
+    foreach ($grps as $g) {
+      $tab .= "\n<tr><td>" . $g->getLib() ."</td><td>". $g->getTypeString() ."</td><td>". $g->getHoraire() ."</td><td><a href='php/gestionGrp.php?id=" .$g->getId(). "&idMod=" . $m->getId() ."'>Supprimer</a></td></tr>\n";
+    }
+
+
     $p->appendContent(Layout::nav());
     $p->appendJsUrl("js/scripts/editmodule.js");
     $p->appendContent(<<<HTML
@@ -45,6 +54,14 @@ if(Admin::isConnected()){
                   <input id="dateP2" class="fancy-input" type="text" name="endDate" value="{$m->getEndDate()}">
                 </div>
               </div>
+              <div class="row padRow">
+                <div class="col-6">
+                  <label for="duree">Duree d'un projet : </label>
+                </div>
+                <div class="col-6">
+                  <input class="fancy-input" type="text" name="duree" value="{$m->getDuree()}">
+                </div>
+              </div>
             </div>
             <div class="col-6">
               <div class="row" >
@@ -61,22 +78,48 @@ if(Admin::isConnected()){
             <button type="submit" class="fancy-button">Valider</a>
           </div>
           </form>
+          <br/>
           <div class="row">
-            <div class="col-8">
+            <div class="col-6">
               <h4>Ajouter des groupes de TD/TP</h4>
               <form onsubmit="return false;" name="addGrp">
-                <label for="title">Libellé groupe: </label>
-                <input class="fancy-input" type="text" name="title">
-                <label for="">Type : </label>
-                <select name="type">
-                  <option value="TD">TD</option>
-                  <option value="TP">TP</option>
-                </select>
+                <div>
+                  <label for="title">Libellé groupe: </label>
+                  <input class="fancy-input" type="text" name="title">
+                </div>
+                <div>
+                  <label for="">Type : </label>
+                  <select name="type">
+                    <option value="1">TD</option>
+                    <option value="2">TP</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="horaire">Heure debut: </label>
+                  <input class="fancy-input" type="text" name="horaire">
+                </div>
                 <input type="hidden" name="idMod" value="{$m->getId()}">
                 <button id="addgrp" type="submit" class="fancy-button">Ajouter</button>
               </form>
             </div>
-            <div id="listgrp" class="col-4">
+            <div id="listgrp" class="col-6">
+              <div class="modules">
+    						<div class="modules-body">
+                  <table class="table .table-dark">
+                    <thead>
+                      <tr>
+                        <th scope="col">Libellé</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Horaire</th>
+                        <th scope="col"> - </th>
+                      </tr>
+                    </thead>
+                    <tbody id="grps">
+                      {$tab}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
           </div>
 

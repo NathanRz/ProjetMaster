@@ -3,15 +3,34 @@ $("#addgrp").on('click', function(){
   var lib = form.title.value;
   var type = form.type.value;
   var idMod = form.idMod.value;
-  
-  console.log(lib + ", " +type+ ", " +idMod);
+  var horaire = form.horaire.value;
 
-  /*$.ajax(
+  console.log(lib + ", " +type+ ", " +idMod+ ", " +horaire);
+
+  $.ajax({
     method: "POST",
-    url: "",
-    data: {'lib': lib, 'type':type, 'idMod': idMod}
+    url: "php/addGrp.php",
+    data: {lib: lib, type:type, idMod: idMod, horaire: horaire},
+    datatype: 'json',
+    success: function(res, statut){
+      var html = "";
+      var res2 = JSON.parse(res);
+      var tGrp;
+      console.log(res2);
+      for(var i = 0;i < res2.length; i++){
+        html +="<tr><td>"+res2[i].libGroupe+"</td><td>";
+        if(res2[i].typeGroupe == 1){
+          tGrp = "TD";
+        }else{
+          tGrp = "TP";
+        }
 
-  );*/
+        html += tGrp+ "</td><td>"+res2[i].horaireDeb+"</td><td><a href='php/gestionGrp?id="+res2[i].idGroupe + "&idMod="+res2[i].idModule+"'>Supprimer</a></td></tr>";
+
+      }
+      $("#grps").html(html);
+    }
+  });
 });
 
 
@@ -22,6 +41,7 @@ $( function() {
 $( function() {
   $( "#dateP2" ).datepicker({ dateFormat: 'yy-mm-dd' });
 });
+
 
 /*var form = $('.edit');
 var box = $('.box');

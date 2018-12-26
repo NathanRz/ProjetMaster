@@ -12,6 +12,7 @@ class Module{
 	protected $passModule;
 	protected $startDate;
 	protected $endDate;
+	protected $duree;
 
 
 	public function getLibModule(){
@@ -36,6 +37,10 @@ class Module{
 
 	public function getEndDate(){
 		return $this->endDate;
+	}
+
+	public function getDuree(){
+		return $this->duree;
 	}
 
 	static public function getModuleById($id){

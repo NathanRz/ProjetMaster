@@ -137,31 +137,62 @@ $p->appendContent(<<<HTML
 	      <form name="addMod" method="POST" action="php/addModule.php" enctype="multipart/form-data">
 		      <!-- Modal body -->
 		      <div class="modal-body">
-		      	<div class="form-group">
-			       	<label for="lib">Libellé:</label>
-			       	<input class="fancy-input" type="text" name="lib">
-		       	</div>
-		       	<div class="form-group">
-			       	<label for="lib">Description:</label>
-			       	<input class="fancy-input" type="text" name="desc">
-		       	</div>
-		       	<div class="form-group">
-			       	<label for="img">Image:</label>
-			       	<input class="fancy-input" type="file" name="img" accept=".jpg, .jpeg, .png, .gif, .svg">
-		       	</div>
-		       	<div class="form-group">
-			       	<label for="lib">Mot de passe:</label>
-			       	<input class="fancy-input" type="text" name="mdp">
-		       	</div>
-						<div class="form-group">
-							<label for="startDate">Date d'ouverture : </label>
-							<input id="dateP1" class="fancy-input" type="text" name="startDate">
+						<div class="row">
+							<div class="col-5">
+				       	<label for="lib">Libellé:</label>
+							</div>
+							<div class="col-7">
+				       	<input class="fancy-input" type="text" name="lib">
+			       	</div>
 						</div>
-						<div class="form-group">
-							<label for="endDate">Date de fermeture : </label>
-							<input id="dateP2" class="fancy-input" type="text" name="endDate">
+						<div class="row">
+							<div class="col-5">
+				       	<label for="lib">Description:</label>
+							</div>
+							<div class="col-7">
+				       	<input class="fancy-input" type="text" name="desc">
+			       	</div>
 						</div>
-
+						<div class="row">
+							<div class="col-5">
+				       	<label for="img">Image:</label>
+							</div>
+							<div class="col-7">
+								<input class="fancy-input" type="file" name="img" accept=".jpg, .jpeg, .png, .gif, .svg">
+			       	</div>
+						</div>
+						<div class="row">
+							<div class="col-5">
+				       	<label for="lib">Mot de passe:</label>
+							</div>
+							<div class="col-7">
+								<input class="fancy-input" type="text" name="mdp">
+			       	</div>
+						</div>
+						<div class="row">
+							<div class="col-5">
+								<label for="startDate">Date d'ouverture : </label>
+							</div>
+							<div class="col-7">
+								<input id="dateP1" class="fancy-input" type="text" name="startDate">
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-5">
+								<label for="endDate">Date de fermeture : </label>
+							</div>
+							<div class="col-7">
+								<input id="dateP2" class="fancy-input" type="text" name="endDate">
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-5">
+								<label for="duree">Duree du projet : </label>
+							</div>
+							<div class="col-7">
+								<input class="fancy-input" type="text" name="duree">
+							</div>
+						</div>
 		      </div>
 
 		      <!-- Modal footer -->
