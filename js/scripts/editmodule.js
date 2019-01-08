@@ -16,7 +16,7 @@ $("#addgrp").on('click', function(){
       var html = "";
       var res2 = JSON.parse(res);
       var tGrp;
-      console.log(res2);
+      //console.log(res2);
       for(var i = 0;i < res2.length; i++){
         html +="<tr><td>"+res2[i].libGroupe+"</td><td>";
         if(res2[i].typeGroupe == 1){
