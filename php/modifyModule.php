@@ -5,9 +5,8 @@ require_once "utils.php";
 
 $uploadOk = true;
 if(Admin::isConnected()){
-	if($_SERVER["REQUEST_METHOD"] == "POST"){
-
-    if(isset($_FILES['img']) && !empty($_FILES['img'])){
+	if($_SERVER["REQUEST_METHOD"] == "POST" || $_SERVER["REQUEST_METHOD"] == "FILES"){
+    if(isset($_FILES['img']['tmp_name']) && !empty($_FILES['img']['tmp_name'])){
       $target_dir = "../img/modImg/";
       $dir = "img/modImg/" . basename($_FILES["img"]["name"]);
       $name = basename($_FILES["img"]["name"]);
@@ -27,7 +26,7 @@ if(Admin::isConnected()){
       $mod = Module::getModuleById($_POST['idMod']);
 
         if($mod->getImgMod() != null){
-          if(unlink($mod->getImgMod())){
+          if(unlink("../" . $mod->getImgMod())){
             if(move_uploaded_file($_FILES["img"]["tmp_name"], $target_file)){
               $stmt = myPDO::getInstance()->prepare(<<<SQL
                 UPDATE module SET imgMod = :img

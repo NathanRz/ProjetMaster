@@ -42,7 +42,12 @@ $( function() {
   $( "#dateP2" ).datepicker({ dateFormat: 'yy-mm-dd' });
 });
 
-
+$(function(){
+  $("#upload_link").on("click", function(e){
+    e.preventDefault();
+    $("#upload:hidden").trigger('click');
+  })
+});
 /*var form = $('.edit');
 var box = $('.box');
 var droppedFile = false;
