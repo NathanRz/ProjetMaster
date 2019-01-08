@@ -380,7 +380,21 @@ $(".dropCM").on('drop', function(e) {
              data: form_data,
              success:function(response) {
                $(".dropCM").css('border', '');
-               $
+               //$('.cours').empty();
+               $('.cours').empty();
+               var res = JSON.parse(response);
+               for(i =0; i < res.length;i++){
+                 var cmPart = "<div class='cmPart'>"+
+                                "<a data-id='" + res[i]["idFichier"] + "' href='#' data-toggle='modal' data-target='#modalRemove'>" +
+                                  "<img src='img/remove.png' width='32' height ='32'>"+
+                                "</a>"+
+                                "<a href='"+ res[i]["cheminFichier"] + "'>" +
+                                  "<h4>" + res[i]["nomFichier"] + "</h4>" +
+                                  "<p>" + res[i]["descFichier"] + "</p>" +
+                                "</a>"+
+                              "</div>";
+                 $(".cours").append(cmPart);
+               }
              }
          });
      }

@@ -37,7 +37,15 @@ SQL
                         ':cheminFichier' => $path));
       }
   }
+
+	$stmt = myPDO::getInstance()->prepare(<<<SQL
+		SELECT *
+		FROM fichier
+		WHERE idModule = :idMod
+SQL
+	);
+	$stmt->execute(array(':idMod' => $_POST["idModule"]));
+	$res = $stmt->fetchAll();
+
+	echo json_encode($res);
 }
-
-
-header("Location: ../module.php?id={$_POST["idModule"]}");
