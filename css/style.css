@@ -134,30 +134,14 @@ a:hover{
     float:right;
 }
 
-.cmPart{
+.cours{
 	position: relative;
 	padding: 1rem;
 	background-color:#15162c;
 	border-radius: .25rem;
 }
 
-.tdPart{
-	position: relative;
-	padding: 1rem;
-	background-color:#15162c;
-	border-radius: .25rem;
-	/*text-align: center;*/
-}
-
-.tpPart{
-	position: relative;
-	padding: 1rem;
-	background-color:#15162c;
-	border-radius: .25rem;
-	/*text-align: center;*/
-}
-
-.part{
+.drop{
 	position: relative;
 	padding: 1rem;
 	background-color:#15162c;
@@ -165,19 +149,19 @@ a:hover{
 	margin-bottom: 40px;
 }
 
-.part img{
+.drop img{
 	position: absolute;
 	top: 20px;
 	right: 10px;
 }
 
-.part img:nth-child(2){
+.drop img:nth-child(2){
 	position: absolute;
 	top: 20px;
 	right: 52px;
 }
 
- .part input[type="image"]{
+ .drop input[type="image"]{
 	position: absolute;
 	top: 20px;
 	right: 52px;
@@ -190,25 +174,3 @@ a:hover{
 .hrFiles{
 	background: #d4d4d4;
 }
-
-
-
-/*TEST DRAG DROP */
-#drop_file_zone {
-        background-color: #EEE;
-        border: #999 5px dashed;
-        width: 290px;
-        height: 200px;
-        padding: 8px;
-        font-size: 18px;
-    }
-    #drag_upload_file {
-        width:50%;
-        margin:0 auto;
-    }
-    #drag_upload_file p {
-        text-align: center;
-    }
-    #drag_upload_file #selectfile {
-        display: none;
-    }

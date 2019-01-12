@@ -30,7 +30,7 @@ class Fichier{
     return $this->cheminFichier;
   }
 
-  static public function getFichiersByModule(int $id){
+  static public function getFichiersByModule($id){
     $stmt = myPDO::getInstance()->prepare(<<<SQL
       SELECT *
       FROM fichier

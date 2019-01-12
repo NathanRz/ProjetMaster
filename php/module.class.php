@@ -23,7 +23,7 @@ class Module{
 		return $this->descModule;
 	}
 
-	static public function getModuleById(int $id){
+	static public function getModuleById($id){
 		$stmt = myPDO::getInstance()->prepare(<<<SQL
 
 			SELECT *
