@@ -303,6 +303,7 @@ HTML
         $(".drop" + id).append(contentDiv);
         $(".drop" + id).append(newDiv);
       }
+      cpt = 0;
     });
 
 JAVASCRIPT

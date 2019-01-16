@@ -6,7 +6,6 @@ $(".drop").on('dragenter', function(e) {
   e.preventDefault();
   e.stopPropagation();
   var id = "#" + $(this).attr("id");
-
   if(cpt == 0)
     contentDiv = $(".drop" + id).html();
 
