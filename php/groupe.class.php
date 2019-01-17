@@ -88,6 +88,25 @@ SQL
 		return $res;
 	}
 
+  static public function getAllGrpForModuleByType($idModule,$type){
+
+
+		$stmt = myPDO::getInstance()->prepare(<<<SQL
+
+			SELECT *
+			FROM groupe
+      WHERE idModule = :id
+      AND typeGroupe = :type
+SQL
+);
+		$stmt->execute(array( ':id' => secureInput($idModule),
+                          ':type'  => secureInput($type)));
+		$stmt->setFetchMode(PDO::FETCH_CLASS, 'Groupe');
+		$res = $stmt->fetchAll();
+
+		return $res;
+	}
+
 
   static public function removeGroup($idGrp){
     $stmt = myPDO::getInstance()->prepare(<<<SQL
