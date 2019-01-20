@@ -7,7 +7,7 @@ include_once("php/autoload.include.php");
 $p = new BootstrapPage("Enseignements");
 $pdo = myPDO::getInstance();
 
-$p->appendContent(Layout::nav());
+$p->appendContent(Layout::nav(1));
 $mods = Module::getModules();
 $modsHtml = "<div class='container container-mod'>\n<h1 style='text-align:center'>Liste des modules</h1>\n<div class='row pt-2'>";
 $c = 0;

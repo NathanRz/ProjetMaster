@@ -71,17 +71,28 @@ class Admin {
         self::startSession() ;
 
         return <<<HTML
-<form name='auth' action='$action' method='POST' autocomplete='off'>
-    <div class="form-group">
-        <label for="Login">Login:</label>
-        <input class="form-control" type='text' name='login' onClick="if (this.value == '$texte_par_defaut') this.value = ''" onFocus="if (this.value == '$texte_par_defaut') this.value = ''" placeholder="Login">
-    <div>
-    <div class="form-group">
-        <label for="Password">Mot de passe:</label>
-        <input type='password' class="form-control" name='pass'  placeholder="Mot de passe">
-    </div>
-    <input type='submit'  class="form-control" value='{$submitText}'>
-</form>
+
+        <div class="container-login">
+          <form name='auth' action='$action' method='POST' autocomplete='off'>
+            <div class ="row">
+              <div class="col-md-4">
+                <label for="Login">Login:</label>
+              </div>
+              <div class="col-md-8">
+                <input class="fancy-input" type='text' name='login' placeholder="Login">
+              </div>
+            </div>
+            <div class ="row">
+              <div class="col-md-4">
+                <label for="Password">Mot de passe:</label>
+              </div>
+              <div class="col-md-8">
+                <input type='password' class="fancy-input" name='pass'  placeholder="Mot de passe">
+              </div>
+            </div>
+            <input type='submit'  class="fancy-button" value='{$submitText}'>
+          </form>
+        </div>
 HTML;
     }
 

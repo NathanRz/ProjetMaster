@@ -40,7 +40,7 @@ HTML;
     if($file->getTypeFichier() == "CM"){
       $cmPart .= <<<HTML
         <div class="cours">
-          <a href = "{rawurlencode($file->getCheminFichier())}">
+          <a href = "{$file->getCheminFichier()}">
             <h4>{$file->getNomFichier()}</h4>
             <p>{$file->getDescFichier()}</p>
           </a>

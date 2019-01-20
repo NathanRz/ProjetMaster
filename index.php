@@ -6,13 +6,13 @@ include_once("php/autoload.include.php");
 
 
 $p = new BootstrapPage("Index");
-$nav = Layout::nav();
+$nav = Layout::nav(0);
 $p->setLanguage("fr");
 $p->appendContent($nav);
 
 $pass = password_hash("test",PASSWORD_BCRYPT);
 $p->appendContent(<<<HTML
-	
+
 		<div class="container text-center no-reveal">
 			<div class="alert">
 				<a href="#">Ceci est un test</a> d'alerte !

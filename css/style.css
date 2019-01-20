@@ -117,6 +117,15 @@ a:hover{
 .container-edit{
 	background-color: #12122f;
 	padding-bottom: 2%;
+	padding-top: 2%;
+}
+
+.container-login{
+	background-color: #12122f;
+	margin: auto;
+	margin-top : 15%;
+	width: 25%;
+	padding: 2%;
 }
 
 .modules{
@@ -279,4 +288,9 @@ a:hover{
 
 #listgrp{
 	overflow-y: auto;
+}
+
+.login{
+	    background-color: #15162c;
+			padding: 1rem;
 }
