@@ -3,7 +3,7 @@
 include_once("autoload.include.php");
 require_once("utils.php");
 
-public class GroupeProjet{
+class GroupeProjet{
   protected $idGroupePrj;
   protected $idModule;
   protected $idProjet;
@@ -26,35 +26,7 @@ public class GroupeProjet{
     return $this->idProjet;
   }
 
-  public function getGroupePrjByModAndEtu($idMod, $idEtu){
-    $stmt = myPDO::getInstance()->prepare(<<<SQL
-      SELECT idGroupePrj FROM appartenir a, groupeprojet g
-      WHERE a.idGroupePrj = g.idGroupePrj
-      AND g.idModule = :idM
-      AND a.idEtu = :idE
-SQL
-);
-
-    $stmt->execute(array(':idM' => secureInput($idMod),
-                         ':idE' => secureInput($idEtu)));
-    $stmt->setFetchMode(PDO::FETCH_ASSOC);
-    $res = $stmt->fetch();
-
-    $grp = getGroupePrjById($res['idGroupePrj']);
-
-    $stmt = myPDO::getInstance()->prepare(<<<SQL
-      SELECT idEtudiant, nom, prenom
-      FROM appartenir a, etudiant e
-      WHERE a.idEtudiant = e.idEtudiant
-      AND a.idGroupePrj = :id
-SQL
-);
-    $stmt->execute(array('id' => secureInput($grp->getIdGroupePrj())));
-    $stmt->setFetchMode(PDO::FETCH_CLASS, "Etudiant");
-    $grp->etudiants= $stmt->fetchAll();
-  }
-
-  public function getGroupePrjById($id){
+  public static function getGroupePrjById($id){
     $grp = new GroupeProjet();
     $stmt = myPDO::getInstance()->prepare(<<<SQL
       SELECT *
@@ -65,12 +37,12 @@ SQL
 
     $stmt->execute(array('id' => secureInput($id)));
     $res = $stmt->fetch();
-    $grp->idGroupe = $res['idGroupe'];
+    $grp->idGroupePrj = $res['idGroupePrj'];
     $grp->idModule = $res['idModule'];
     $grp->idProjet = $res['idProjet'];
 
     $stmt = myPDO::getInstance()->prepare(<<<SQL
-      SELECT idEtudiant, nom, prenom
+      SELECT e.idEtudiant, nom, prenom
       FROM appartenir a, etudiant e
       WHERE a.idEtudiant = e.idEtudiant
       AND a.idGroupePrj = :id
@@ -83,7 +55,39 @@ SQL
     return $grp;
   }
 
-  public function getAllGroupeProjet(){
+  public static function getGroupePrjByModAndEtu($idMod, $idEtu){
+    $stmt = myPDO::getInstance()->prepare(<<<SQL
+      SELECT g.idGroupePrj FROM appartenir a, groupeprojet g
+      WHERE a.idGroupePrj = g.idGroupePrj
+      AND g.idModule = :idM
+      AND a.idEtudiant = :idE
+SQL
+);
+
+    $stmt->execute(array(':idM' => secureInput($idMod),
+                         ':idE' => secureInput($idEtu)));
+    $stmt->setFetchMode(PDO::FETCH_ASSOC);
+    $res = $stmt->fetch();
+
+    $grp = GroupeProjet::getGroupePrjById($res['idGroupePrj']);
+
+    $stmt = myPDO::getInstance()->prepare(<<<SQL
+      SELECT e.idEtudiant, nom, prenom
+      FROM appartenir a, etudiant e
+      WHERE a.idEtudiant = e.idEtudiant
+      AND a.idGroupePrj = :id
+SQL
+);
+    $stmt->execute(array('id' => secureInput($grp->getIdGroupePrj())));
+    $stmt->setFetchMode(PDO::FETCH_CLASS, "Etudiant");
+    $grp->etudiants= $stmt->fetchAll();
+
+    if($grp->idGroupePrj == null)
+      $grp = null;
+    return $grp;
+  }
+
+  public static function getAllGroupeProjet(){
 
     $grps = array();
     $stmt = myPDO::getInstance()->prepare(<<<SQL
@@ -101,7 +105,7 @@ SQL
       $grp->idProjet = $g['idProjet'];
 
       $stmt = myPDO::getInstance()->prepare(<<<SQL
-        SELECT idEtudiant, nom, prenom
+        SELECT e.idEtudiant, nom, prenom
         FROM appartenir a, etudiant e
         WHERE a.idEtudiant = e.idEtudiant
         AND a.idGroupePrj = :id
@@ -116,5 +120,23 @@ SQL
     }
 
     return $grps;
+  }
+
+  public static function addGroupePrj($idMod, $etu){
+    $stmt = myPDO::getInstance()->prepare(<<<SQL
+      INSERT INTO groupeprojet VALUES(null,:idM,null)
+SQL
+);
+    $stmt->execute(array(':idM' => secureInput($idMod)));
+    $id = myPDO::getInstance()->lastInsertId();
+    foreach ($etu as $e) {
+      $stmt = myPDO::getInstance()->prepare(<<<SQL
+        INSERT INTO appartenir VALUES(:idE,:idG)
+SQL
+);
+      $stmt->execute(array(':idE' => $e->getId(),
+                           ':idG' => $id));
+
+    }
   }
 }
