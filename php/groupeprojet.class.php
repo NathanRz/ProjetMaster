@@ -26,6 +26,34 @@ public class GroupeProjet{
     return $this->idProjet;
   }
 
+  public function getGroupePrjByModAndEtu($idMod, $idEtu){
+    $stmt = myPDO::getInstance()->prepare(<<<SQL
+      SELECT idGroupePrj FROM appartenir a, groupeprojet g
+      WHERE a.idGroupePrj = g.idGroupePrj
+      AND g.idModule = :idM
+      AND a.idEtu = :idE
+SQL
+);
+
+    $stmt->execute(array(':idM' => secureInput($idMod),
+                         ':idE' => secureInput($idEtu)));
+    $stmt->setFetchMode(PDO::FETCH_ASSOC);
+    $res = $stmt->fetch();
+
+    $grp = getGroupePrjById($res['idGroupePrj']);
+
+    $stmt = myPDO::getInstance()->prepare(<<<SQL
+      SELECT idEtudiant, nom, prenom
+      FROM appartenir a, etudiant e
+      WHERE a.idEtudiant = e.idEtudiant
+      AND a.idGroupePrj = :id
+SQL
+);
+    $stmt->execute(array('id' => secureInput($grp->getIdGroupePrj())));
+    $stmt->setFetchMode(PDO::FETCH_CLASS, "Etudiant");
+    $grp->etudiants= $stmt->fetchAll();
+  }
+
   public function getGroupePrjById($id){
     $grp = new GroupeProjet();
     $stmt = myPDO::getInstance()->prepare(<<<SQL
@@ -36,10 +64,10 @@ SQL
 );
 
     $stmt->execute(array('id' => secureInput($id)));
-    $res->fetch();
-    $grp->idGroupe = $res[0]['idGroupe'];
-    $grp->idModule = $res[0]['idModule'];
-    $grp->idProjet = $res[0]['idProjet'];
+    $res = $stmt->fetch();
+    $grp->idGroupe = $res['idGroupe'];
+    $grp->idModule = $res['idModule'];
+    $grp->idProjet = $res['idProjet'];
 
     $stmt = myPDO::getInstance()->prepare(<<<SQL
       SELECT idEtudiant, nom, prenom

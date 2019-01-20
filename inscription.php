@@ -48,6 +48,7 @@ $p->appendContent(<<<HTML
       </div>
       <div class="row">
         <div class="col-lg mt-3">
+          <input type="hidden" name="idMod" value="{$_GET['id']}"> 
           <input class="fancy-button" type="submit">
         </div>
       </div>

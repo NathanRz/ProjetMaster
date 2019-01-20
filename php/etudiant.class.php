@@ -6,6 +6,17 @@ class Etudiant{
   protected $nom;
   protected $prenom;
 
+  public function getId(){
+    return $this->id;
+  }
+
+  public function getNom(){
+    return $this->nom;
+  }
+
+  public function getPrenom(){
+    return $this->prenom;
+  }
 
   static public function addEtudiant($nom,$prenom){
     $pdo =myPDO::getInstance();
