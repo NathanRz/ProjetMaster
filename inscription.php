@@ -5,7 +5,7 @@ include_once("php/autoload.include.php");
 
 $p = new BootstrapPage("Enseignements");
 
-$p->appendContent(Layout::nav());
+$p->appendContent(Layout::nav(1));
 $groupsTD = Groupe::getAllGrpForModuleByType($_GET['id'],1);
 $groupsTP = Groupe::getAllGrpForModuleByType($_GET['id'],2);
 
@@ -48,7 +48,7 @@ $p->appendContent(<<<HTML
       </div>
       <div class="row">
         <div class="col-lg mt-3">
-          <input type="hidden" name="idMod" value="{$_GET['id']}"> 
+          <input type="hidden" name="idMod" value="{$_GET['id']}">
           <input class="fancy-button" type="submit">
         </div>
       </div>
