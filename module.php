@@ -5,7 +5,7 @@ include_once("php/autoload.include.php");
 
 $p = new BootstrapPage("Enseignements");
 
-$p->appendContent(Layout::nav());
+$p->appendContent(Layout::nav(1));
 
 $mod = Module::getModuleById($_GET['id']);
 
