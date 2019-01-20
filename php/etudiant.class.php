@@ -2,12 +2,12 @@
 
 class Etudiant{
 
-  protected $id;
+  protected $idEtudiant;
   protected $nom;
   protected $prenom;
 
   public function getId(){
-    return $this->id;
+    return $this->idEtudiant;
   }
 
   public function getNom(){
@@ -75,7 +75,7 @@ SQL
     $stmt->execute(array(':n' => secureInput($nom),
                          ':p' => secureInput($prenom)));
     $stmt->setFetchMode(PDO::FETCH_CLASS, 'Etudiant');
-		$res = $stmt->fetchAll();
+		$res = $stmt->fetch();
 
     return $res;
   }

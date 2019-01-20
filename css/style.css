@@ -34,9 +34,6 @@ h1,h2,h3,h4{
   color: #d4d4d4;
 	text-shadow: 0 0 8px hsla(0,0%,100%,.3);
 }
-h1{
-	padding-top: 2%;
-}
 
 div{
 	display:block;
@@ -117,6 +114,7 @@ a:hover{
 .container-edit{
 	background-color: #12122f;
 	padding-bottom: 2%;
+	padding-top: 2%;
 }
 
 .modules{
@@ -183,6 +181,8 @@ a:hover{
     float:right;
 }
 
+/** Module.php **/
+
 .cours{
 	position: relative;
 	padding: 1rem;
@@ -210,7 +210,7 @@ a:hover{
 	right: 52px;
 }
 
- .drop input[type="image"]{
+.drop input[type="image"]{
 	position: absolute;
 	top: 20px;
 	right: 52px;
@@ -223,6 +223,8 @@ a:hover{
 .hrFiles{
 	background: #d4d4d4;
 }
+
+/** EditModule.php **/
 
 .editMod{
 	margin-top: 3%;
