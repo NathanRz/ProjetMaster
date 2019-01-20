@@ -56,7 +56,7 @@ class Admin {
     public function getUsername(){
         return $this->username;
     }
-   
+
 
     /**
      * Production d'un formulaire de connexion contenant un challenge et une méthode JavaScript de hachage
@@ -106,7 +106,7 @@ SQL
 
         $stmt->execute(array(':user' => $data['login']));
         // Test de réussite de la sélection
-        
+
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         if($row !== false){
         	$validPassword = password_verify($data['pass'], $row['password']);
@@ -120,19 +120,19 @@ SQL
 				$stmt->execute(array(':user' => $data['login']));
 				$stmt->setFetchMode(PDO::FETCH_CLASS, __CLASS__);
 		        if (($admin = $stmt->fetch()) !== false) {
-		        	
+
 		            return $admin ;
 		        }
-		        
+
         	}else{
         		throw new AuthenticationException("Login/pass incorrect") ;
         	}
-			
+
         }else {
 
 		    throw new AuthenticationException("Login/pass incorrect") ;
 		}
-        
+
     }
 
     /**
@@ -145,9 +145,7 @@ SQL
     public static function logoutForm($text, $action) {
         $text = htmlspecialchars($text, ENT_COMPAT, 'utf-8') ;
         return <<<HTML
-    <form action='$action' method='POST'>
-    <button type='submit' class="btn btn-primary" name='logout'>{$text}</button>
-    </form>
+        <a href="$action">{$text}</a>
 HTML;
     }
 
@@ -157,10 +155,10 @@ HTML;
      * @return void
      */
     public static function logoutIfRequested() {
-        if (isset($_REQUEST['logout'])) {
-            self::startSession() ;
-            unset($_SESSION[self::session_key]) ;
-        }
+
+        self::startSession() ;
+        unset($_SESSION[self::session_key]) ;
+
     }
 
     /**
