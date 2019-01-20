@@ -37,7 +37,7 @@ SQL
 
     $stmt->execute(array('id' => secureInput($id)));
     $res = $stmt->fetch();
-    $grp->idGroupe = $res['idGroupe'];
+    $grp->idGroupePrj = $res['idGroupePrj'];
     $grp->idModule = $res['idModule'];
     $grp->idProjet = $res['idProjet'];
 
@@ -81,6 +81,10 @@ SQL
     $stmt->execute(array('id' => secureInput($grp->getIdGroupePrj())));
     $stmt->setFetchMode(PDO::FETCH_CLASS, "Etudiant");
     $grp->etudiants= $stmt->fetchAll();
+
+    if($grp->idGroupePrj == null)
+      $grp = null;
+    return $grp;
   }
 
   public static function getAllGroupeProjet(){

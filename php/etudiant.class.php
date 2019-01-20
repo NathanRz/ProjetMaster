@@ -18,7 +18,7 @@ class Etudiant{
     return $this->prenom;
   }
 
-  static public function addEtudiant($nom,$prenom){
+  static public function addEtudiant($nom,$prenom,$grpTD,$grpTP){
     $pdo =myPDO::getInstance();
     $stmt = $pdo->prepare(<<<SQL
       INSERT INTO etudiant VALUES(null, :n, :p);
@@ -37,6 +37,20 @@ SQL
     $stmt->execute(array(':id' => secureInput($id)));
     $stmt->setFetchMode(PDO::FETCH_CLASS,'Etudiant');
     $res = $stmt->fetch();
+
+    $stmt = $pdo->prepare(<<<SQL
+      INSERT INTO membre VALUES(:idG,:idE)
+SQL
+);
+    $stmt->execute(array(':idG' => secureInput($grpTD),
+                         ':idE' => secureInput($res->getId())));
+
+    $stmt = $pdo->prepare(<<<SQL
+      INSERT INTO membre VALUES(:idG,:idE)
+SQL
+);
+    $stmt->execute(array(':idG' => secureInput($grpTP),
+                         ':idE' => secureInput($res->getId())));
     return $res;
   }
 
