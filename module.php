@@ -6,7 +6,6 @@ include_once("php/autoload.include.php");
 $p = new BootstrapPage("Enseignements");
 
 $p->appendContent(Layout::nav());
-<<<<<<< HEAD
 
 $mod = Module::getModuleById($_GET['id']);
 
@@ -313,19 +312,17 @@ JAVASCRIPT
 
 //Closing the topDiv
 $p->appendContent("</div>");
-=======
+
 $mod = Module::getModuleById($_GET['id']);
 $p->appendContent(<<<HTML
-  <div class="container  container-edit">
+
     <ul>
       <li><a href="inscription.php?id={$mod->getId()}">S'inscrire</a></li>
     </ul>
-  </div>
 
 
 
 HTML
 );
 
->>>>>>> a25d73c679b929889f0b13c1df16a1260d59f921
 echo $p->toHTML();

@@ -1,10 +1,8 @@
 <?php
 
 include_once("autoload.include.php");
-<<<<<<< HEAD
-=======
 require_once("utils.php");
->>>>>>> a25d73c679b929889f0b13c1df16a1260d59f921
+
 
 class Module{
 
@@ -30,8 +28,6 @@ class Module{
 		return $this->descModule;
 	}
 
-<<<<<<< HEAD
-=======
 	public function getImgMod(){
 		return $this->imgMod;
 	}
@@ -48,7 +44,6 @@ class Module{
 		return $this->duree;
 	}
 
->>>>>>> a25d73c679b929889f0b13c1df16a1260d59f921
 	static public function getModuleById($id){
 		$stmt = myPDO::getInstance()->prepare(<<<SQL
 
@@ -66,10 +61,6 @@ SQL
 	}
 
 	static public function getModules(){
-<<<<<<< HEAD
-=======
-
->>>>>>> a25d73c679b929889f0b13c1df16a1260d59f921
 
 		$stmt = myPDO::getInstance()->prepare(<<<SQL
 

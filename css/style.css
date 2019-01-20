@@ -28,19 +28,11 @@ footer{
 
 h1,h2,h3,h4{
 	margin-bottom: .5rem;
-<<<<<<< HEAD
-    font-family: inherit;
-    font-weight: 500;
-    line-height: 1.1;
-    color: #d4d4d4;
-	text-shadow: 0 0 8px hsla(0,0%,100%);
-=======
   font-family: inherit;
   font-weight: 500;
   line-height: 1.1;
   color: #d4d4d4;
 	text-shadow: 0 0 8px hsla(0,0%,100%,.3);
->>>>>>> a25d73c679b929889f0b13c1df16a1260d59f921
 }
 h1{
 	padding-top: 2%;
@@ -95,15 +87,6 @@ a:hover{
 }
 
 .fancy-button{
-<<<<<<< HEAD
-	background-image: linear-gradient(-80deg,#0be49b,#14cbd9);
-	box-shadow: 0 0 25px 0 #0c7563;
-	border-radius: 2px;
-	padding: 11px 20px 9px 23px;
-	color: #fff;
-	letter-spacing: .01px;
-	cursor: pointer;
-=======
 		border:none;
 		background-image: linear-gradient(-80deg,#0be49b,#14cbd9);
     box-shadow: 0 0 25px 0 #0c7563;
@@ -112,7 +95,6 @@ a:hover{
     color: white !important;
     letter-spacing: .01px;
     cursor: pointer;
->>>>>>> a25d73c679b929889f0b13c1df16a1260d59f921
 }
 
 .fancy-button:hover{
@@ -201,7 +183,6 @@ a:hover{
     float:right;
 }
 
-<<<<<<< HEAD
 .cours{
 	position: relative;
 	padding: 1rem;
@@ -241,7 +222,8 @@ a:hover{
 
 .hrFiles{
 	background: #d4d4d4;
-=======
+}
+
 .editMod{
 	margin-top: 3%;
 }
@@ -297,5 +279,4 @@ a:hover{
 
 #listgrp{
 	overflow-y: auto;
->>>>>>> a25d73c679b929889f0b13c1df16a1260d59f921
 }
