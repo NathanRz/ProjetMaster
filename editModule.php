@@ -18,7 +18,7 @@ if(Admin::isConnected()){
     }
 
 
-    $p->appendContent(Layout::nav());
+    $p->appendContent(Layout::nav(1));
     $p->appendJsUrl("js/scripts/editmodule.js");
     $p->appendContent(<<<HTML
       <div class='container container-edit'>
