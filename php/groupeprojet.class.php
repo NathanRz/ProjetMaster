@@ -139,4 +139,59 @@ SQL
 
     }
   }
+
+  public static function getGrpByidMod($idMod){
+    $stmt = myPDO::getInstance()->prepare(<<<SQL
+      SELECT *
+      FROM groupeprojet
+      WHERE idModule = :id
+SQL
+);
+
+    $stmt->execute(array('id' => secureInput($idMod)));
+    $res = $stmt->fetchAll();
+
+    for($i = 0; $i < count($res); $i++) {
+      $stmt = myPDO::getInstance()->prepare(<<<SQL
+        SELECT idEtudiant
+        FROM appartenir
+        WHERE idGroupePrj = :idGrp
+SQL
+  );
+      $stmt->execute(array('idGrp' => $res[$i]["idGroupePrj"]));
+      $res[$i]["etudiants"] = $stmt->fetchAll();
+    }
+
+    for($i = 0; $i < count($res); $i++) {
+      for($j = 0; $j < count($res[$i]["etudiants"]); $j++) {
+        $stmt = myPDO::getInstance()->prepare(<<<SQL
+          SELECT *
+          FROM etudiant
+          WHERE idEtudiant = :idEtud
+SQL
+    );
+        $stmt->execute(array('idEtud' => $res[$i]["etudiants"][$j]["idEtudiant"]));
+        $res[$i]["etudiants"][$j] = $stmt->fetch();
+      }
+    }
+
+    for($i = 0; $i < count($res); $i++) {
+      for($j = 0; $j < count($res[$i]["etudiants"]); $j++) {
+        $stmt = myPDO::getInstance()->prepare(<<<SQL
+          SELECT g.typeGroupe, g.libGroupe
+          FROM membre m, groupe g
+          WHERE m.idGroupe = g.idGroupe
+          AND m.idEtudiant = :idEtud
+SQL
+    );
+        $stmt->execute(array('idEtud' => $res[$i]["etudiants"][$j]["idEtudiant"]));
+        $res[$i]["etudiants"][$j]["groupe"] = $stmt->fetchAll();
+      }
+    }
+
+
+
+
+    return $res;
+  }
 }
