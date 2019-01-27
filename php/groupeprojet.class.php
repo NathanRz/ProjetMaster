@@ -4,28 +4,65 @@ include_once("autoload.include.php");
 require_once("utils.php");
 
 class GroupeProjet{
+
+  /**
+  * @var idGroupePrj l'id du groupe de projet
+  */
   protected $idGroupePrj;
+
+  /**
+  * @var idModule l'id du module concernant le groupe de projet
+  */
   protected $idModule;
+
+  /**
+  * @var idProjet l'id du projet
+  */
   protected $idProjet;
+
+  /**
+  * @var etudiants les étudiants du groupe de projet
+  */
   protected $etudiants = array();
 
 
+  /**
+  * Getter sur les etudiants du groupe de projet
+  * @return etudiants les étudiants
+  */
   public function getEtudiants(){
     return $this->etudiants;
   }
 
+  /**
+  * Getter sur l'id du groupe projet
+  * @return idGroupePrj l'id du groupe de projet
+  */
   public function getIdGroupePrj(){
     return $this->idGroupePrj;
   }
 
+  /**
+  * Getter sur l'id du module
+  * @return idModule l'id du module
+  */
   public function getIdModule(){
     return $this->idModule;
   }
 
+  /**
+  * Getter sur l'id du projet
+  * @return idProjet l'id du projet
+  */
   public function getIdProjet(){
     return $this->idProjet;
   }
 
+  /**
+  * Récupère un groupe de projet par son id
+  * @param id l'id du groupe de projet
+  * @return grp le groupe de projet
+  */
   public static function getGroupePrjById($id){
     $grp = new GroupeProjet();
     $stmt = myPDO::getInstance()->prepare(<<<SQL
@@ -55,6 +92,12 @@ SQL
     return $grp;
   }
 
+  /**
+  * Récupère le groupe de projet d'un étudiant pour un module
+  * @param idMod l'id du module
+  * @param idEtu l'id de l'étudiant
+  * @return grp le groupe de projet
+  */
   public static function getGroupePrjByModAndEtu($idMod, $idEtu){
     $stmt = myPDO::getInstance()->prepare(<<<SQL
       SELECT g.idGroupePrj FROM appartenir a, groupeprojet g
@@ -87,6 +130,10 @@ SQL
     return $grp;
   }
 
+  /**
+  * Récupère tous les groupes de projet
+  * @return grps les groupes de projet
+  */
   public static function getAllGroupeProjet(){
 
     $grps = array();
@@ -122,6 +169,11 @@ SQL
     return $grps;
   }
 
+  /**
+  * Ajoute à la BDD un nouveau groupe de projet
+  * @param idMod l'id du module
+  * @param etu les étudiants du groupe
+  */
   public static function addGroupePrj($idMod, $etu){
     $stmt = myPDO::getInstance()->prepare(<<<SQL
       INSERT INTO groupeprojet VALUES(null,:idM,null)
@@ -191,6 +243,12 @@ SQL
 
     return $res;
   }
+
+  /**
+  * Retourne tous les groupes de projets d'un module avec leurs étudiants
+  * @param idMod
+  * @return grps
+  */
 
   public static function getGroupePrjByMod($idMod){
     $stmt = myPDO::getInstance()->prepare(<<<SQL
