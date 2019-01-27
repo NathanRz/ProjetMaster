@@ -189,9 +189,32 @@ SQL
       }
     }
 
-
-
-
     return $res;
+  }
+
+  public static function getGroupePrjByMod($idMod){
+    $stmt = myPDO::getInstance()->prepare(<<<SQL
+      SELECT * FROM  groupeprojet
+      WHERE idModule = :id
+SQL
+);
+    $stmt->execute(array(':id' => secureInput($idMod)));
+    $stmt->setFetchMode(PDO::FETCH_CLASS, "GroupeProjet");
+    $grps = $stmt->fetchAll();
+
+    foreach ($grps as $g) {
+      $stmt = myPDO::getInstance()->prepare(<<<SQL
+        SELECT e.idEtudiant, nom, prenom
+        FROM appartenir a, etudiant e
+        WHERE a.idEtudiant = e.idEtudiant
+        AND a.idGroupePrj = :id
+SQL
+);
+      $stmt->execute(array(':id' => $g->getIdGroupePrj()));
+      $stmt->setFetchMode(PDO::FETCH_CLASS, "Etudiant");
+      $g->etudiants = $stmt->fetchAll();
+    }
+
+    return $grps;
   }
 }

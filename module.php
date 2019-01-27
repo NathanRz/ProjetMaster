@@ -319,6 +319,7 @@ $p->appendContent(<<<HTML
     <ul>
       <li><a href="inscription.php?id={$mod->getId()}">S'inscrire</a></li>
       <li><a href="groupeProjet.php?id={$mod->getId()}">Groupes de projet</a></li>
+      <li><a href="deposerProjet.php?id={$mod->getId()}">Déposer un projet</a></li>
     </ul>
 
 
