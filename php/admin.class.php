@@ -4,12 +4,12 @@ require_once "autoload.include.php";
 require_once "mypdo.include.php";
 
 /**
- * Classe d'Exception concernant les connexions de la Classe Utilisateur
+ * Classe d'Exception concernant les connexions de la classe Admin
  */
 class AuthenticationException extends Exception { }
 
 /**
- * Classe d'Exception concernant les récupération de la Classe Utilisateur dans les données de session
+ * Classe d'Exception concernant les récupération de la classe Admin dans les données de session
  */
 class NotInSessionException extends Exception { }
 
@@ -19,8 +19,7 @@ class NotInSessionException extends Exception { }
 class SessionException extends Exception { }
 
 /**
- * Utilisateur permettant d'effectuer des connexions client/serveur
- * Utilisateur issu de la base de données (table admin)
+ * Administrateur issu de la base de données (table admin)
  */
 class Admin {
     /**
