@@ -6,7 +6,7 @@ include_once("php/autoload.include.php");
 $p = new BootstrapPage("Enseignements");
 $p->appendContent(Layout::nav(1));
 $grps = GroupeProjet::getGrpByidMod($_GET["id"]);
-var_dump($grps);
+
 $contentTable = <<<HTML
   <thead>
     <tr>

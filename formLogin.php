@@ -4,7 +4,7 @@ require_once "php/autoload.include.php";
 
 $p = new BootstrapPage("Connexion");
 $p->setLanguage("fr");
-$p->appendContent(Layout::nav(2));
+$p->appendContent(Layout::nav(3));
 
 $p->appendContent(Admin::loginForm("login.php"));
 

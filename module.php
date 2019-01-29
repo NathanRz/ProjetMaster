@@ -14,7 +14,14 @@ $title = "<h1 style='text-align : center'>" . $mod->getLibModule() . "</h1>";
 
 //Must close topDiv at the end of the page
 $p->appendContent($topDiv . $title);
-
+$p->appendContent(<<<HTML
+  <div class="buttonsModule">
+    <a href="inscription.php?id={$mod->getId()}" class="fancy-button">S'inscrire</a>
+    <a href="groupeProjet.php?id={$mod->getId()}" class="fancy-button">Groupes de projet</a>
+    <a href="deposerProjet.php?id={$mod->getId()}" class="fancy-button">Déposer un projet</a>
+  </div>
+HTML
+);
 if(!Admin::isConnected()){
   $cmPart = <<<HTML
     <div class = "drop" id ="CM">
@@ -314,17 +321,4 @@ JAVASCRIPT
 $p->appendContent("</div>");
 
 $mod = Module::getModuleById($_GET['id']);
-$p->appendContent(<<<HTML
-
-    <ul>
-      <li><a href="inscription.php?id={$mod->getId()}">S'inscrire</a></li>
-      <li><a href="groupeProjet.php?id={$mod->getId()}">Groupes de projet</a></li>
-      <li><a href="deposerProjet.php?id={$mod->getId()}">Déposer un projet</a></li>
-    </ul>
-
-
-
-HTML
-);
-
 echo $p->toHTML();
