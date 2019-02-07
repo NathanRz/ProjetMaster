@@ -43,7 +43,7 @@ HTML;
 			<div class="col-lg mt-3">
 					<div class="modules">
 						{$gestion}
-						<a href="module.php?id={$m->getId()}">
+						<a href="acces.php?id={$m->getId()}">
 							{$imgMod}
 							<div class="modules-body">
 								<h4 class="modules-title">{$m->getLibModule()}</h4>
