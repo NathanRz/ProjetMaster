@@ -17,9 +17,12 @@ foreach ($grps as $g) {
 
   $options .="</option>";
 }
+
+$_POST['id'] = $_GET['id'];
 $p->appendContent(<<<HTML
   <div class='container container-edit'>
-      <form name="depoFich" method="POST" action="" enctype="multipart/form-data">
+      <h1>Dépôt de projet</h1>
+      <form name="depoFich" method="POST" action="php/addProject.php" enctype="multipart/form-data">
         <div class="row">
 
             <div class="col-lg mt-4">
@@ -29,19 +32,28 @@ $p->appendContent(<<<HTML
               </select>
             </div>
             <div class="col-lg mt-4">
-              <input type="file" name="archive">
+              <input type="file" name="sources" accept=".zip">
             </div>
             <div class="col-lg mt-4">
-              <input type="file" name="images">
+              <input type="file" name="rapport" accept=".pdf">
             </div>
 
         </div>
+        <div class="row rowImg">
+            <div class="col-lg mt-3">
+              <div class="addImgPrj">
+                <span class="plus">+</span>
+              </div>
+            </div>
+        </div>
+        <input type="submit" value="Envoyer">
       </form>
   </div>
 
 HTML
 );
 
+$p->appendContent(Layout::footer());
 
 
 
