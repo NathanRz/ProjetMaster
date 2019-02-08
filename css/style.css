@@ -2,7 +2,7 @@
 html,body{
 	margin:0;
 	font-family: Amiko, Arial, sans-serif;
-	font-size: 1rem;
+	font-size: 0.9em;
 	font-weight: 400;
 	height:100% !important;
 	line-height: 1.5;
@@ -97,7 +97,9 @@ a:hover{
 	border: 1px solid transparent;
 	border-radius: .25rem;
 }
-
+.container{
+	min-height: 100% !important;
+}
 .container-mod{
 	padding: 6rem 0;
 	min-height: 100% !important;
@@ -130,6 +132,9 @@ a:hover{
   text-align: center;
 }
 
+.imgMod{
+	padding-top: 2%;
+}
 .modules-body{
 	flex: 1 1 auto;
     padding: 1.5rem;

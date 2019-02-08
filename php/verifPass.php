@@ -6,6 +6,9 @@ require_once "utils.php";
 $acces = 0;
 session_start();
 if($_SERVER["REQUEST_METHOD"] == "POST"){
+  if(isset($_SESSION['password'])){
+    unset($_SESSION['password']);
+  }
 
   $stmt = myPDO::getInstance()->prepare(<<<SQL
     SELECT passModule

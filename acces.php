@@ -1,11 +1,14 @@
 <?php
 include_once("php/layout.class.php");
 include_once("php/autoload.include.php");
-
+session_start();
 if($_SERVER["REQUEST_METHOD"] == "GET"){
+
   $mod = Module::getModuleById($_GET['id']);
   $p = new BootstrapPage("Accès au module");
-
+  if(isset($_SESSION['password']) && $_SESSION['password'] == $mod->getPassModule()){
+    header("Location: ./module.php?id=". $mod->getId());
+  }
   $p->appendContent(Layout::nav(1));
   $p->appendContent(<<<HTML
     <div class="container container-mod">
