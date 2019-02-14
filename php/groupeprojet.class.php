@@ -77,10 +77,8 @@ SQL
 );
 
     $stmt->execute(array('id' => secureInput($id)));
-    $res = $stmt->fetch();
-    $grp->idGroupePrj = $res['idGroupePrj'];
-    $grp->idModule = $res['idModule'];
-    $grp->idProjet = $res['idProjet'];
+    $stmt->setFetchMode(PDO::FETCH_CLASS, "GroupeProjet");
+    $grp = $stmt->fetch();
 
     $stmt = myPDO::getInstance()->prepare(<<<SQL
       SELECT e.idEtudiant, nom, prenom
@@ -90,7 +88,7 @@ SQL
 SQL
 );
     $stmt->execute(array('id' => secureInput($id)));
-
+    $stmt->setFetchMode(PDO::FETCH_CLASS, "Etudiant");
     $grp->etudiants= $stmt->fetchAll();
 
     return $grp;

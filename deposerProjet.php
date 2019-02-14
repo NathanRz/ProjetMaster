@@ -12,13 +12,12 @@ $options = "";
 foreach ($grps as $g) {
   $options .= "<option value='" . $g->getIdGroupePrj() . "'>";
   foreach ($g->getEtudiants() as $e) {
-    $options .= $e->getNom() . " " . $e->getPrenom() . " | ";
+    $options .= $e->getNom() . " " . $e->getPrenom() . " - ";
   }
 
   $options .="</option>";
 }
 
-$_POST['id'] = $_GET['id'];
 $p->appendContent(<<<HTML
   <div class='container container-edit'>
       <h1>Dépôt de projet</h1>
@@ -37,15 +36,21 @@ $p->appendContent(<<<HTML
             <div class="col-lg mt-4">
               <input type="file" name="rapport" accept=".pdf">
             </div>
-
+            <input type="hidden" name="id" value="{$_GET['id']}">
         </div>
-        <div class="row rowImg">
-            <div class="col-lg mt-3">
+        <div class="row rowImg mb-4">
+            <div class="col-md-3 mb-1">
+              <div class="addImgPrj">
+                <span class="plus">+</span>
+              </div>
+            </div>
+            <div class="col-md-3">
               <div class="addImgPrj">
                 <span class="plus">+</span>
               </div>
             </div>
         </div>
+
         <input type="submit" value="Envoyer">
       </form>
   </div>
