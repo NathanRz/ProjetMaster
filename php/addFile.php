@@ -27,7 +27,7 @@ if(Admin::isConnected()){
     if(move_uploaded_file($_FILES["addedFile"]["tmp_name"], $target_file)){
       $stmt = myPDO::getInstance()->prepare(<<<SQL
         INSERT INTO fichier
-        VALUES(null,:idModule, :nomFichier, :descFichier, :typeFichier, :cheminFichier);
+        VALUES(null,:idModule, :nomFichier, :descFichier, :typeFichier, :cheminFichier, NULL);
 SQL
   );
 

@@ -44,12 +44,20 @@ HTML;
   $mods = Fichier::getFichiersByModule($mod->getId());
 
   foreach ($mods as $file){
+    $img="";
+    if($file->getCheminImg() != NULL){
+      $img.=<<<HTML
+      <img src="{$file->getCheminImg()}" width="64" height="64">
+HTML;
+    }
+
     if($file->getTypeFichier() == "CM"){
       $cmPart .= <<<HTML
         <div class="cours">
           <a href = "{$file->getCheminFichier()}">
-            <h4>{$file->getNomFichier()}</h4>
-            <p>{$file->getDescFichier()}</p>
+            {$img}
+            <h4>{$file->getNomFichier()} : </h4>
+            <p class="fileDesc">{$file->getDescFichier()}</p>
           </a>
         </div>
         <hr>
@@ -58,8 +66,9 @@ HTML;
       $tdPart .= <<<HTML
         <div class="cours">
           <a href = "{$file->getCheminFichier()}">
-            <h4>{$file->getNomFichier()}</h4>
-            <p>{$file->getDescFichier()}</p>
+            {$img}
+            <h4>{$file->getNomFichier()} : </h4>
+            <p class="fileDesc">{$file->getDescFichier()}</p>
           </a>
         </div>
         <hr>
@@ -69,8 +78,9 @@ HTML;
         $tdPart .= <<<HTML
           <div class="cours">
             <a href = "{$file->getCheminFichier()}">
-              <h4>{$file->getNomFichier()}</h4>
-              <p>{$file->getDescFichier()}</p>
+              {$img}
+              <h4>{$file->getNomFichier()} : </h4>
+              <p class="fileDesc">{$file->getDescFichier()}</p>
             </a>
           </div>
           <hr>
@@ -86,7 +96,7 @@ HTML;
     <div class = "drop" id ="CM">
       <h2>Cours magistraux</h2>
       <a href ="#" data-toggle="modal" data-target="#myModalCM">
-        <img src="img/document_add.png" width="32" height="32" alt="Ajouter un CM">
+        <img class="addPng" src="img/document_add.png" width="32" height="32" alt="Ajouter un CM">
       </a>
       <hr class="hrPart"/>
 HTML;
@@ -95,7 +105,7 @@ HTML;
     <div class="drop" id="TD">
       <h2>Travaux dirigés</h2>
       <a href ="#" data-toggle="modal" data-target="#myModalTD">
-        <img src="img/document_add.png" width="32" height="32" alt="Ajouter un TD">
+        <img class="addPng" src="img/document_add.png" width="32" height="32" alt="Ajouter un TD">
       </a>
       <hr class="hrPart"/>
 HTML;
@@ -104,7 +114,7 @@ HTML;
     <div class="drop" id ="TP">
       <h2>Travaux pratiques</h2>
       <a href ="#" data-toggle="modal" data-target="#myModalTP">
-        <img src="img/document_add.png" width="32" height="32" alt="Ajouter un TP">
+        <img class="addPng" src="img/document_add.png" width="32" height="32" alt="Ajouter un TP">
       </a>
       <hr class="hrPart" />
 HTML;
@@ -112,31 +122,36 @@ HTML;
   $mods = Fichier::getFichiersByModule($mod->getId());
 
   foreach ($mods as $file){
+    $img="";
+    if($file->getCheminImg() != NULL){
+      $img .=<<<HTML
+      <img class="imgFile" src="{$file->getCheminImg()}" width="64" height="64" >
+HTML;
+    }
     if($file->getTypeFichier() == "CM"){
       $cmPart .= <<<HTML
         <div class="cours">
           <a data-id = "{$file->getId()}" href="#" data-toggle="modal" data-target="#modalRemove">
-            <img src = "img/remove.png" width="32" height="32" alt ="Supprimer ce TD">
+            <img class="removePng" src="img/remove.png" width="32" height="32" alt ="Supprimer ce TD">
           </a>
           <a href = "{$file->getCheminFichier()}">
-            <h4>{$file->getNomFichier()}</h4>
-            <p>{$file->getDescFichier()}</p>
+            {$img}
+            <h4>{$file->getNomFichier()} : </h4>
+            <p class="fileDesc">{$file->getDescFichier()}</p>
           </a>
         </div>
-        <hr>
 HTML;
     } else if($file->getTypeFichier() =="TD"){
       $tdPart .= <<<HTML
         <div class="cours">
           <a data-id = "{$file->getId()}" href="#" data-toggle="modal" data-target="#modalRemove">
-            <img src = "img/remove.png" width="32" height="32" alt="Supprimer ce TD">
+            <img class="removePng" src="img/remove.png" width="32" height="32" alt="Supprimer ce TD">
           </a>
           <a href = "{$file->getCheminFichier()}">
             <h4>{$file->getNomFichier()}</h4>
             <p>{$file->getDescFichier()}</p>
           </a>
         </div>
-        <hr>
 
 HTML;
     } else if($file->getTypeFichier() == "TP"){
@@ -147,10 +162,9 @@ HTML;
           </a>
           <a href = "{$file->getCheminFichier()}">
             <h4>{$file->getNomFichier()}</h4>
-            <p>{$file->getDescFichier()}</p>
+            <p class="fileDesc">{$file->getDescFichier()}</p>
           </a>
         </div>
-        <hr>
 HTML;
     }
   }

@@ -8,6 +8,7 @@ class Fichier{
   protected $descFichier;
   protected $typeFichier;
   protected $cheminFichier;
+  protected $cheminImg;
 
 
   public function getId(){
@@ -28,6 +29,10 @@ class Fichier{
 
   public function getCheminFichier(){
     return $this->cheminFichier;
+  }
+
+  public function getCheminImg(){
+    return $this->cheminImg;
   }
 
   static public function getFichiersByModule($id){

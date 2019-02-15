@@ -194,7 +194,6 @@ a:hover{
 
 .cours{
 	position: relative;
-	padding: 1rem;
 	background-color:#15162c;
 	border-radius: .25rem;
 }
@@ -207,19 +206,19 @@ a:hover{
 	margin-bottom: 40px;
 }
 
-.drop img{
+.addPng{
 	position: absolute;
 	top: 20px;
 	right: 10px;
 }
 
-.drop img:nth-child(2){
+.removePng{
 	position: absolute;
 	top: 20px;
-	right: 52px;
+	right: 0px;
 }
 
-.drop input[type="image"]{
+/drop input[type="image"]{
 	position: absolute;
 	top: 20px;
 	right: 52px;
@@ -301,4 +300,18 @@ a:hover{
 	position: absolute;
 	top: 10%;
 	right : 5%;
+}
+
+.imgFile{
+	width: auto;
+}
+
+.fileDesc{
+	width: auto;
+	display: inline-block;
+}
+
+.cours h4{
+	display: inline-block;
+	padding: 2%;
 }
