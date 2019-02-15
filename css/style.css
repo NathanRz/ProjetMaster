@@ -213,7 +213,7 @@ a:hover{
 	right: 0px;
 }
 
-/drop input[type="image"]{
+drop input[type="image"]{
 	position: absolute;
 	top: 20px;
 	right: 52px;
@@ -297,7 +297,6 @@ a:hover{
 	right : 5%;
 }
 
-<<<<<<< HEAD
 .imgFile{
 	width: auto;
 }
@@ -309,8 +308,8 @@ a:hover{
 
 .cours h4{
 	display: inline-block;
-	padding: 2%;
-=======
+}
+
 #alert-verif-success{
 	display:none;
 }
@@ -339,5 +338,4 @@ a:hover{
 	font-size: 6em !important;
 	margin-top: 3%;
 	margin-bottom: 3%;
->>>>>>> 301b85bebafd1cc07b7c1a16b98a5dafdc86d2fd
 }
