@@ -1,27 +1,26 @@
 
-body{
+html,body{
 	margin:0;
 	font-family: Amiko, Arial, sans-serif;
-	font-size: 1rem;
+	font-size: 0.9em;
 	font-weight: 400;
+	height:100% !important;
 	line-height: 1.5;
 	color:#8082a0;
 	background:#03041a;
 }
 
 p {
-    display: block;
-    margin-block-start: 1em;
-    margin-block-end: 1em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
+  display: block;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
 }
 
 footer{
-	position: fixed;
-  left: 0;
+	position: relative;
   bottom: 0;
-  width: 100%;
 	line-height: 0.5;
 	padding: 5px;
 	background-color: #3e418e;
@@ -36,10 +35,6 @@ h1,h2,h3,h4{
 	text-shadow: 0 0 8px hsla(0,0%,100%,.3);
 }
 
-div{
-	display:block;
-}
-
 /*******************************************************
 **********************		NAV		************************
 ********************************************************/
@@ -47,7 +42,6 @@ div{
 .topnav{
 	border-bottom: 5px solid #1c1f65;
 	background-color: #3e418e;
-
 	overflow: hidden;
 }
 
@@ -73,8 +67,6 @@ div{
 	/*box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.125);*/
 	color: #d4d4d4;
 }
-
-
 
 a:hover{
 	text-decoration: none;
@@ -105,11 +97,12 @@ a:hover{
 	border: 1px solid transparent;
 	border-radius: .25rem;
 }
-
-
-
+.container{
+	min-height: 100% !important;
+}
 .container-mod{
 	padding: 6rem 0;
+	min-height: 100% !important;
 }
 
 .container-edit{
@@ -127,7 +120,6 @@ a:hover{
 }
 
 .modules{
-
 	position: relative;
   display: flex;
   flex-direction: column;
@@ -140,6 +132,9 @@ a:hover{
   text-align: center;
 }
 
+.imgMod{
+	padding-top: 2%;
+}
 .modules-body{
 	flex: 1 1 auto;
     padding: 1.5rem;
@@ -292,8 +287,8 @@ a:hover{
 }
 
 .login{
-	    background-color: #15162c;
-			padding: 1rem;
+	background-color: #15162c;
+	padding: 1rem;
 }
 
 .buttonsModule{
@@ -302,6 +297,7 @@ a:hover{
 	right : 5%;
 }
 
+<<<<<<< HEAD
 .imgFile{
 	width: auto;
 }
@@ -314,4 +310,34 @@ a:hover{
 .cours h4{
 	display: inline-block;
 	padding: 2%;
+=======
+#alert-verif-success{
+	display:none;
+}
+
+/**********************************************************
+********************* DEPOT ******************************
+**********************************************************/
+.rowImg{
+	margin-top: 5%;
+}
+
+.addImgPrj{
+	position: relative;
+  display: flex;
+  flex-direction: column;
+	padding: 2% 2% 2% 2%;
+	text-align:center;
+	border: 1px solid #0fd9b6;
+	box-shadow: 0 0 30px 0 rgba(15,217,182,.36);
+}
+
+.plus{
+	display: inline;
+	border:2px dashed grey;
+	border-radius: 90px;
+	font-size: 6em !important;
+	margin-top: 3%;
+	margin-bottom: 3%;
+>>>>>>> 301b85bebafd1cc07b7c1a16b98a5dafdc86d2fd
 }

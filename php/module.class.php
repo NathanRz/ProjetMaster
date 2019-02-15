@@ -36,6 +36,10 @@ class Module{
 		return $this->startDate;
 	}
 
+	public function getPassModule(){
+		return $this->passModule;
+	}
+
 	public function getEndDate(){
 		return $this->endDate;
 	}

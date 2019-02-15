@@ -33,7 +33,7 @@ foreach ($mods as $m) {
 HTML;
 	}
 	if($m->getImgMod() !== null)
-		$imgMod = "<img src='".$m->getImgMod()."' width='50' height='50'>";
+		$imgMod = "<img class='imgMod' src='".$m->getImgMod()."' width='50' height='50' />";
 	else
 		$imgMod = "";
 
@@ -43,7 +43,7 @@ HTML;
 			<div class="col-lg mt-3">
 					<div class="modules">
 						{$gestion}
-						<a href="module.php?id={$m->getId()}">
+						<a href="acces.php?id={$m->getId()}">
 							{$imgMod}
 							<div class="modules-body">
 								<h4 class="modules-title">{$m->getLibModule()}</h4>
@@ -85,14 +85,14 @@ if(Admin::isConnected()){
 		$modsHtml .= <<<HTML
 			<div class="col-lg mt-3">
 				<div class="modules">
-				<a href="#" data-toggle="modal" data-target="#myModal">
-					<div class="modimg-top">
-						<img src="img/add.svg" width="50" height="50" alt="Ajouter un module">
-					</div>
-					<div class="modules-body">
-						<h4 class="modules-title">Ajouter un module</h4>
-					</div>
-				</a>
+					<a href="#" data-toggle="modal" data-target="#myModal">
+						<div class="modimg-top">
+							<img src="img/add.svg" width="50" height="50" alt="Ajouter un module">
+						</div>
+						<div class="modules-body">
+							<h4 class="modules-title">Ajouter un module</h4>
+						</div>
+					</a>
 				</div>
 			</div>
 		</div>
@@ -210,20 +210,20 @@ $p->appendContent(<<<HTML
 	  <div class="modal-dialog">
 	    <div class="modal-content">
 
-		<!-- Modal Header -->
-		<div class="modal-header">
-			<h4 class="modal-title">Etes-vous sûr ?</h4>
-		</div>
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">Etes-vous sûr ?</h4>
+				</div>
 
-		<!-- Modal body -->
-		<div class="modal-body">
-			<form name="delMod" method="POST" action="php/removeModule.php">
-				<input type="hidden" name="idMod" value="">
-				<button type="submit" class="btn btn-success">Valider</button>
-				<button type="button" class="btn btn-danger" data-dismiss="modal">Annuler</button>
-			</form>
-		</div>
-	    </div>
+				<!-- Modal body -->
+				<div class="modal-body">
+					<form name="delMod" method="POST" action="php/removeModule.php">
+						<input type="hidden" name="idMod" value="">
+						<button type="submit" class="btn btn-success">Valider</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Annuler</button>
+					</form>
+				</div>
+	  	</div>
 	  </div>
 	</div>
 HTML
@@ -246,6 +246,8 @@ $p->appendJs(<<<JAVASCRIPT
 
 JAVASCRIPT
 );
+
+$p->appendContent("</div>");
 $p->appendContent(Layout::footer());
 
 echo $p->toHTML();

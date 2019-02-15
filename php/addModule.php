@@ -63,6 +63,7 @@ SQL
 			mkdir($dirNewFold . "TD/");
 			mkdir($dirNewFold . "TP/");
 			mkdir($dirNewFold . "CM/");
+			mkdir($dirNewFold . "Projets/");
 		}
 
 	}

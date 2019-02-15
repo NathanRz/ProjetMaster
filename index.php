@@ -13,9 +13,6 @@ $p->appendContent($nav);
 
 $p->appendContent(<<<HTML
 		<hr>
-		<div class="container text-center">
-			<h1>Sandrine Lanquetin</h1>
-		</div>
 		<div class="container container-mod">
 			<div class="row pt-2">
 				<div class="col-lg mt-3">
@@ -52,12 +49,11 @@ $p->appendContent(<<<HTML
 				</div>
 			</div>
 		</div>
-	</div>
+
 
 HTML
 );
 
 $p->appendContent(Layout::footer());
-
 
 echo $p->toHTML();
