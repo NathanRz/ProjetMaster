@@ -21,41 +21,133 @@ foreach ($grps as $g) {
 $p->appendContent(<<<HTML
   <div class='container container-edit'>
       <h1>Dépôt de projet</h1>
-      <form name="depoFich" method="POST" action="php/addProject.php" enctype="multipart/form-data">
+      <form clas="md-form" name="depoFich" method="POST" action="php/addProject.php" enctype="multipart/form-data">
         <div class="row">
 
             <div class="col-lg mt-4">
-              <select name="binom" placeholder="Choisir un groupe">
-                <option value="null">Choisir un groupe</option>
+              <select name="binom" class="browser-default custom-select" required="required">
+                <option value='null' selected="true" disabled="disabled">Choisissez un groupe</option>
                 {$options}
               </select>
             </div>
             <div class="col-lg mt-4">
-              <input type="file" name="sources" accept=".zip">
-            </div>
-            <div class="col-lg mt-4">
-              <input type="file" name="rapport" accept=".pdf">
-            </div>
-            <input type="hidden" name="id" value="{$_GET['id']}">
-        </div>
-        <div class="row rowImg mb-4">
-            <div class="col-md-3 mb-1">
-              <div class="addImgPrj">
-                <span class="plus">+</span>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">Upload</span>
+                </div>
+                <div class="custom-file">
+                  <input type="file" name="sources" accept=".zip" class="custom-file-input" id="sources" aria-describedby="inputGroupFileAddon01" required="required">
+                  <label class="custom-file-label" for="inputGroupFile01">Archive</label>
+                </div>
               </div>
             </div>
-            <div class="col-md-3">
-              <div class="addImgPrj">
+            <div class="col-lg mt-4">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+                </div>
+                <div class="custom-file">
+                  <input type="file" name="rapport" accept=".pdf" class="custom-file-input" id="rapport" aria-describedby="inputGroupFileAddon01" required="required">
+                  <label class="custom-file-label" for="inputGroupFile01">Rapport</label>
+                </div>
+              </div>
+            </div>
+            <input type="hidden" name="idMod" value="{$_GET['id']}">
+        </div>
+        <div id="rowImg" class="row rowImg mb-4">
+            <div class="col-md-3 mb-1">
+              <div id="addImgPrj">
                 <span class="plus">+</span>
+                <input type="file">
               </div>
             </div>
         </div>
 
-        <input type="submit" value="Envoyer">
+        <input type="submit" id="postData" value="Envoyer">
       </form>
   </div>
 
 HTML
+);
+
+$p->appendContent(<<<JAVASCRIPT
+  <script>
+
+  var formImage = new FormData();
+  $(document).ready(function(){
+
+    $("#addImgPrj").on('dragenter', function(e){
+      e.preventDefault();
+      $(this).css('background', '#BBD5B8');
+    });
+
+    $("#addImgPrj").on('dragover', function(e){
+      e.preventDefault();
+    })
+
+    $("#addImgPrj").on('drop', function(e){
+      $(this).css('background', "#D8F9D3");
+      e.preventDefault();
+      var image = e.originalEvent.dataTransfer.files;
+      createFormData(image);
+      var img = document.createElement("img");
+      img.className ="img-fluid";
+      var reader = new FileReader();
+      reader.onload = function(event){
+          console.log(event);
+          img.src = event.target.result;
+          //$('.imgU').attr('width',150);
+      }
+      reader.readAsDataURL(image[0]);
+      var imgHold = document.createElement('div');
+      imgHold.className = "col-md-3 mb-1";
+      imgHold.append(img);
+      $("#rowImg").prepend(imgHold);
+    });
+  });
+
+  function createFormData(image){
+    formImage.append('images[]', image[0]);
+  }
+
+  $("#sources").on('input', function(e){
+    formImage.append('sources', e.currentTarget.files[0]);
+  })
+
+  $("#rapport").on('input', function(e){
+    formImage.append('rapport', e.currentTarget.files[0]);
+  })
+
+  function uploadFormData(formData){
+    var formU = document.forms['depoFich'];
+    console.log(formU.binom.value);
+    //if(formU.binom.value != null)
+      formImage.append('binom', formU.binom.value);
+    //if(formU.sources.value != null)
+      //formImage.append('sources', $('input[name="sources"]')[0].files[0]);
+    //if(formU.rapport.value != null)
+      //formImage.append('rapport', $('input[name="rapport"]')[0].files[0]);
+      formImage.append('idMod', formU.idMod.value);
+    console.log(formImage);
+    $.ajax({
+      url: "php/addProject.php",
+      type: "POST",
+      data: formImage,
+      contentType: false,
+      cache: false,
+      processData: false,
+      success: function(data){
+        $("#addImgPrj").html(data);
+      }
+    });
+  }
+
+  $("#postData").on('click', function(e){
+    e.preventDefault();
+    uploadFormData();
+  });
+  </script>
+JAVASCRIPT
 );
 
 $p->appendContent(Layout::footer());

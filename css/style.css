@@ -321,7 +321,7 @@ drop input[type="image"]{
 	margin-top: 5%;
 }
 
-.addImgPrj{
+#addImgPrj{
 	position: relative;
   display: flex;
   flex-direction: column;
