@@ -155,7 +155,7 @@ SQL
     public static function logoutForm($text, $action) {
         $text = htmlspecialchars($text, ENT_COMPAT, 'utf-8') ;
         return <<<HTML
-        <a href="$action">{$text}</a>
+        <a class="nav-link" href="$action">{$text}</a>
 HTML;
     }
 

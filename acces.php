@@ -5,8 +5,9 @@ session_start();
 if($_SERVER["REQUEST_METHOD"] == "GET"){
 
   $mod = Module::getModuleById($_GET['id']);
+
   $p = new BootstrapPage("Accès au module");
-  if(isset($_SESSION['password']) && $_SESSION['password'] == $mod->getPassModule()){
+  if(isset($_SESSION['password']) && $_SESSION['password'] == $mod->getPassModule() || Admin::isConnected()){
     header("Location: ./module.php?id=". $mod->getId());
   }
   $p->appendContent(Layout::nav(1));
@@ -53,10 +54,9 @@ HTML
         success: function(res, statut){
           var r = JSON.parse(res);
           if(r == 1){
-            setTimeout(function(){ window.location = "./module.php?id="+id; }, 5000);
+            setTimeout(function(){ window.location = "./module.php?id="+id; }, 2000);
             $("#alert-verif-success").fadeIn("slow");
           }
-          //console.log("Accès = " + res);
         }
       });
     }

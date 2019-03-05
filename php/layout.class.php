@@ -9,45 +9,56 @@ class Layout{
 		$cv = "";
 		switch ($id) {
 			case 0:
-				$index = "<a class='active' href='index.php'>Accueil</a></li>";
-				$enseignement = "<a href='enseignements.php'>Enseignements</a></li>";
-				$cv= "<a href='cv.php'>CV</a></li>";
+				$index = "<a class='nav-link' href='index.php'>Accueil</a></li>";
+				$enseignement = "<a class='nav-link' href='enseignements.php'>Enseignements</a></li>";
+				$cv= "<a class='nav-link' href='cv.php'>CV</a></li>";
 				break;
 			case 1:
-				$index = "<a href='index.php'>Accueil</a></li>";
-				$enseignement = "<a class='active' href='enseignements.php'>Enseignements</a></li>";
-				$cv= "<a href='cv.php'>CV</a></li>";
+				$index = "<a class='nav-link' href='index.php'>Accueil</a></li>";
+				$enseignement = "<a class='nav-link' href='enseignements.php'>Enseignements</a></li>";
+				$cv= "<a class='nav-link' href='cv.php'>CV</a></li>";
 				break;
 			case 2:
-				$index = "<a href='index.php'>Accueil</a></li>";
-				$enseignement = "<a href='enseignements.php'>Enseignements</a></li>";
-				$cv= "<a  class='active' href='cv.php'>CV</a></li>";
+				$index = "<a class='nav-link' href='index.php'>Accueil</a></li>";
+				$enseignement = "<a class='nav-link' href='enseignements.php'>Enseignements</a></li>";
+				$cv= "<a class='nav-link' href='cv.php'>CV</a></li>";
 				break;
 			default :
-				$index = "<a href='index.php'>Accueil</a></li>";
-				$enseignement = "<a href='enseignements.php'>Enseignements</a></li>";
-				$cv = "<a href='cv.php'>CV</a></li>";
+				$index = "<a class='nav-link' href='index.php'>Accueil</a></li>";
+				$enseignement = "<a class='nav-link' href='enseignements.php'>Enseignements</a></li>";
+				$cv = "<a class='nav-link' href='cv.php'>CV</a></li>";
 				break;
 		}
 		$nav = <<<HTML
 		<header>
-			<nav class="topnav" id="navbarColors01">
-				<div class="links">
-					{$index}
-					{$enseignement}
-					{$cv}
+			<nav class="topnav navbar navbar-expand-sm navbar-dark">
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+			    <span class="navbar-toggler-icon"></span>
+			  </button>
+				<div class="collapse navbar-collapse" id="collapsibleNavbar">
+					<ul class="navbar-nav">
+						<li class="nav-item">
+							{$index}
+						</li>
+						<li class="nav-item">
+							{$enseignement}
+						</li>
+						<li class="nav-item">
+							{$cv}
+						</li>
 HTML;
 		if(Admin::isConnected()){
 			$a = Admin::createFromSession();
-			$nav .= Admin::logoutForm("Déconnexion", "logout.php");
+			$nav .= "<li class='nav-item'>" . Admin::logoutForm("Déconnexion", "logout.php") . "</li>";
 		}else{
 			if($id == 3)
-				$nav .= "<a class='active' href='formLogin.php'>Administration</a>";
+				$nav .= "<li class='nav-item'><a class='nav-link' href='formLogin.php'>Administration</a></li>";
 			else
-				$nav .= "<a href='formLogin.php'>Administration</a>";
+				$nav .= "<li class='nav-item'><a class='nav-link' href='formLogin.php'>Administration</a></li>";
 		}
 
 		$nav .= <<<HTML
+					</ul>
 				</div>
 			</nav>
 		</header>

@@ -2,7 +2,9 @@
 
 include_once("php/layout.class.php");
 include_once("php/autoload.include.php");
-
+session_start();
+$mod = Module::getModuleById($_GET['id']);
+if(isset($_SESSION['password']) && !empty($_SESSION['password']) && ($_SESSION['password']) == $mod->getPassModule() || Admin::isConnected()){
 $p = new BootstrapPage("Déposer un projet");
 
 $p->appendContent(Layout::nav(1));
@@ -94,9 +96,8 @@ $p->appendContent(<<<JAVASCRIPT
       img.className ="img-fluid";
       var reader = new FileReader();
       reader.onload = function(event){
-          console.log(event);
+          //console.log(event);
           img.src = event.target.result;
-          //$('.imgU').attr('width',150);
       }
       reader.readAsDataURL(image[0]);
       var imgHold = document.createElement('div');
@@ -120,13 +121,7 @@ $p->appendContent(<<<JAVASCRIPT
 
   function uploadFormData(formData){
     var formU = document.forms['depoFich'];
-    console.log(formU.binom.value);
-    //if(formU.binom.value != null)
       formImage.append('binom', formU.binom.value);
-    //if(formU.sources.value != null)
-      //formImage.append('sources', $('input[name="sources"]')[0].files[0]);
-    //if(formU.rapport.value != null)
-      //formImage.append('rapport', $('input[name="rapport"]')[0].files[0]);
       formImage.append('idMod', formU.idMod.value);
     console.log(formImage);
     $.ajax({
@@ -152,6 +147,7 @@ JAVASCRIPT
 
 $p->appendContent(Layout::footer());
 
-
-
 echo $p->toHTML();
+}else{
+  header("Location: index.php");
+}
