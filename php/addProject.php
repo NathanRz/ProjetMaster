@@ -19,10 +19,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
       $zipName .= $e->getNom();
     }
 
-    $target_dir = "../docs/". $mod->getLibModule() . "/Projets/" . $zipName . ".zip";
+    $target_dir = "docs/". $mod->getLibModule() . "/Projets/" . $zipName . ".zip";
     $dir_upload = "../docs/". $mod->getLibModule() . "/Projets/";
     $zip = new ZipArchive;
-    $zip->open($target_dir, ZipArchive::CREATE);
+    $zip->open($dir_upload . $zipName . ".zip", ZipArchive::CREATE);
 
     if(isset($_FILES['sources']['tmp_name']) && !empty($_FILES['sources']['tmp_name'])){
       $sources = $_FILES['sources']['tmp_name'];
