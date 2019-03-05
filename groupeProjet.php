@@ -80,7 +80,6 @@ HTML;
         <input type="hidden" id="inputId" value="{$_GET['id']}"/>
       </form>
       <button class="fancy-button" id="export">Exporter sous Excel</button>
-      <div id="test"></div>
     </div>
 HTML
     );
@@ -97,7 +96,7 @@ HTML
             processData: false,
             data: "id=" + id,
             success:function(response) {
-              $("#test").append("Test excel");
+              
             }
         });
       });
@@ -105,30 +104,7 @@ HTML
 JAVASCRIPT
     );
 
-    echo $p->toHTML();
-
 } else {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   $contentTable = <<<HTML
     <thead>
@@ -199,31 +175,12 @@ HTML;
         {$contentTable}
     </div>
     <button id="export">Exporter</button>
-    <script src="js/jquery.table2excel.js"></script>
-
-    <script>
-      $("#export").click(function(){
-
-        var table = $("#t2ex").html();
-        console.log(table);
-        $("#t2ex").table2excel({
-          exclude:".noExl",
-          name:"WorkSheetTest",
-          filename:"test"
-        });
-      });
-    </script>
 HTML
   );
+}
 
-<<<<<<< HEAD
 echo $p->toHTML();
 
 }else{
   header("Location: index.php");
-=======
-
-
-  echo $p->toHTML();
->>>>>>> e02fb25e0945a5f9126cc1c9a374b13b8699383a
 }
