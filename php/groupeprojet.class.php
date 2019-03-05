@@ -1,6 +1,7 @@
 <?php
 
 include_once("autoload.include.php");
+require_once "mypdo.include.php";
 require_once("utils.php");
 
 /**
@@ -204,6 +205,17 @@ SQL
 
     $stmt->execute(array('id' => secureInput($idMod)));
     $res = $stmt->fetchAll();
+
+    for($i = 0; $i < count($res); $i++) {
+      $stmt = myPDO::getInstance()->prepare(<<<SQL
+        SELECT archive
+        FROM projet
+        WHERE idGroupePrj = :idGrp
+SQL
+  );
+      $stmt->execute(array('idGrp' => $res[$i]["idGroupePrj"]));
+      $res[$i]["archive"] = $stmt->fetchColumn();
+    }
 
     for($i = 0; $i < count($res); $i++) {
       $stmt = myPDO::getInstance()->prepare(<<<SQL
