@@ -40,34 +40,21 @@ h1,h2,h3,h4{
 ********************************************************/
 
 .topnav{
-	border-bottom: 5px solid #1c1f65;
-	background-color: #3e418e;
+	border-bottom: 5px solid #1c1f65 !important;
+	background-color: #3e418e !important;
 	overflow: hidden;
 }
 
-.links{
-	margin-left: 16%;
-}
 .topnav a{
-
-	float: left;
-  color: #adadad;
-  text-align: center;
-  padding: 14px 16px;
-	text-decoration: none;
+  color: #adadad !important;
 }
 
 .topnav a:hover{
 	/*box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.125);*/
-	color: #d4d4d4;
+	color: #d4d4d4 !important;
 }
 
-.topnav a.active{
-	background-color: #1c1f65;
-	/*box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.125);*/
-	color: #d4d4d4;
-}
-
+/**************************************************/
 a:hover{
 	text-decoration: none;
 }
@@ -260,23 +247,24 @@ drop input[type="image"]{
 	padding: 1.25rem 1.25rem;
 }
 
-@media screen and (max-width:991px){
+.buttonEdit{
+	margin-top:2%;
+	width: 100%;
+}
+/*@media screen and (max-width:991px){
 
 	.imgUp{
 		margin-top:2%;
 	}
 
-	.buttonEdit{
-		margin-top:2%;
-		width: 100%;
-	}
+
 
 	.buttonAdd{
 		margin-top:3%;
 		margin-bottom: 3%;
 		width: 100%;
 	}
-}
+}*/
 
 .padRow{
 	margin-top:0.75rem;

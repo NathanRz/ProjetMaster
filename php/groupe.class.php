@@ -10,6 +10,7 @@ class Groupe{
   protected $libGroupe;
   protected $typeGroupe;
   protected $horaireDeb;
+  protected $duree;
 
   public function getId(){
     return $this->idGroupe;
@@ -25,6 +26,10 @@ class Groupe{
 
   public function getType(){
     return $this->typeGroupe;
+  }
+
+  public function getDuree(){
+    return $this->duree;
   }
 
   public function getTypeString(){
@@ -119,15 +124,16 @@ SQL
 
   }
 
-  static public function addGroup($idMod, $lib, $type, $horaire){
+  static public function addGroup($idMod, $lib, $type, $horaire, $duree){
       $stmt = myPDO::getInstance()->prepare(<<<SQL
-        INSERT INTO groupe VALUES(null, :idMod, :lib, :type, :horaire)
+        INSERT INTO groupe VALUES(null, :idMod, :lib, :type, :horaire, :duree)
 SQL
   );
       $stmt->execute(array(":idMod" => secureInput($idMod),
                            ":lib" => secureInput($lib),
                            ":type" => secureInput($type),
-                           ":horaire" => secureInput($horaire)));
+                           ":horaire" => secureInput($horaire),
+                           ":duree" => secureInput($duree)));
 
   }
 }

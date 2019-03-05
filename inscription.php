@@ -2,7 +2,9 @@
 
 include_once("php/layout.class.php");
 include_once("php/autoload.include.php");
-
+session_start();
+$mod = Module::getModuleById($_GET['id']);
+if(isset($_SESSION['password']) && !empty($_SESSION['password']) && ($_SESSION['password']) == $mod->getPassModule() || Admin::isConnected()){
 $p = new BootstrapPage("Enseignements");
 
 $p->appendContent(Layout::nav(1));
@@ -66,3 +68,6 @@ HTML
 
 
 echo $p->toHTML();
+}else{
+  header("Location: index.php");
+}

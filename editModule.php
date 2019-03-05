@@ -14,9 +14,8 @@ if(Admin::isConnected()){
     $grps = Groupe::getAllGrpForModule($m->getId());
     $tab = "";
     foreach ($grps as $g) {
-      $tab .= "\n<tr><td>" . $g->getLib() ."</td><td>". $g->getTypeString() ."</td><td>". $g->getHoraire() ."</td><td><a href='php/gestionGrp.php?id=" .$g->getId(). "&idMod=" . $m->getId() ."'>Supprimer</a></td></tr>\n";
+      $tab .= "\n<tr><td>" . $g->getLib() ."</td><td>". $g->getTypeString() ."</td><td>". $g->getHoraire() ."</td><td>". $g->getDuree() ."</td><td><a href='php/gestionGrp.php?id=" .$g->getId(). "&idMod=" . $m->getId() ."'>Supprimer</a></td></tr>\n";
     }
-
 
     $p->appendContent(Layout::nav(1));
     $p->appendJsUrl("js/scripts/editmodule.js");
@@ -26,7 +25,7 @@ if(Admin::isConnected()){
         <hr style="background:white" />
         <form class="" name='edit' method="POST" action="php/modifyModule.php" enctype="multipart/form-data">
           <div class="row">
-            <div class="col-sm-6">
+            <div class="col-md-6">
               <fieldset>
                 <legend>Changer le mot de passe du module</legend>
                 <div class="form-group">
@@ -36,21 +35,24 @@ if(Admin::isConnected()){
               </fieldset>
               <fieldset>
                 <legend>Changer les dates des projets</legend>
-                <div class="form-group">
-                  <label for="startDate">Date d'ouverture : </label>
-                  <input id="dateP1" class="fancy-input" type="text" name="startDate" value="{$m->getStartDate()}">
-                </div>
-                <div class="form-group">
-                  <label for="endDate">Date de fermeture : </label>
-                  <input id="dateP2" class="fancy-input" type="text" name="endDate" value="{$m->getEndDate()}">
-                </div>
-                <div class="form-group">
-                  <label for="duree">Duree d'un projet : </label>
-                  <input class="fancy-input" type="text" name="duree" value="{$m->getDuree()}">
+                <div class="row">
+                  <div class="form-group col-md-4">
+                    <label for="startDate">Date d'ouverture : </label>
+                    <input id="dateP1" class="fancy-input" type="text" name="startDate" value="{$m->getStartDate()}">
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="endDate">Date de fermeture : </label>
+                    <input id="dateP2" class="fancy-input" type="text" name="endDate" value="{$m->getEndDate()}">
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="duree">Duree d'un projet : </label>
+                    <input class="fancy-input" type="time" name="duree" aria-describedby="dureeHelp" value="{$m->getDuree()}">
+                    <small id="dureeHelp" class="form-text text-muted">Format HH:mm</small>
+                  </div>
                 </div>
               </fieldset>
             </div>
-            <div class="col-sm-6">
+            <div class="col-md-6">
               <fieldset>
                 <legend>Changer d'image</legend>
                 <div class="box" style="margin:auto">
@@ -67,14 +69,14 @@ if(Admin::isConnected()){
           </div>
           <input type="hidden" name="idMod" value="{$_GET['id']}">
           <div class="row">
-              <div class="col-sm-6">
+              <div class="col-md-6">
                 <button type="submit" class="fancy-button buttonEdit">Valider</button>
               </div>
           </div>
         </form>
         <form onsubmit="return false;" name="addGrp">
-          <div class="row">
-            <div class="col-sm-6">
+          <div class="row mt-4">
+            <div class="col-md-6">
               <fieldset>
                 <legend>Ajouter des groupes de TD/TP</legend>
                   <div class="form-group">
@@ -88,16 +90,24 @@ if(Admin::isConnected()){
                       <option value="2">TP</option>
                     </select>
                   </div>
-                  <div class="form-group">
-                    <label for="horaire">Heure debut: </label>
-                    <input class="fancy-input" type="text" name="horaire">
+                  <div class="row">
+                    <div class="form-group col-md-6">
+                      <label for="horaire">Heure debut: </label>
+                      <input class="fancy-input" type="time" aria-describedby="dureeHelp" name="horaire">
+                      <small id="horaireHelp" class="form-text text-muted">Format HH:mm</small>
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="duree">Durée du cours: </label>
+                      <input class="fancy-input" type="time" aria-describedby="dureeHelp" name="duree">
+                      <small id="dureeHelp" class="form-text text-muted">Format HH:mm</small>
+                    </div>
                   </div>
                 <input type="hidden" name="idMod" value="{$m->getId()}">
                 <button id="addgrp" type="submit" class="fancy-button col-12 buttonAdd">Ajouter</button>
                 </fieldset>
               </div>
         </form>
-            <div id="listgrp" class="col-sm-6">
+            <div id="listgrp" class="col-md-6 mt-4">
               <h4>Liste des groupes</h4>
               <div class="modules">
     						<div class="modules-body">
@@ -107,6 +117,7 @@ if(Admin::isConnected()){
                         <th scope="col">Libellé</th>
                         <th scope="col">Type</th>
                         <th scope="col">Horaire</th>
+                        <th scope="col">Durée</th>
                         <th scope="col"> - </th>
                       </tr>
                     </thead>

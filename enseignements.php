@@ -190,7 +190,7 @@ $p->appendContent(<<<HTML
 								<label for="duree">Duree du projet : </label>
 							</div>
 							<div class="col-7">
-								<input class="fancy-input" type="text" name="duree">
+								<input id="dateP3" class="fancy-input" type="time" name="duree">
 							</div>
 						</div>
 		      </div>
@@ -242,7 +242,6 @@ $p->appendJs(<<<JAVASCRIPT
 	$( function() {
 		$( "#dateP2" ).datepicker({ dateFormat: 'yy-mm-dd' });
 	});
-
 
 JAVASCRIPT
 );
