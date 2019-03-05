@@ -159,7 +159,7 @@ HTML;
         $tpPart .= <<<HTML
           <div class="cours">
             <a data-id = "{$file->getId()}" href="#" data-toggle="modal" data-target="#modalRemove">
-              <img src = "img/remove.png" width="32" height="32" alt ="Supprimer ce TP">
+              <img class="removePng" src="img/remove.png" width="32" height="32" alt ="Supprimer ce TP">
             </a>
             <a href = "{$file->getCheminFichier()}">
               {$img}
@@ -186,12 +186,22 @@ HTML;
 
             <form name="addCM" method="POST" action="php/addFile.php" enctype="multipart/form-data">
             <!-- Modal body -->
-              <div class="modal-body">
-                <input name="addedFile" type="file" accept="application/pdf">
-                <input name="descFile" type="text" placeholder="Description du fichier">
-                <input name="typeFile" type="hidden" value="CM">
-                <input name="idModule" type="hidden" value="{$mod->getId()}">
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="addedFile">Fichier:</label>
+                <input class= "fancy-input" id="addedFile" name="addedFile" type="file" accept="application/pdf" />
               </div>
+              <div class="form-group">
+                <label for="descFile">Description:</label>
+                <input class= "fancy-input" id="descFile" name="descFile" type="text" placeholder="Description du fichier" />
+              </div>
+              <div class="form-group">
+                <label for="imgDesc">Image:</label>
+                <input class= "fancy-input" id="imgDesc" name="imgDesc" type="file" accept="image/*" />
+              </div>
+                <input name="typeFile" type="hidden" value="CM" />
+                <input name="idModule" type="hidden" value="{$mod->getId()}" />
+            </div>
 
               <!-- Modal footer -->
               <div class="modal-footer">
@@ -219,10 +229,20 @@ HTML
             <form name="addTD" method="POST" action="php/addFile.php" enctype="multipart/form-data">
             <!-- Modal body -->
             <div class="modal-body">
-              <input name="addedFile" type="file" accept="application/pdf">
-              <input name="descFile" type="text" placeholder="Description du fichier">
-              <input name="typeFile" type="hidden" value="TD">
-              <input name="idModule" type="hidden" value="{$mod->getId()}">
+              <div class="form-group">
+                <label for="addedFile">Fichier:</label>
+                <input class= "fancy-input" id="addedFile" name="addedFile" type="file" accept="application/pdf" />
+              </div>
+              <div class="form-group">
+                <label for="descFile">Description:</label>
+                <input class= "fancy-input" id="descFile" name="descFile" type="text" placeholder="Description du fichier" />
+              </div>
+              <div class="form-group">
+                <label for="imgDesc">Image:</label>
+                <input class= "fancy-input" id="imgDesc" name="imgDesc" type="file" accept="image/*" />
+              </div>
+                <input name="typeFile" type="hidden" value="TD" />
+                <input name="idModule" type="hidden" value="{$mod->getId()}" />
             </div>
 
             <!-- Modal footer -->
@@ -251,10 +271,20 @@ HTML
             <form name="addTP" method="POST" action="php/addFile.php" enctype="multipart/form-data">
             <!-- Modal body -->
             <div class="modal-body">
-              <input name="addedFile" type="file" accept="application/pdf">
-              <input name="descFile" type="text" placeholder="Description du fichier">
-              <input name="typeFile" type="hidden" value="TP">
-              <input name="idModule" type="hidden" value="{$mod->getId()}">
+              <div class="form-group">
+                <label for="addedFile">Fichier:</label>
+                <input class= "fancy-input" id="addedFile" name="addedFile" type="file" accept="application/pdf" />
+              </div>
+              <div class="form-group">
+                <label for="descFile">Description:</label>
+                <input class= "fancy-input" id="descFile" name="descFile" type="text" placeholder="Description du fichier" />
+              </div>
+              <div class="form-group">
+                <label for="imgDesc">Image:</label>
+                <input class= "fancy-input" id="imgDesc" name="imgDesc" type="file" accept="image/*" />
+              </div>
+                <input name="typeFile" type="hidden" value="TP" />
+                <input name="idModule" type="hidden" value="{$mod->getId()}" />
             </div>
 
             <!-- Modal footer -->
@@ -309,21 +339,44 @@ HTML
           e.stopPropagation();
           fileobj = e.originalEvent.dataTransfer.files[0];
           var type = $(this).attr("id");
-          var newDiv = "<div class='cours' id='added'>"+
-          "<h4>"+ fileobj["name"] +"</h4>"+
-          "<form name ='validateFileDrop' action='php/addFile.php'>"+
-            "<img class='cancelNewFile' id='" + type + "'src='img/remove.png' width='32' height='32' alt='Confirmer l'ajout'>"+
-            "<img class='validateNewFile' id='"+ type +"'src='img/validate.png' width='32' height='32' alt ='Annuler l'ajout'>"+
-            "<input type='hidden' name='idModuleDrop' value='{$_GET['id']}'>"+
-            "<input type='hidden' name='typeFileDrop' value='"+type+"'>"+
-            "<input type='text' name='descFileDrop' placeholder='Description du fichier'>";
+          var newDiv = "<hr><div class='cours' id='added'>"+
+            "<h4>"+ fileobj["name"] +"</h4>"+
+            "<form id ='validateFileDrop' name ='validateFileDrop' action='php/addFile.php'>"+
+              //"<div class='form-control'><img class='cancelNewFile' id='" + type + "'src='img/remove.png' width='32' height='32' alt='Confirmer l'ajout'></div>"+
+              //"<img class='validateNewFile' id='"+ type +"'src='img/validate.png' width='32' height='32' alt ='Annuler l'ajout'>"+
+              "<input type='hidden' name='idModuleDrop' value='{$_GET['id']}'>"+
+              "<input type='hidden' name='typeFileDrop' value='"+type+"'>"+
+              "<div class='row'>"+
+                "<div class='col-10 offset-1'>"+
+                  "<div class='form-control' style='background-color:#15162C;border:0;height:100%;'>"+
+                    "<label for='imgDescDrop'>Image:</label>" +
+                      "<input id='imgDescDrop' class='fancy-input' name='imgDesc' type='file' accept='image/*'>"+
+                  "</div>" +
+                "</div>" +
+              "</div>"+
+              "<div class='row'>"+
+                "<div class='col-10 offset-1'>"+
+                  "<div class='form-control' style='background-color:#15162C;border:0;height:100%;'>"+
+                    "<label for='descFileDrop'>Descirption du fichier:</label>" +
+                    "<input id='descFileDrop'class='fancy-input' type='text' name='descFileDrop' placeholder='Description du fichier'>"+
+                  "</div>" +
+                "</div>" +
+              "</div>"+
+              "<div class='row'>"+
+                "<div class='col-2 offset-10'>"+
+                  "<div class='form-control' style='background-color:#15162C;border:0;height:100%;'>"+
+                    "<img class='cancelNewFile' id='" + type + "'src='img/remove.png' width='32' height='32' alt='Confirmer l'ajout'>"+
+                    "<img class='validateNewFile' id='"+ type +"'src='img/validate.png' width='32' height='32' alt ='Annuler l'ajout'>"+
+                  "</div>" +
+                "</div>" +
+              "</div>"+
             "</form>"+
           "</div>";
           $(".drop" + id).empty();
-          $(".drop" + id).css('width','');
-          $(".drop" + id).css('height','');
           $(".drop" + id).append(contentDiv);
           $(".drop" + id).append(newDiv);
+          $(".drop" + id).css('width','100%');
+          $(".drop" + id).css('height','100%');
         }
         cpt = 0;
       });

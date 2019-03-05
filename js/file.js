@@ -38,10 +38,13 @@ $(".drop").on('dragleave', function(e) {
 function ajax_file_upload(file_obj, id) {
     if(file_obj != undefined) {
         var form_data = new FormData();
+        var file_img = $("#imgDescDrop").prop('files');
         form_data.append('idModule', $('input[name=idModuleDrop]').val());
         form_data.append('descFile', $('input[name=descFileDrop]').val());
         form_data.append('typeFile', $('input[name=typeFileDrop]').val());
         form_data.append('file', file_obj, file_obj["name"]);
+        if(file_img["length"] != 0)
+          form_data.append('fileImg', file_img[0], file_img[0]["name"]);
         $.ajax({
             type: 'POST',
             url: 'php/addFileDrop.php',
@@ -64,23 +67,27 @@ function ajax_file_upload(file_obj, id) {
                   title = "<h2>Travaux pratiques</h2>\n<hr class='hrPart'/>";
                   break;
               }
-              title += "<a href='#' data-toggle='modal' data-target='#myModalTP'>" +
-                          "<img src='img/document_add.png' width='32' height='32' alt='Ajouter un" + id + "'>"+
+              title += "<a href='#' data-toggle='modal' data-target='#myModal" +id+"'>" +
+                          "<img class='addPng' src='img/document_add.png' width='32' height='32' alt='Ajouter un" + id + "'>"+
                         "</a>";
 
               $(".drop#" + id).append(title);
               for(i =0; i < res.length;i++){
                 if(res[i]["typeFichier"] == id){
+                  var img="";
+                  if(res[i]["cheminImg"] != null){
+                    img = "<img class='imgFile' src='"+ res[i]["cheminImg"] + "' width='64' height='64' >";
+                  }
                   var cmPart = "<div class='cours'>"+
                                  "<a data-id='" + res[i]["idFichier"] + "' href='#' data-toggle='modal' data-target='#modalRemove'>" +
-                                   "<img src='img/remove.png' width='32' height ='32'>"+
+                                   "<img class='removePng' src='img/remove.png' width='32' height ='32'>"+
                                  "</a>"+
                                  "<a href='"+ res[i]["cheminFichier"] + "'>" +
-                                   "<h4>" + res[i]["nomFichier"] + "</h4>" +
-                                   "<p>" + res[i]["descFichier"] + "</p>" +
+                                    img +
+                                   "<h4>" + res[i]["nomFichier"] + " : </h4>" +
+                                   "<p class='fileDesc'>" + res[i]["descFichier"] + "</p>" +
                                  "</a>"+
-                               "</div>"+
-                               "<hr>";
+                               "</div>";
                   $(".drop#" + id).append(cmPart);
                 }
               }
