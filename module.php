@@ -44,49 +44,89 @@ HTML;
         <hr class="hrPart" />
 HTML;
 
-    $mods = Fichier::getFichiersByModule($mod->getId());
+      $mods = Fichier::getFichiersByModule($mod->getId());
 
-    foreach ($mods as $file){
-      $img="";
-      if($file->getCheminImg() != NULL){
-        $img.=<<<HTML
-        <img class="imgFile" src="{$file->getCheminImg()}" width="64" height="64">
+      foreach ($mods as $file){
+        $img="";
+        $nomFic = substr($file->getNomFichier(), 0, strrpos($file->getNomFichier(), "."));
+        if($file->getCheminImg() != NULL){
+          $img.=<<<HTML
+          <img class="imgFile" src="{$file->getCheminImg()}" width="64" height="64">
 HTML;
-      }
+        }
 
-      if($file->getTypeFichier() == "CM"){
-        $cmPart .= <<<HTML
+        if($file->getTypeFichier() == "CM"){
+          $cmPart .= <<<HTML
           <div class="cours">
-            <a href = "{$file->getCheminFichier()}">
-              {$img}
-              <h4>{$file->getNomFichier()} : </h4>
-              <p class="fileDesc">{$file->getDescFichier()}</p>
-            </a>
+            <div class="row rowCours mb-2">
+              <div class="col-1">
+                {$img}
+              </div>
+                <div class="col-2">
+                  <a href ="{$file->getCheminFichier()}">
+                    <p class="fileDesc">{$nomFic} : </p>
+                  </a>
+                </div>
+                <div class=" col-4">
+                  <a href ="{$file->getCheminFichier()}">
+                    <p class="fileDesc">{$file->getDescFichier()}</p>
+                  </a>
+                </div>
+              <div class="col-5 ">
+                <p class="fileDesc">SOURCE</p>
+              </div>
+            </div>
           </div>
 HTML;
-      } else if($file->getTypeFichier() =="TD"){
-        $tdPart .= <<<HTML
+        } else if($file->getTypeFichier() =="TD"){
+          $tdPart .= <<<HTML
           <div class="cours">
-            <a href = "{$file->getCheminFichier()}">
-              {$img}
-              <h4>{$file->getNomFichier()} : </h4>
-              <p class="fileDesc">{$file->getDescFichier()}</p>
-            </a>
+            <div class="row rowCours mb-2">
+              <div class="col-1">
+                {$img}
+              </div>
+                <div class="col-2">
+                  <a href ="{$file->getCheminFichier()}">
+                    <p class="fileDesc">{$nomFic} : </p>
+                  </a>
+                </div>
+                <div class=" col-4">
+                  <a href ="{$file->getCheminFichier()}">
+                    <p class="fileDesc">{$file->getDescFichier()}</p>
+                  </a>
+                </div>
+              <div class="col-4">
+                <p class="fileDesc">SOURCE</p>
+              </div>
+            </div>
           </div>
 
 HTML;
         } else if($file->getTypeFichier() == "TP"){
-            $tdPart .= <<<HTML
+              $tpPart .= <<<HTML
               <div class="cours">
-                <a href = "{$file->getCheminFichier()}">
-                  {$img}
-                  <h4>{$file->getNomFichier()} : </h4>
-                  <p>{$file->getDescFichier()}</p>
-                </a>
+                <div class="row rowCours mb-2">
+                  <div class="col-1">
+                    {$img}
+                  </div>
+                    <div class="col-2">
+                      <a href ="{$file->getCheminFichier()}">
+                        <p class="fileDesc">{$nomFic} : </p>
+                      </a>
+                    </div>
+                    <div class=" col-4">
+                      <a href ="{$file->getCheminFichier()}">
+                        <p class="fileDesc">{$file->getDescFichier()}</p>
+                      </a>
+                    </div>
+                  <div class="col-5 ">
+                    <p class="fileDesc">SOURCE</p>
+                  </div>
+                </div>
               </div>
 HTML;
         }
-      }
+    }
     $p->appendContent($cmPart . "</div>");
     $p->appendContent($tdPart . "</div>");
     $p->appendContent($tpPart . "</div>");
@@ -123,6 +163,7 @@ HTML;
 
   foreach ($mods as $file){
     $img="";
+    $nomFic = substr($file->getNomFichier(), 0, strrpos($file->getNomFichier(), "."));
     if($file->getCheminImg() != NULL){
       $img .=<<<HTML
       <img class="imgFile" src="{$file->getCheminImg()}" width="64" height="64" >
@@ -131,42 +172,88 @@ HTML;
     if($file->getTypeFichier() == "CM"){
       $cmPart .= <<<HTML
         <div class="cours">
-          <a data-id = "{$file->getId()}" href="#" data-toggle="modal" data-target="#modalRemove">
-            <img class="removePng" src="img/remove.png" width="32" height="32" alt ="Supprimer ce TD">
-          </a>
-          <a href = "{$file->getCheminFichier()}">
-            {$img}
-            <h4>{$file->getNomFichier()} : </h4>
-            <p class="fileDesc">{$file->getDescFichier()}</p>
-          </a>
+          <div class="row rowCours mb-2">
+            <div class="col-1">
+              {$img}
+            </div>
+            <div class="col-2">
+              <a href ="{$file->getCheminFichier()}">
+                <p class="fileDesc">{$nomFic} : </p>
+              </a>
+            </div>
+            <div class=" col-4 align-left">
+              <a href ="{$file->getCheminFichier()}">
+                <p class="fileDesc">{$file->getDescFichier()}</p>
+              </a>
+            </div>
+            <div class="col-4">
+              <p class="fileDesc">SOURCE</p>
+            </div>
+            <div class="col-1 text-center">
+              <a data-id = "{$file->getId()}" href="#" data-toggle="modal" data-target="#modalRemove">
+                <img class="removePng" src="img/remove.png" width="32" height="32" alt ="Supprimer ce CM">
+              </a>
+            </div>
+          </div>
         </div>
 HTML;
     } else if($file->getTypeFichier() =="TD"){
       $tdPart .= <<<HTML
-        <div class="cours">
-          <a data-id = "{$file->getId()}" href="#" data-toggle="modal" data-target="#modalRemove">
-            <img class="removePng" src="img/remove.png" width="32" height="32" alt="Supprimer ce TD">
-          </a>
-          <a href = "{$file->getCheminFichier()}">
+      <div class="cours">
+        <div class="row rowCours mb-2">
+          <div class="col-1">
             {$img}
-            <h4>{$file->getNomFichier()}</h4>
-            <p>{$file->getDescFichier()}</p>
-          </a>
-        </div>
+          </div>
 
+            <div class="col-2">
+              <a href ="{$file->getCheminFichier()}">
+                <p class="fileDesc">{$nomFic} : </p>
+              </a>
+            </div>
+            <div class=" col-4 align-left">
+              <a href ="{$file->getCheminFichier()}">
+                <p class="fileDesc">{$file->getDescFichier()}</p>
+              </a>
+            </div>
+          <div class="col-4">
+            <p class="fileDesc">SOURCE</p>
+          </div>
+          <div class="col-1">
+            <a data-id = "{$file->getId()}" href="#" data-toggle="modal" data-target="#modalRemove">
+              <img class="removePng" src="img/remove.png" width="32" height="32" alt ="Supprimer ce TD">
+            </a>
+          </div>
+        </div>
+      </div>
 HTML;
       } else if($file->getTypeFichier() == "TP"){
         $tpPart .= <<<HTML
-          <div class="cours">
-            <a data-id = "{$file->getId()}" href="#" data-toggle="modal" data-target="#modalRemove">
-              <img class="removePng" src="img/remove.png" width="32" height="32" alt ="Supprimer ce TP">
-            </a>
-            <a href = "{$file->getCheminFichier()}">
+        <div class="cours">
+          <div class="row rowCours mb-2">
+            <div class="col-1">
               {$img}
-              <h4>{$file->getNomFichier()}</h4>
-              <p class="fileDesc">{$file->getDescFichier()}</p>
-            </a>
+            </div>
+
+              <div class="col-2">
+                <a href ="{$file->getCheminFichier()}">
+                  <p class="fileDesc">{$nomFic} : </p>
+                </a>
+              </div>
+              <div class=" col-4 align-left">
+                <a href ="{$file->getCheminFichier()}">
+                  <p class="fileDesc">{$file->getDescFichier()}</p>
+                </a>
+              </div>
+            <div class="col-4">
+              <p class="fileDesc">SOURCE</p>
+            </div>
+            <div class="col-1">
+              <a data-id = "{$file->getId()}" href="#" data-toggle="modal" data-target="#modalRemove">
+                <img class="removePng" src="img/remove.png" width="32" height="32" alt ="Supprimer ce TP">
+              </a>
+            </div>
           </div>
+        </div>
 HTML;
       }
     }
@@ -189,11 +276,11 @@ HTML;
             <div class="modal-body">
               <div class="form-group">
                 <label for="addedFile">Fichier:</label>
-                <input class= "fancy-input" id="addedFile" name="addedFile" type="file" accept="application/pdf" />
+                <input class= "fancy-input" id="addedFile" name="addedFile" type="file" accept="application/pdf" required/>
               </div>
               <div class="form-group">
                 <label for="descFile">Description:</label>
-                <input class= "fancy-input" id="descFile" name="descFile" type="text" placeholder="Description du fichier" />
+                <input class= "fancy-input" id="descFile" name="descFile" type="text" placeholder="Description du fichier" required/>
               </div>
               <div class="form-group">
                 <label for="imgDesc">Image:</label>
@@ -231,11 +318,11 @@ HTML
             <div class="modal-body">
               <div class="form-group">
                 <label for="addedFile">Fichier:</label>
-                <input class= "fancy-input" id="addedFile" name="addedFile" type="file" accept="application/pdf" />
+                <input class= "fancy-input" id="addedFile" name="addedFile" type="file" accept="application/pdf" required/>
               </div>
               <div class="form-group">
                 <label for="descFile">Description:</label>
-                <input class= "fancy-input" id="descFile" name="descFile" type="text" placeholder="Description du fichier" />
+                <input class= "fancy-input" id="descFile" name="descFile" type="text" placeholder="Description du fichier" required/>
               </div>
               <div class="form-group">
                 <label for="imgDesc">Image:</label>
@@ -273,11 +360,11 @@ HTML
             <div class="modal-body">
               <div class="form-group">
                 <label for="addedFile">Fichier:</label>
-                <input class= "fancy-input" id="addedFile" name="addedFile" type="file" accept="application/pdf" />
+                <input class= "fancy-input" id="addedFile" name="addedFile" type="file" accept="application/pdf" required/>
               </div>
               <div class="form-group">
                 <label for="descFile">Description:</label>
-                <input class= "fancy-input" id="descFile" name="descFile" type="text" placeholder="Description du fichier" />
+                <input class= "fancy-input" id="descFile" name="descFile" type="text" placeholder="Description du fichier" required/>
               </div>
               <div class="form-group">
                 <label for="imgDesc">Image:</label>
@@ -342,8 +429,6 @@ HTML
           var newDiv = "<hr><div class='cours' id='added'>"+
             "<h4>"+ fileobj["name"] +"</h4>"+
             "<form id ='validateFileDrop' name ='validateFileDrop' action='php/addFile.php'>"+
-              //"<div class='form-control'><img class='cancelNewFile' id='" + type + "'src='img/remove.png' width='32' height='32' alt='Confirmer l'ajout'></div>"+
-              //"<img class='validateNewFile' id='"+ type +"'src='img/validate.png' width='32' height='32' alt ='Annuler l'ajout'>"+
               "<input type='hidden' name='idModuleDrop' value='{$_GET['id']}'>"+
               "<input type='hidden' name='typeFileDrop' value='"+type+"'>"+
               "<div class='row'>"+
@@ -358,7 +443,7 @@ HTML
                 "<div class='col-10 offset-1'>"+
                   "<div class='form-control' style='background-color:#15162C;border:0;height:100%;'>"+
                     "<label for='descFileDrop'>Descirption du fichier:</label>" +
-                    "<input id='descFileDrop'class='fancy-input' type='text' name='descFileDrop' placeholder='Description du fichier'>"+
+                    "<input id='descFileDrop'class='fancy-input' type='text' name='descFileDrop' placeholder='Description du fichier' required>"+
                   "</div>" +
                 "</div>" +
               "</div>"+

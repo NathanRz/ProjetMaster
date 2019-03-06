@@ -196,8 +196,8 @@ a:hover{
 
 .removePng{
 	position: absolute;
-	top: 5%;
-	right: 0px;
+	top: 25%;
+
 }
 
 drop input[type="image"]{
@@ -290,8 +290,8 @@ drop input[type="image"]{
 }
 
 .fileDesc{
-	width: auto;
-	display: inline-block;
+	color: white;
+	font-size: large;
 }
 
 .cours h4{
@@ -326,4 +326,9 @@ drop input[type="image"]{
 	font-size: 6em !important;
 	margin-top: 3%;
 	margin-bottom: 3%;
+}
+
+.rowCours:hover{
+	background-color: #43456b;
+	border-radius: 1px;
 }
