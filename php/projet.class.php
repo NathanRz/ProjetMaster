@@ -7,7 +7,10 @@ class Projet{
     protected $idProjet;
     protected $idGroupePrj;
     protected $archive;
+    protected $rapport;
+    protected $images;
     protected $date;
+
 
     public function getIdProjet(){
       return $this->idProjet;
@@ -21,18 +24,39 @@ class Projet{
       return $this->archive;
     }
 
+    public function getRapport(){
+      return $this->rapport;
+    }
+
+    public function getImages(){
+      return $this->images;
+    }
     public function getDate(){
       return $this->date;
     }
 
-    public static function addProjet($archiveLink,$idGrp){
+    public static function getProjetByIdGrp($id){
+      $stmt = myPDO::getInstance()->prepare(<<<SQL
+          SELECT * FROM projet
+          WHERE idGroupePrj = :id
+SQL
+);
+      $stmt->execute(array(':id' => secureInput($id)));
+      $stmt->setFetchMode(PDO::FETCH_CLASS, "Projet");
+
+      return $stmt->fetch();
+    }
+
+    public static function addProjet($archiveLink, $rapport, $images ,$idGrp){
       $date = date('Y-m-d');
       $stmt = myPDO::getInstance()->prepare(<<<SQL
-        INSERT INTO projet VALUES(null,:grp,:zip,:d)
+        INSERT INTO projet VALUES(null,:grp,:zip,:rap,:img,:d)
 SQL
 );
       $stmt->execute(array(':grp' => secureInput($idGrp),
                           ':zip' => secureInput($archiveLink),
+                          ':rap' => secureInput($rapport),
+                          ':img' => secureInput($images),
                           ':d' => $date));
 
 

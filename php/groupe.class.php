@@ -8,6 +8,10 @@ class Groupe{
   protected $idGroupe;
   protected $idModule;
   protected $libGroupe;
+
+  /**
+  * 1 = TD / 2 = TP
+  */
   protected $typeGroupe;
   protected $horaireDeb;
   protected $duree;
@@ -23,6 +27,7 @@ class Groupe{
   public function getLib(){
     return $this->libGroupe;
   }
+
 
   public function getType(){
     return $this->typeGroupe;
@@ -112,6 +117,35 @@ SQL
 		return $res;
 	}
 
+  static public function getGrpTDByIdEtu($idEtu){
+    $stmt = myPDO::getInstance()->prepare(<<<SQL
+      SELECT * FROM groupe g, membre m, etudiant e
+      WHERE e.idEtudiant = m.idEtudiant
+      AND m.idGroupe = g.idGroupe
+      AND e.idEtudiant = :id
+      AND g.typeGroupe = 1
+SQL
+);
+    $stmt->execute(array(':id' => secureInput($idEtu)));
+    $stmt->setFetchMode(PDO::FETCH_CLASS, "Groupe");
+
+    return $stmt->fetch();
+  }
+
+  static public function getGrpTPByIdEtu($idEtu){
+    $stmt = myPDO::getInstance()->prepare(<<<SQL
+      SELECT * FROM groupe g, membre m, etudiant e
+      WHERE e.idEtudiant = m.idEtudiant
+      AND m.idGroupe = g.idGroupe
+      AND e.idEtudiant = :id
+      AND g.typeGroupe = 2
+SQL
+);
+    $stmt->execute(array(':id' => secureInput($idEtu)));
+    $stmt->setFetchMode(PDO::FETCH_CLASS, "Groupe");
+
+    return $stmt->fetch();
+  }
 
   static public function removeGroup($idGrp){
     $stmt = myPDO::getInstance()->prepare(<<<SQL

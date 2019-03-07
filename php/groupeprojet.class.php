@@ -30,6 +30,7 @@ class GroupeProjet{
   */
   protected $etudiants = array();
 
+  protected $projet;
 
   /**
   * Getter sur les etudiants du groupe de projet
@@ -63,6 +64,10 @@ class GroupeProjet{
     return $this->idProjet;
   }
 
+  public function getProjet(){
+    return $this->projet;
+  }
+
   /**
   * Récupère un groupe de projet par son id
   * @param int id l'id du groupe de projet
@@ -81,7 +86,7 @@ SQL
     $stmt->setFetchMode(PDO::FETCH_CLASS, "GroupeProjet");
     $grp = $stmt->fetch();
 
-    $stmt = myPDO::getInstance()->prepare(<<<SQL
+    /*$stmt = myPDO::getInstance()->prepare(<<<SQL
       SELECT e.idEtudiant, nom, prenom
       FROM appartenir a, etudiant e
       WHERE a.idEtudiant = e.idEtudiant
@@ -89,8 +94,10 @@ SQL
 SQL
 );
     $stmt->execute(array('id' => secureInput($id)));
-    $stmt->setFetchMode(PDO::FETCH_CLASS, "Etudiant");
-    $grp->etudiants= $stmt->fetchAll();
+    $stmt->setFetchMode(PDO::FETCH_CLASS, "Etudiant");*/
+    $grp->etudiants= Etudiant::getEtudiantsByGrpPrj($grp->getIdGroupePrj());
+
+    $grp->projet = Projet::getProjetByIdGrp($grp->getIdGroupePrj());
 
     return $grp;
   }
@@ -117,7 +124,7 @@ SQL
 
     $grp = GroupeProjet::getGroupePrjById($res['idGroupePrj']);
 
-    $stmt = myPDO::getInstance()->prepare(<<<SQL
+    /*$stmt = myPDO::getInstance()->prepare(<<<SQL
       SELECT e.idEtudiant, nom, prenom
       FROM appartenir a, etudiant e
       WHERE a.idEtudiant = e.idEtudiant
@@ -125,8 +132,10 @@ SQL
 SQL
 );
     $stmt->execute(array('id' => secureInput($grp->getIdGroupePrj())));
-    $stmt->setFetchMode(PDO::FETCH_CLASS, "Etudiant");
-    $grp->etudiants= $stmt->fetchAll();
+    $stmt->setFetchMode(PDO::FETCH_CLASS, "Etudiant");*/
+    $grp->etudiants= Etudiant::getEtudiantsByGrpPrj($grp->getIdGroupePrj());
+
+    $grp->projet = Projet::getProjetByIdGrp($grp->getIdGroupePrj());
 
     if($grp->idGroupePrj == null)
       $grp = null;
@@ -154,7 +163,7 @@ SQL
       $grp->idModule = $g['idModule'];
       $grp->idProjet = $g['idProjet'];
 
-      $stmt = myPDO::getInstance()->prepare(<<<SQL
+      /*$stmt = myPDO::getInstance()->prepare(<<<SQL
         SELECT e.idEtudiant, nom, prenom
         FROM appartenir a, etudiant e
         WHERE a.idEtudiant = e.idEtudiant
@@ -162,9 +171,9 @@ SQL
 SQL
       );
 
-      $stmt->execute(array('id' => $grp->idGroupePrj));
+      $stmt->execute(array('id' => $grp->idGroupePrj));*/
 
-      $grp->etudiants = $stmt->fetchAll();
+      $grp->etudiants = Etudiant::getEtudiantsByGrpPrj($grp->getIdGroupePrj());
 
       array_push($grps, $grp);
     }
@@ -275,16 +284,8 @@ SQL
     $grps = $stmt->fetchAll();
 
     foreach ($grps as $g) {
-      $stmt = myPDO::getInstance()->prepare(<<<SQL
-        SELECT e.idEtudiant, nom, prenom
-        FROM appartenir a, etudiant e
-        WHERE a.idEtudiant = e.idEtudiant
-        AND a.idGroupePrj = :id
-SQL
-);
-      $stmt->execute(array(':id' => $g->getIdGroupePrj()));
-      $stmt->setFetchMode(PDO::FETCH_CLASS, "Etudiant");
-      $g->etudiants = $stmt->fetchAll();
+      $g->etudiants = Etudiant::getEtudiantsByGrpPrj($grp->getIdGroupePrj());
+      $g->projet = Projet::getProjetByIdGrp($g->getIdGroupePrj());
     }
 
     return $grps;

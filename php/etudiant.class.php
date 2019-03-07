@@ -5,6 +5,8 @@ class Etudiant{
   protected $idEtudiant;
   protected $nom;
   protected $prenom;
+  protected $grpTD;
+  protected $grpTP;
 
   public function getId(){
     return $this->idEtudiant;
@@ -16,6 +18,14 @@ class Etudiant{
 
   public function getPrenom(){
     return $this->prenom;
+  }
+
+  public function getGrpTD(){
+    return $this->grpTD;
+  }
+
+  public function getGrpTP(){
+    return $this->grpTP;
   }
 
   static public function addEtudiant($nom,$prenom,$grpTD,$grpTP){
@@ -62,6 +72,10 @@ SQL
     $stmt->execute();
     $stmt->setFetchMode(PDO::FETCH_CLASS, 'Etudiant');
 		$res = $stmt->fetchAll();
+    foreach ($res as $e) {
+      $e->grpTD = Groupe::getGrpTDByIdEtu($e->getId());
+      $e->grpTP = Groupe::getGrpTPByIdEtu($e->getId());
+    }
 
     return $res;
   }
@@ -74,7 +88,10 @@ SQL
 );
     $stmt->execute(array(':id' => secureInput($id)));
     $stmt->setFetchMode(PDO::FETCH_CLASS, 'Etudiant');
-		$res = $stmt->fetchAll();
+		$res = $stmt->fetch();
+
+    $res->grpTD = Groupe::getGrpTDByIdEtu($res->getId());
+    $res->grpTP = Groupe::getGrpTPByIdEtu($res->getId());
 
     return $res;
   }
@@ -91,6 +108,28 @@ SQL
     $stmt->setFetchMode(PDO::FETCH_CLASS, 'Etudiant');
 		$res = $stmt->fetch();
 
+    $res->grpTD = Groupe::getGrpTDByIdEtu($res->getId());
+    $res->grpTP = Groupe::getGrpTPByIdEtu($res->getId());
+
     return $res;
+  }
+
+  static public function getEtudiantsByGrpPrj($idGrpPrj){
+    $stmt = myPDO::getInstance()->prepare(<<<SQL
+      SELECT e.idEtudiant, e.nom, e.prenom  FROM etudiant e, appartenir a, groupeprojet g
+      WHERE e.idEtudiant = a.idEtudiant
+      AND a.idGroupePrj = g.idGroupePrj
+      AND g.idGroupePrj = :id
+SQL
+);
+    $stmt->execute(array(':id' => secureInput($idGrpPrj)));
+    $stmt->setFetchMode(PDO::FETCH_CLASS, "Etudiant");
+    $etus = $stmt->fetchAll();
+
+    foreach ($etus as $e) {
+      $e->grpTD = Groupe::getGrpTDByIdEtu($e->getId());
+      $e->grpTP = Groupe::getGrpTPByIdEtu($e->getId());
+    }
+    return ;
   }
 }
