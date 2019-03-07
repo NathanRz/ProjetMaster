@@ -284,7 +284,7 @@ SQL
     $grps = $stmt->fetchAll();
 
     foreach ($grps as $g) {
-      $g->etudiants = Etudiant::getEtudiantsByGrpPrj($grp->getIdGroupePrj());
+      $g->etudiants = Etudiant::getEtudiantsByGrpPrj($g->getIdGroupePrj());
       $g->projet = Projet::getProjetByIdGrp($g->getIdGroupePrj());
     }
 
