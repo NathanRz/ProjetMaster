@@ -130,6 +130,6 @@ SQL
       $e->grpTD = Groupe::getGrpTDByIdEtu($e->getId());
       $e->grpTP = Groupe::getGrpTPByIdEtu($e->getId());
     }
-    return ;
+    return $etus;
   }
 }
