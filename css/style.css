@@ -291,7 +291,8 @@ drop input[type="image"]{
 
 .fileDesc{
 	color: white;
-	font-size: large;
+	font-size: 1.2em;
+	padding: 2%;
 }
 
 .cours h4{

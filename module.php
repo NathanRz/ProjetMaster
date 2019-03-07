@@ -58,21 +58,16 @@ HTML;
         if($file->getTypeFichier() == "CM"){
           $cmPart .= <<<HTML
           <div class="cours">
-            <div class="row rowCours mb-2">
+            <div class="row mb-2">
               <div class="col-1">
                 {$img}
               </div>
-                <div class="col-2">
-                  <a href ="{$file->getCheminFichier()}">
-                    <p class="fileDesc">{$nomFic} : </p>
-                  </a>
-                </div>
-                <div class=" col-4">
-                  <a href ="{$file->getCheminFichier()}">
-                    <p class="fileDesc">{$file->getDescFichier()}</p>
-                  </a>
-                </div>
-              <div class="col-5 ">
+              <div class="col-6">
+                <a href ="{$file->getCheminFichier()}">
+                  <p class="fileDesc rowCours"><img class="pr-1" src="img/logo-pdf.png" height="32" width="32"/>{$file->getDescFichier()}</p>
+                </a>
+              </div>
+              <div class="col-5">
                 <p class="fileDesc">SOURCE</p>
               </div>
             </div>
@@ -81,21 +76,16 @@ HTML;
         } else if($file->getTypeFichier() =="TD"){
           $tdPart .= <<<HTML
           <div class="cours">
-            <div class="row rowCours mb-2">
+            <div class="row mb-2">
               <div class="col-1">
                 {$img}
               </div>
-                <div class="col-2">
-                  <a href ="{$file->getCheminFichier()}">
-                    <p class="fileDesc">{$nomFic} : </p>
-                  </a>
-                </div>
-                <div class=" col-4">
-                  <a href ="{$file->getCheminFichier()}">
-                    <p class="fileDesc">{$file->getDescFichier()}</p>
-                  </a>
-                </div>
-              <div class="col-4">
+              <div class="col-6">
+                <a href ="{$file->getCheminFichier()}">
+                  <p class="fileDesc rowCours"><img class="pr-1" src="img/logo-pdf.png" height="32" width="32"/>{$file->getDescFichier()}</p>
+                </a>
+              </div>
+              <div class="col-5">
                 <p class="fileDesc">SOURCE</p>
               </div>
             </div>
@@ -105,21 +95,16 @@ HTML;
         } else if($file->getTypeFichier() == "TP"){
               $tpPart .= <<<HTML
               <div class="cours">
-                <div class="row rowCours mb-2">
+                <div class="row mb-2">
                   <div class="col-1">
                     {$img}
                   </div>
-                    <div class="col-2">
-                      <a href ="{$file->getCheminFichier()}">
-                        <p class="fileDesc">{$nomFic} : </p>
-                      </a>
-                    </div>
-                    <div class=" col-4">
-                      <a href ="{$file->getCheminFichier()}">
-                        <p class="fileDesc">{$file->getDescFichier()}</p>
-                      </a>
-                    </div>
-                  <div class="col-5 ">
+                  <div class="col-6">
+                    <a href ="{$file->getCheminFichier()}">
+                      <p class="fileDesc rowCours"><img class="pr-1" src="img/logo-pdf.png" height="32" width="32"/>{$file->getDescFichier()}</p>
+                    </a>
+                  </div>
+                  <div class="col-5">
                     <p class="fileDesc">SOURCE</p>
                   </div>
                 </div>
@@ -172,21 +157,16 @@ HTML;
     if($file->getTypeFichier() == "CM"){
       $cmPart .= <<<HTML
         <div class="cours">
-          <div class="row rowCours mb-2">
+          <div class="row mb-2">
             <div class="col-1">
               {$img}
             </div>
-            <div class="col-2">
+            <div class="col-5">
               <a href ="{$file->getCheminFichier()}">
-                <p class="fileDesc">{$nomFic} : </p>
+                <p class="fileDesc rowCours"><img class="pr-1" src="img/logo-pdf.png" height="32" width="32"/>{$file->getDescFichier()}</p>
               </a>
             </div>
-            <div class=" col-4 align-left">
-              <a href ="{$file->getCheminFichier()}">
-                <p class="fileDesc">{$file->getDescFichier()}</p>
-              </a>
-            </div>
-            <div class="col-4">
+            <div class="col-5">
               <p class="fileDesc">SOURCE</p>
             </div>
             <div class="col-1 text-center">
@@ -200,25 +180,19 @@ HTML;
     } else if($file->getTypeFichier() =="TD"){
       $tdPart .= <<<HTML
       <div class="cours">
-        <div class="row rowCours mb-2">
+        <div class="row mb-2">
           <div class="col-1">
             {$img}
           </div>
-
-            <div class="col-2">
-              <a href ="{$file->getCheminFichier()}">
-                <p class="fileDesc">{$nomFic} : </p>
-              </a>
-            </div>
-            <div class=" col-4 align-left">
-              <a href ="{$file->getCheminFichier()}">
-                <p class="fileDesc">{$file->getDescFichier()}</p>
-              </a>
-            </div>
-          <div class="col-4">
+          <div class="col-5">
+            <a href ="{$file->getCheminFichier()}">
+              <p class="fileDesc rowCours"><img class="pr-1" src="img/logo-pdf.png" height="32" width="32"/>{$file->getDescFichier()}</p>
+            </a>
+          </div>
+          <div class="col-5">
             <p class="fileDesc">SOURCE</p>
           </div>
-          <div class="col-1">
+          <div class="col-1 text-center">
             <a data-id = "{$file->getId()}" href="#" data-toggle="modal" data-target="#modalRemove">
               <img class="removePng" src="img/remove.png" width="32" height="32" alt ="Supprimer ce TD">
             </a>
@@ -229,25 +203,19 @@ HTML;
       } else if($file->getTypeFichier() == "TP"){
         $tpPart .= <<<HTML
         <div class="cours">
-          <div class="row rowCours mb-2">
+          <div class="row mb-2">
             <div class="col-1">
               {$img}
             </div>
-
-              <div class="col-2">
-                <a href ="{$file->getCheminFichier()}">
-                  <p class="fileDesc">{$nomFic} : </p>
-                </a>
-              </div>
-              <div class=" col-4 align-left">
-                <a href ="{$file->getCheminFichier()}">
-                  <p class="fileDesc">{$file->getDescFichier()}</p>
-                </a>
-              </div>
-            <div class="col-4">
+            <div class="col-5">
+              <a href ="{$file->getCheminFichier()}">
+                <p class="fileDesc rowCours"><img class="pr-1" src="img/logo-pdf.png" height="32" width="32"/>{$file->getDescFichier()}</p>
+              </a>
+            </div>
+            <div class="col-5">
               <p class="fileDesc">SOURCE</p>
             </div>
-            <div class="col-1">
+            <div class="col-1 text-center">
               <a data-id = "{$file->getId()}" href="#" data-toggle="modal" data-target="#modalRemove">
                 <img class="removePng" src="img/remove.png" width="32" height="32" alt ="Supprimer ce TP">
               </a>

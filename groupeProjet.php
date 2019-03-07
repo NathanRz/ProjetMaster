@@ -8,7 +8,7 @@ if(isset($_SESSION['password']) && !empty($_SESSION['password']) && ($_SESSION['
 
 $p = new BootstrapPage("Enseignements");
 $p->appendContent(Layout::nav(1));
-$grps = GroupeProjet::getGrpByidMod($_GET["id"]);
+$grps = GroupeProjet::getGroupePrjByMod($_GET["id"]);
 if(Admin::isConnected()){
   $contentTable = <<<HTML
     <thead>
@@ -18,15 +18,19 @@ if(Admin::isConnected()){
         <th scope="col">Prénom</th>
         <th scope="col">TD</th>
         <th scope="col">TP</th>
-        <th scope="col">Projet</th>
+        <th scope="col">Rapport</th>
+        <th scope="col">Source</th>
+        <th scope="col">Image</th>
+        <th scope="col">Date de dépôt</th>
       </tr>
     </thead>
     <tbody>
 HTML;
   foreach ($grps as $grp) {
-    for($i = 0; $i < count($grp["etudiants"]);$i++) {
-      if($i == 0){
-        $span = "<td scope ='row' rowspan=" . count($grp["etudiants"]) . ">" . $grp["idGroupePrj"] . "</td>";
+    $cpt = 0;
+    foreach($grp->getEtudiants() as $etu) {
+      if($cpt == 0){
+        $span = "<td scope ='row' rowspan=" . count($grp->getEtudiants()) . ">" . $grp->getIdGroupePrj() . "</td>";
       } else{
         $span="";
       }
@@ -35,32 +39,34 @@ HTML;
 
       <tr>
         {$span}
-        <td>{$grp["etudiants"][$i]["nom"]}</td>
-        <td>{$grp["etudiants"][$i]["prenom"]}</td>
+        <td>{$etu->getNom()}</td>
+        <td>{$etu->getPrenom()}</td>
 HTML;
-        $td ="";
-        $tp="";
-        if($grp["etudiants"][$i]["groupe"][0]["typeGroupe"] == "1"){
-          $td = $grp["etudiants"][$i]["groupe"][0]["libGroupe"];
-          $tp = $grp["etudiants"][$i]["groupe"][1]["libGroupe"];
-        } else {
-          $td = $grp["etudiants"][$i]["groupe"][1]["libGroupe"];
-          $tp = $grp["etudiants"][$i]["groupe"][0]["libGroupe"];
-        }
+        $td = $etu->getGrpTD()->getLib();
+        $tp = $etu->getGrpTP()->getLib();
 
         $contentTable .=<<<HTML
           <td>{$td}</td>
           <td>{$tp}</td>
 HTML;
-        if($grp["archive"] != null){
-          if($i == 0)
-            $contentTable .="<td scope ='row' rowspan='" . count($grp["etudiants"]) . "' class='bg-success'><a href='{$grp["archive"]}'>Source</a></td>";
+        if($grp->getIdProjet() != null){
+          if($cpt == 0){
+            $contentTable .="<td scope ='row' rowspan='" .  count($grp->getEtudiants()) . "' class='bg-success'><a href='{$grp->getProjet()->getRapport()}'>Rapport</a></td>";
+            $contentTable .="<td scope ='row' rowspan='" .  count($grp->getEtudiants()) . "' class='bg-success'><a href='{$grp->getProjet()->getArchive()}'>Sources</a></td>";
+            $contentTable .="<td scope ='row' rowspan='" .  count($grp->getEtudiants()) . "' class='bg-success'><a href='{$grp->getProjet()->getImages()}'>Images</a></td>";
+            $contentTable .="<td scope ='row' rowspan='" .  count($grp->getEtudiants()) . "'>{$grp->getProjet()->getDate()}</td>";
+          }
         } else{
-            if($i == 0)
-              $contentTable .="<td scope ='row' rowspan='" . count($grp["etudiants"]) . "'class='bg-danger'>Projet non rendu</td>";
+            if($cpt == 0){
+              $contentTable .="<td scope ='row' rowspan='" .  count($grp->getEtudiants()) . "'class='bg-danger'>Projet non rendu</td>";
+              $contentTable .="<td scope ='row' rowspan='" .  count($grp->getEtudiants()) . "'class='bg-danger'>Projet non rendu</td>";
+              $contentTable .="<td scope ='row' rowspan='" .  count($grp->getEtudiants()) . "'class='bg-danger'>Projet non rendu</td>";
+              $contentTable .="<td scope ='row' rowspan='" .  count($grp->getEtudiants()) . "'class='bg-danger'>-</td>";
+            }
         }
 
       $contentTable.="</tr>";
+      $cpt++;
     }
   }
 
@@ -73,7 +79,7 @@ HTML;
     <div class="container container-edit">
       <h2>Groupes de projet</h2>
 
-      <table class="table" id="t2ex">
+      <table class="table">
       {$contentTable}
 
       <form action="" name="export">
@@ -88,7 +94,6 @@ HTML
 
       $("#export").on("click", function(){
         var id = $("#inputId").val();
-        console.log(id);
         $.ajax({
             type: 'GET',
             url: 'php/exportExcel.php',
@@ -96,7 +101,7 @@ HTML
             processData: false,
             data: "id=" + id,
             success:function(response) {
-              
+
             }
         });
       });
@@ -115,50 +120,50 @@ JAVASCRIPT
         <th scope="col">TD</th>
         <th scope="col">TP</th>
         <th scope="col">Projet rendu</th>
+        <th scope="col">Date</th>
       </tr>
     </thead>
     <tbody>
 HTML;
-  foreach ($grps as $grp) {
-    for($i = 0; $i < count($grp["etudiants"]);$i++) {
-      if($i == 0){
-        $span = "<td scope ='row' rowspan=" . count($grp["etudiants"]) . ">" . $grp["idGroupePrj"] . "</td>";
+foreach ($grps as $grp) {
+  $cpt = 0;
+  foreach($grp->getEtudiants() as $etu) {
+    if($cpt == 0){
+      $span = "<td scope ='row' rowspan=" . count($grp->getEtudiants()) . ">" . $grp->getIdGroupePrj() . "</td>";
+    } else{
+      $span="";
+    }
+
+    $contentTable.= <<<HTML
+
+    <tr>
+      {$span}
+      <td>{$etu->getNom()}</td>
+      <td>{$etu->getPrenom()}</td>
+HTML;
+      $td = $etu->getGrpTD()->getLib();
+      $tp = $etu->getGrpTP()->getLib();
+
+      $contentTable .=<<<HTML
+        <td>{$td}</td>
+        <td>{$tp}</td>
+HTML;
+      if($grp->getIdProjet() != null){
+        if($cpt == 0){
+          $contentTable .="<td scope ='row' rowspan='" .  count($grp->getEtudiants()) . "' class='bg-success'>Oui</td>";
+          $contentTable .="<td scope ='row' rowspan='" .  count($grp->getEtudiants()) . "'>{$grp->getProjet()->getDate()}</td>";
+        }
       } else{
-        $span="";
+          if($cpt == 0){
+            $contentTable .="<td scope ='row' rowspan='" .  count($grp->getEtudiants()) . "'class='bg-danger'>Projet non rendu</td>";
+            $contentTable .="<td scope ='row' rowspan='" .  count($grp->getEtudiants()) . "'class='bg-danger'>-</td>";
+          }
       }
 
-      $contentTable.= <<<HTML
-
-      <tr>
-        {$span}
-        <td>{$grp["etudiants"][$i]["nom"]}</td>
-        <td>{$grp["etudiants"][$i]["prenom"]}</td>
-HTML;
-        $td ="";
-        $tp="";
-        if($grp["etudiants"][$i]["groupe"][0]["typeGroupe"] == "1"){
-          $td = $grp["etudiants"][$i]["groupe"][0]["libGroupe"];
-          $tp = $grp["etudiants"][$i]["groupe"][1]["libGroupe"];
-        } else {
-          $td = $grp["etudiants"][$i]["groupe"][1]["libGroupe"];
-          $tp = $grp["etudiants"][$i]["groupe"][0]["libGroupe"];
-        }
-
-        $contentTable .=<<<HTML
-          <td>{$td}</td>
-          <td>{$tp}</td>
-HTML;
-        if($grp["idProjet"] != null){
-          if($i == 0)
-            $contentTable .="<td scope ='row' rowspan=" . count($grp["etudiants"]) . "' class='bg-success'>Oui</td>";
-        } else{
-          if($i == 0)
-            $contentTable .="<td scope ='row' rowspan=" . count($grp["etudiants"]) . "' class='bg-danger'>Non</td>";
-        }
-
-      $contentTable.="</tr>";
-    }
+    $contentTable.="</tr>";
+    $cpt++;
   }
+}
 
   $contentTable .=<<<HTML
       </tbody>
@@ -178,7 +183,6 @@ HTML;
 HTML
   );
 }
-
 echo $p->toHTML();
 
 }else{
