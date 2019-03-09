@@ -73,7 +73,7 @@ class GroupeProjet{
   * @param int id l'id du groupe de projet
   * @return GroupeProjet grp le groupe de projet
   */
-  public static function getGroupePrjById($id){
+  public static function getGroupePrjById($id, $idMod){
     $grp = new GroupeProjet();
     $stmt = myPDO::getInstance()->prepare(<<<SQL
       SELECT *
@@ -95,7 +95,7 @@ SQL
 );
     $stmt->execute(array('id' => secureInput($id)));
     $stmt->setFetchMode(PDO::FETCH_CLASS, "Etudiant");*/
-    $grp->etudiants= Etudiant::getEtudiantsByGrpPrj($grp->getIdGroupePrj());
+    $grp->etudiants= Etudiant::getEtudiantsByGrpPrj($grp->getIdGroupePrj(), $idMod);
 
     $grp->projet = Projet::getProjetByIdGrp($grp->getIdGroupePrj());
 
@@ -110,7 +110,7 @@ SQL
   */
   public static function getGroupePrjByModAndEtu($idMod, $idEtu){
     $stmt = myPDO::getInstance()->prepare(<<<SQL
-      SELECT g.idGroupePrj FROM appartenir a, groupeprojet g
+      SELECT * FROM appartenir a, groupeprojet g
       WHERE a.idGroupePrj = g.idGroupePrj
       AND g.idModule = :idM
       AND a.idEtudiant = :idE
@@ -119,26 +119,14 @@ SQL
 
     $stmt->execute(array(':idM' => secureInput($idMod),
                          ':idE' => secureInput($idEtu)));
-    $stmt->setFetchMode(PDO::FETCH_ASSOC);
-    $res = $stmt->fetch();
+    $stmt->setFetchMode(PDO::FETCH_CLASS, 'GroupeProjet');
+    $grp = $stmt->fetch();
 
-    $grp = GroupeProjet::getGroupePrjById($res['idGroupePrj']);
+    if($grp){
+      $grp->etudiants= Etudiant::getEtudiantsByGrpPrj($grp->getIdGroupePrj());
+      $grp->projet = Projet::getProjetByIdGrp($grp->getIdGroupePrj());
+    }
 
-    /*$stmt = myPDO::getInstance()->prepare(<<<SQL
-      SELECT e.idEtudiant, nom, prenom
-      FROM appartenir a, etudiant e
-      WHERE a.idEtudiant = e.idEtudiant
-      AND a.idGroupePrj = :id
-SQL
-);
-    $stmt->execute(array('id' => secureInput($grp->getIdGroupePrj())));
-    $stmt->setFetchMode(PDO::FETCH_CLASS, "Etudiant");*/
-    $grp->etudiants= Etudiant::getEtudiantsByGrpPrj($grp->getIdGroupePrj());
-
-    $grp->projet = Projet::getProjetByIdGrp($grp->getIdGroupePrj());
-
-    if($grp->idGroupePrj == null)
-      $grp = null;
     return $grp;
   }
 
@@ -188,11 +176,12 @@ SQL
   */
   public static function addGroupePrj($idMod, $etu){
     $stmt = myPDO::getInstance()->prepare(<<<SQL
-      INSERT INTO groupeprojet VALUES(null,:idM,null)
+      INSERT INTO groupeprojet VALUES(null,:idM,null,null)
 SQL
 );
     $stmt->execute(array(':idM' => secureInput($idMod)));
     $id = myPDO::getInstance()->lastInsertId();
+    $grps = array();
     foreach ($etu as $e) {
       $stmt = myPDO::getInstance()->prepare(<<<SQL
         INSERT INTO appartenir VALUES(:idE,:idG)
@@ -200,8 +189,36 @@ SQL
 );
       $stmt->execute(array(':idE' => $e->getId(),
                            ':idG' => $id));
+      array_push($grps, $e->getGrpTP());
+    }
+
+    //On choisis aléatoirement le groupe de TP dans lequel le groupe de projet va passer la soutenance.
+    $nb = array();
+    foreach ($grps as $g) {
+      $stmt = myPDO::getInstance()->prepare(<<<SQL
+        SELECT count(idGroupePrj)
+        FROM groupeprojet
+        WHERE idGroupe = :id
+SQL
+      );
+      $stmt->execute(array(':id' => secureInput($g->getId())));
+      array_push($nb,array('nbSout' => $stmt->fetch(),
+                           'idGroup' => $g->getId()));
 
     }
+
+    $nbSoutenances = array_column($nb, 'nbSout');
+    //on recupere le groupe ayant le moins de soutenances parmis les groupes des étudiants
+    $min_array = $nb[array_search(min($nbSoutenances), $nbSoutenances)];
+
+    $stmt = myPDO::getInstance()->prepare(<<<SQL
+      UPDATE groupeprojet SET idGroupe = :id
+      WHERE idGroupePrj = :idGP
+SQL
+);
+
+    $stmt->execute(array(':id' => $min_array['idGroup'],
+                         ':idGP' => $id));
   }
 
   public static function getGrpByidMod($idMod){
@@ -284,7 +301,7 @@ SQL
     $grps = $stmt->fetchAll();
 
     foreach ($grps as $g) {
-      $g->etudiants = Etudiant::getEtudiantsByGrpPrj($g->getIdGroupePrj());
+      $g->etudiants = Etudiant::getEtudiantsByGrpPrj($g->getIdGroupePrj(),$idMod);
       $g->projet = Projet::getProjetByIdGrp($g->getIdGroupePrj());
     }
 

@@ -117,31 +117,37 @@ SQL
 		return $res;
 	}
 
-  static public function getGrpTDByIdEtu($idEtu){
+  //ajouter en fonction de idMod
+  static public function getGrpTDByIdEtu($idEtu, $idMod){
     $stmt = myPDO::getInstance()->prepare(<<<SQL
       SELECT * FROM groupe g, membre m, etudiant e
       WHERE e.idEtudiant = m.idEtudiant
       AND m.idGroupe = g.idGroupe
       AND e.idEtudiant = :id
       AND g.typeGroupe = 1
+      AND g.idModule = :idM
 SQL
 );
-    $stmt->execute(array(':id' => secureInput($idEtu)));
+    $stmt->execute(array(':id' => secureInput($idEtu),
+                         ':idM' => secureInput($idMod)));
     $stmt->setFetchMode(PDO::FETCH_CLASS, "Groupe");
 
     return $stmt->fetch();
   }
 
-  static public function getGrpTPByIdEtu($idEtu){
+  //ajouter en fonction de idMod
+  static public function getGrpTPByIdEtu($idEtu, $idMod){
     $stmt = myPDO::getInstance()->prepare(<<<SQL
       SELECT * FROM groupe g, membre m, etudiant e
       WHERE e.idEtudiant = m.idEtudiant
       AND m.idGroupe = g.idGroupe
       AND e.idEtudiant = :id
       AND g.typeGroupe = 2
+      AND g.idModule = :idM
 SQL
 );
-    $stmt->execute(array(':id' => secureInput($idEtu)));
+    $stmt->execute(array(':id' => secureInput($idEtu),
+                         ':idM' => secureInput($idMod)));
     $stmt->setFetchMode(PDO::FETCH_CLASS, "Groupe");
 
     return $stmt->fetch();
