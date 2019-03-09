@@ -2,7 +2,6 @@
 include_once("autoload.include.php");
 require_once "mypdo.include.php";
 require_once "utils.php";
-
 if(Admin::isConnected()){
 	if($_SERVER["REQUEST_METHOD"] == "POST"){
 
@@ -20,17 +19,34 @@ if(Admin::isConnected()){
     }
 
     $target_dir = "../docs/" . $mod->getLibModule() . "/" . $folder;
+
     $target_file = $target_dir . basename($_FILES["file"]["name"]);
     $path = "docs/" . $mod->getLibModule() ."/" . $folder  . $_FILES["file"]["name"];
 
-		if(array_key_exists('fileImg', $_FILES)){
-			$target_fileImg = $target_dir . basename($_FILES["fileImg"]["name"]);
-			$pathImg = "docs/" . $mod->getLibModule() ."/" . $folder  . $_FILES["fileImg"]["name"];
+		$pathImg=NULL;
+		$target_imgDesc = NULL;
 
-			if(move_uploaded_file($_FILES["file"]["tmp_name"], $target_file) && move_uploaded_file($_FILES["fileImg"]["tmp_name"], $target_fileImg)){
+		$pathSrc=NULL;
+		$target_srcFile = NULL;
+
+		if($_FILES["imgDesc"]["tmp_name"] != NULL){
+				$extImage = substr($_FILES["imgDesc"]["name"],strpos($_FILES["imgDesc"]["name"],"."));
+				$target_imgDesc = $target_dir . substr($_FILES["file"]["name"], 0, strrpos($_FILES["file"]["name"], ".")). "_Image" . $extImage;
+		}
+
+		if(array_key_exists('srcFile',$_FILES))
+				$target_srcFile = $target_dir . substr($_FILES["file"]["name"], 0, strrpos($_FILES["file"]["name"], ".")). "_Sources.zip";
+
+		if(move_uploaded_file($_FILES["imgDesc"]["tmp_name"], $target_imgDesc))
+			$pathImg = "docs/" . $mod->getLibModule() ."/" . $folder  . substr($_FILES["file"]["name"], 0, strrpos($_FILES["file"]["name"], ".")). "_Image" . $extImage;
+
+		if(array_key_exists('srcFile',$_FILES) && move_uploaded_file($_FILES["srcFile"]["tmp_name"], $target_srcFile))
+			$pathSrc = "docs/" . $mod->getLibModule() ."/" . $folder  .substr($_FILES["file"]["name"], 0, strrpos($_FILES["file"]["name"], ".")). "_Sources.zip";
+
+			if(move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)){
 	      $stmt = myPDO::getInstance()->prepare(<<<SQL
 	        INSERT INTO fichier
-	        VALUES(null,:idModule, :nomFichier, :descFichier, :typeFichier, :cheminFichier, :cheminImg);
+	        VALUES(null,:idModule, :nomFichier, :descFichier, :typeFichier, :cheminFichier, :cheminImg, :cheminSource);
 SQL
 	  );
 
@@ -39,25 +55,11 @@ SQL
 	                        ':descFichier' => $_POST["descFile"],
 	                        ':typeFichier' => $_POST["typeFile"],
 	                        ':cheminFichier' => $path,
-													':cheminImg' => $pathImg));
+													':cheminImg' => $pathImg,
+													':cheminSource' => $pathSrc));
 	      }
 
-		}else{
-			if(move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)){
-				$stmt = myPDO::getInstance()->prepare(<<<SQL
-					INSERT INTO fichier
-					VALUES(null,:idModule, :nomFichier, :descFichier, :typeFichier, :cheminFichier, NULL);
-SQL
-		);
 
-				$stmt->execute(array(':idModule' => $_POST["idModule"],
-													':nomFichier' => $_FILES["file"]["name"],
-													':descFichier' => $_POST["descFile"],
-													':typeFichier' => $_POST["typeFile"],
-													':cheminFichier' => $path));
-			}
-		}
-  }
 
 	$stmt = myPDO::getInstance()->prepare(<<<SQL
 		SELECT *
@@ -69,4 +71,5 @@ SQL
 	$res = $stmt->fetchAll();
 
 	echo json_encode($res);
+	}
 }

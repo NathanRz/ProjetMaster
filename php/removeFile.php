@@ -19,6 +19,12 @@ SQL
 
       if($fichier->getCheminImg() != null)
         unlink("../" . $fichier->getCheminImg());
+
+      if($fichier->getCheminImg() != null)
+        unlink("../" . $fichier->getCheminImg());
+
+      if($fichier->getCheminSource() != null)
+        unlink("../" . $fichier->getCheminSource());
     }
 }
 

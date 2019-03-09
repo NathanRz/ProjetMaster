@@ -12,19 +12,34 @@ if((isset($_SESSION['password']) && !empty($_SESSION['password']) && ($_SESSION[
 
 
 
-  $topDiv = "<div class ='container container-mod'>";
+
   $title = "<h1 style='text-align : center'>" . $mod->getLibModule() . "</h1>";
 
   //Must close topDiv at the end of the page
-  $p->appendContent($topDiv . $title);
+
   $p->appendContent(<<<HTML
-    <div class="buttonsModule">
-      <a href="inscription.php?id={$mod->getId()}" class="fancy-button">S'inscrire</a>
-      <a href="groupeProjet.php?id={$mod->getId()}" class="fancy-button">Groupes de projet</a>
-      <a href="deposerProjet.php?id={$mod->getId()}" class="fancy-button">Déposer un projet</a>
-    </div>
+    <div class ="container container-mod">
+      <div class="row mv-1">
+        <div class="col-md-2 offset-md-6  p-1 text-center">
+          <a href="inscription.php?id={$mod->getId()}">
+            <p class="fancy-button">S'inscrire</p>
+          </a>
+        </div>
+        <div class="col-md-2 p-1 text-center">
+          <a href="groupeProjet.php?id={$mod->getId()}">
+            <p class="fancy-button">Groupes de projet</p>
+          </a>
+        </div>
+        <div class="col-md-2  p-1 text-center">
+          <a href="deposerProjet.php?id={$mod->getId()}">
+              <p class="fancy-button">Déposer un projet</p>
+            </a>
+        </div>
+      </div>
+      <h1 style="text-align : center">{$mod->getLibModule()}</h1>
 HTML
   );
+
   if(!Admin::isConnected()){
     $cmPart = <<<HTML
       <div class = "drop" id ="CM">
@@ -48,6 +63,7 @@ HTML;
 
       foreach ($mods as $file){
         $img="";
+        $src="";
         $nomFic = substr($file->getNomFichier(), 0, strrpos($file->getNomFichier(), "."));
         if($file->getCheminImg() != NULL){
           $img.=<<<HTML
@@ -55,38 +71,53 @@ HTML;
 HTML;
         }
 
+        if($file->getCheminSource() != NULL){
+          $extSrc = substr($file->getCheminSource(),strpos($file->getCheminSource(),"."));
+          $nomSrc = basename($file->getCheminSource(), $extSrc);
+          $src = <<<HTML
+          <a href="{$file->getCheminSource()}">
+            <p class="fileDesc rowCours">
+              <img class="pr-1" src="img/logo-pdf.png" height="32" width="32"/>
+              {$nomSrc}
+            </p>
+          </a>
+HTML;
+        }
+
         if($file->getTypeFichier() == "CM"){
           $cmPart .= <<<HTML
           <div class="cours">
             <div class="row mb-2">
-              <div class="col-1">
+              <div class="col-md-1">
                 {$img}
               </div>
-              <div class="col-6">
+              <div class="col-md-5">
                 <a href ="{$file->getCheminFichier()}">
-                  <p class="fileDesc rowCours"><img class="pr-1" src="img/logo-pdf.png" height="32" width="32"/>{$file->getDescFichier()}</p>
+                  <p class="fileDesc rowCours">
+                    <img class="pr-1" src="img/logo-pdf.png" height="32" width="32"/>
+                    {$file->getDescFichier()}
+                  </p>
                 </a>
-              </div>
-              <div class="col-5">
-                <p class="fileDesc">SOURCE</p>
               </div>
             </div>
           </div>
 HTML;
         } else if($file->getTypeFichier() =="TD"){
+
+
           $tdPart .= <<<HTML
           <div class="cours">
             <div class="row mb-2">
-              <div class="col-1">
+              <div class="col-md-1">
                 {$img}
               </div>
-              <div class="col-6">
+              <div class="col-md-6">
                 <a href ="{$file->getCheminFichier()}">
                   <p class="fileDesc rowCours"><img class="pr-1" src="img/logo-pdf.png" height="32" width="32"/>{$file->getDescFichier()}</p>
                 </a>
               </div>
-              <div class="col-5">
-                <p class="fileDesc">SOURCE</p>
+              <div class="col-md-5">
+                {$src}
               </div>
             </div>
           </div>
@@ -96,16 +127,16 @@ HTML;
               $tpPart .= <<<HTML
               <div class="cours">
                 <div class="row mb-2">
-                  <div class="col-1">
+                  <div class="col-md-1">
                     {$img}
                   </div>
-                  <div class="col-6">
+                  <div class="col-md-6">
                     <a href ="{$file->getCheminFichier()}">
                       <p class="fileDesc rowCours"><img class="pr-1" src="img/logo-pdf.png" height="32" width="32"/>{$file->getDescFichier()}</p>
                     </a>
                   </div>
-                  <div class="col-5">
-                    <p class="fileDesc">SOURCE</p>
+                  <div class="col-md-5">
+                    {$src}
                   </div>
                 </div>
               </div>
@@ -148,28 +179,46 @@ HTML;
 
   foreach ($mods as $file){
     $img="";
+    $src="";
     $nomFic = substr($file->getNomFichier(), 0, strrpos($file->getNomFichier(), "."));
     if($file->getCheminImg() != NULL){
-      $img .=<<<HTML
+      $img =<<<HTML
       <img class="imgFile" src="{$file->getCheminImg()}" width="64" height="64" >
 HTML;
     }
+
+    if($file->getCheminSource() != NULL){
+      $extSrc = substr($file->getCheminSource(),strpos($file->getCheminSource(),"."));
+      $nomSrc = basename($file->getCheminSource(), $extSrc);
+      $src = <<<HTML
+      <a href="{$file->getCheminSource()}">
+        <p class="fileDesc rowCours">
+          <img class="pr-1" src="img/logo-pdf.png" height="32" width="32"/>
+          {$nomSrc}
+        </p>
+      </a>
+HTML;
+    }
+
     if($file->getTypeFichier() == "CM"){
       $cmPart .= <<<HTML
         <div class="cours">
           <div class="row mb-2">
-            <div class="col-1">
+            <div class="col-md-1">
               {$img}
             </div>
-            <div class="col-5">
+            <div class="col-md-5">
               <a href ="{$file->getCheminFichier()}">
-                <p class="fileDesc rowCours"><img class="pr-1" src="img/logo-pdf.png" height="32" width="32"/>{$file->getDescFichier()}</p>
+                <p class="fileDesc rowCours">
+                  <img class="pr-1" src="img/logo-pdf.png" height="32" width="32"/>
+                  {$file->getDescFichier()}
+                </p>
               </a>
             </div>
-            <div class="col-5">
-              <p class="fileDesc">SOURCE</p>
+            <div class="col-md-5">
+              {$src}
             </div>
-            <div class="col-1 text-center">
+            <div class="col-md-1 text-center">
               <a data-id = "{$file->getId()}" href="#" data-toggle="modal" data-target="#modalRemove">
                 <img class="removePng" src="img/remove.png" width="32" height="32" alt ="Supprimer ce CM">
               </a>
@@ -181,18 +230,18 @@ HTML;
       $tdPart .= <<<HTML
       <div class="cours">
         <div class="row mb-2">
-          <div class="col-1">
+          <div class="col-md-1">
             {$img}
           </div>
-          <div class="col-5">
+          <div class="col-md-5">
             <a href ="{$file->getCheminFichier()}">
               <p class="fileDesc rowCours"><img class="pr-1" src="img/logo-pdf.png" height="32" width="32"/>{$file->getDescFichier()}</p>
             </a>
           </div>
-          <div class="col-5">
-            <p class="fileDesc">SOURCE</p>
+          <div class="col-md-5">
+            {$src}
           </div>
-          <div class="col-1 text-center">
+          <div class="col-md-1 text-center">
             <a data-id = "{$file->getId()}" href="#" data-toggle="modal" data-target="#modalRemove">
               <img class="removePng" src="img/remove.png" width="32" height="32" alt ="Supprimer ce TD">
             </a>
@@ -204,18 +253,18 @@ HTML;
         $tpPart .= <<<HTML
         <div class="cours">
           <div class="row mb-2">
-            <div class="col-1">
+            <div class="col-md-1">
               {$img}
             </div>
-            <div class="col-5">
+            <div class="col-md-5">
               <a href ="{$file->getCheminFichier()}">
                 <p class="fileDesc rowCours"><img class="pr-1" src="img/logo-pdf.png" height="32" width="32"/>{$file->getDescFichier()}</p>
               </a>
             </div>
-            <div class="col-5">
-              <p class="fileDesc">SOURCE</p>
+            <div class="col-md-5">
+              {$src}
             </div>
-            <div class="col-1 text-center">
+            <div class="col-md-1 text-center">
               <a data-id = "{$file->getId()}" href="#" data-toggle="modal" data-target="#modalRemove">
                 <img class="removePng" src="img/remove.png" width="32" height="32" alt ="Supprimer ce TP">
               </a>
@@ -296,6 +345,10 @@ HTML
                 <label for="imgDesc">Image:</label>
                 <input class= "fancy-input" id="imgDesc" name="imgDesc" type="file" accept="image/*" />
               </div>
+              <div class="form-group">
+                <label for="srcFile">Sources:</label>
+                <input class= "fancy-input" id="srcFile" name="srcFile" type="file" accept=".zip" />
+              </div>
                 <input name="typeFile" type="hidden" value="TD" />
                 <input name="idModule" type="hidden" value="{$mod->getId()}" />
             </div>
@@ -337,6 +390,10 @@ HTML
               <div class="form-group">
                 <label for="imgDesc">Image:</label>
                 <input class= "fancy-input" id="imgDesc" name="imgDesc" type="file" accept="image/*" />
+              </div>
+              <div class="form-group">
+                <label for="srcFile">Sources:</label>
+                <input class= "fancy-input" id="srcFile" name="srcFile" type="file" accept=".zip" />
               </div>
                 <input name="typeFile" type="hidden" value="TP" />
                 <input name="idModule" type="hidden" value="{$mod->getId()}" />
@@ -394,29 +451,41 @@ HTML
           e.stopPropagation();
           fileobj = e.originalEvent.dataTransfer.files[0];
           var type = $(this).attr("id");
+          var divSource="";
+          if(type != "CM"){
+            divSource = "<div class='row'>"+
+              "<div class='col-md-10 offset-1'>"+
+                "<div class='form-control' style='background-color:#15162C;border:0;height:100%;'>"+
+                  "<label for='srcFileDrop'>Source:</label>" +
+                    "<input id='srcFileDrop' class='fancy-input' name='srcFile' type='file' accept='.zip'>"+
+                "</div>" +
+              "</div>" +
+            "</div>";
+          }
           var newDiv = "<hr><div class='cours' id='added'>"+
             "<h4>"+ fileobj["name"] +"</h4>"+
             "<form id ='validateFileDrop' name ='validateFileDrop' action='php/addFile.php'>"+
               "<input type='hidden' name='idModuleDrop' value='{$_GET['id']}'>"+
               "<input type='hidden' name='typeFileDrop' value='"+type+"'>"+
               "<div class='row'>"+
-                "<div class='col-10 offset-1'>"+
+                "<div class='col-md-10 offset-1'>"+
+                  "<div class='form-control' style='background-color:#15162C;border:0;height:100%;'>"+
+                    "<label for='descFileDrop'>Descirption du fichier:</label>" +
+                    "<input id='descFileDrop'class='fancy-input' type='text' name='descFileDrop' placeholder='Description du fichier' required='required'>"+
+                  "</div>" +
+                "</div>" +
+              "</div>"+
+              "<div class='row'>"+
+                "<div class='col-md-10 offset-1'>"+
                   "<div class='form-control' style='background-color:#15162C;border:0;height:100%;'>"+
                     "<label for='imgDescDrop'>Image:</label>" +
                       "<input id='imgDescDrop' class='fancy-input' name='imgDesc' type='file' accept='image/*'>"+
                   "</div>" +
                 "</div>" +
               "</div>"+
+              divSource+
               "<div class='row'>"+
-                "<div class='col-10 offset-1'>"+
-                  "<div class='form-control' style='background-color:#15162C;border:0;height:100%;'>"+
-                    "<label for='descFileDrop'>Descirption du fichier:</label>" +
-                    "<input id='descFileDrop'class='fancy-input' type='text' name='descFileDrop' placeholder='Description du fichier' required>"+
-                  "</div>" +
-                "</div>" +
-              "</div>"+
-              "<div class='row'>"+
-                "<div class='col-2 offset-10'>"+
+                "<div class='col-md-2 offset-10'>"+
                   "<div class='form-control' style='background-color:#15162C;border:0;height:100%;'>"+
                     "<img class='cancelNewFile' id='" + type + "'src='img/remove.png' width='32' height='32' alt='Confirmer l'ajout'>"+
                     "<img class='validateNewFile' id='"+ type +"'src='img/validate.png' width='32' height='32' alt ='Annuler l'ajout'>"+

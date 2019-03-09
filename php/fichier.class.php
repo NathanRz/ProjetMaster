@@ -9,6 +9,7 @@ class Fichier{
   protected $typeFichier;
   protected $cheminFichier;
   protected $cheminImg;
+  protected $cheminSource;
 
 
   public function getId(){
@@ -35,11 +36,17 @@ class Fichier{
     return $this->cheminImg;
   }
 
+  public function getCheminSource(){
+    return $this->cheminSource;
+  }
+
+
   static public function getFichiersByModule($id){
     $stmt = myPDO::getInstance()->prepare(<<<SQL
       SELECT *
       FROM fichier
       WHERE idModule = :idMod
+      ORDER BY idFichier;
 SQL
 );
     $stmt->execute(array(':idMod' => $id));
