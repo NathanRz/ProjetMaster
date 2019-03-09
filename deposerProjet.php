@@ -23,7 +23,7 @@ foreach ($grps as $g) {
 $p->appendContent(<<<HTML
   <div class='container container-edit'>
       <h1>Dépôt de projet</h1>
-      <form clas="md-form" name="depoFich" method="POST" action="php/addProject.php" enctype="multipart/form-data">
+      <form id="formDepot" clas="md-form" name="depoFich" method="POST" action="php/addProject.php" enctype="multipart/form-data">
         <div class="row">
 
             <div class="col-lg mt-4">
@@ -56,13 +56,18 @@ $p->appendContent(<<<HTML
             </div>
             <input type="hidden" name="idMod" value="{$_GET['id']}">
         </div>
-        <div id="rowImg" class="row rowImg mb-4">
-            <div class="col-md-3 mb-1">
+
+        <div id="dropBox" class="col-12 mt-4 text-center">
+          <label for="img"><a href="" id="upload_link"><strong>Choisissez un fichier</strong></a><span> ou deplacez le ici</span>.</label>
+        </div>
+
+        <div id="rowImg" class="row rowImg mb-4 ">
+          <!--  <div class="col-md-3 mb-1">
               <div id="addImgPrj">
                 <span class="plus">+</span>
                 <input type="file">
               </div>
-            </div>
+            </div>-->
         </div>
 
         <input type="submit" id="postData" value="Envoyer">
@@ -78,17 +83,29 @@ $p->appendContent(<<<JAVASCRIPT
   var formImage = new FormData();
   $(document).ready(function(){
 
-    $("#addImgPrj").on('dragenter', function(e){
+
+    $("#dropBox").on('dragenter', function(e){
       e.preventDefault();
       $(this).css('background', '#BBD5B8');
     });
 
-    $("#addImgPrj").on('dragover', function(e){
+    $("#dropBox").on('dragover', function(e){
       e.preventDefault();
-    })
+    });
 
-    $("#addImgPrj").on('drop', function(e){
-      $(this).css('background', "#D8F9D3");
+    $("#dropBox").on('dragleave', function(e){
+      e.preventDefault();
+      $(this).css('background', '');
+    });
+
+    $("#upload_link").on("click", function(e){
+        e.preventDefault();
+        console.log("test");
+        $("#upload:hidden").trigger('click');
+    });
+
+    $("#dropBox").on('drop', function(e){
+      $(this).css('background', "");
       e.preventDefault();
       var image = e.originalEvent.dataTransfer.files;
       createFormData(image);
@@ -110,6 +127,13 @@ $p->appendContent(<<<JAVASCRIPT
   function createFormData(image){
     formImage.append('images[]', image[0]);
   }
+
+  $(function(){
+    $("#upload_link").on("click", function(e){
+      e.preventDefault();
+      $("#upload:hidden").trigger('click');
+    })
+  });
 
   $("#sources").on('input', function(e){
     formImage.append('sources', e.currentTarget.files[0]);

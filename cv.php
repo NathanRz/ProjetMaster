@@ -20,7 +20,7 @@ $p->appendContent(<<<HTML
         <li> 2004 : Doctorat Instrumentation et Informatique de l'Image</li>
         <li> 2001 : DEA Instrumentation et Informatique de l'Image</li>
         <li> 1997 : Maîtrise de Mathématiques pures</li>
-        <li>2000 : Brevet d'État d'Éducateur Sportif dans les Activités de la Natation (BEESAN) premier degré</li>
+        <li> 2000 : Brevet d'État d'Éducateur Sportif dans les Activités de la Natation (BEESAN) premier degré</li>
       </ul>
     </div>
 

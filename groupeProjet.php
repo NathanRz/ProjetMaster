@@ -86,6 +86,7 @@ HTML;
         <input type="hidden" id="inputId" value="{$_GET['id']}"/>
       </form>
       <button class="fancy-button" id="export">Exporter sous Excel</button>
+      <button class="fancy-button"><a href="php/calculHoraires.php?id={$mod->getId()}">Générer les horaires</a></button>
     </div>
 HTML
     );
@@ -179,7 +180,7 @@ HTML;
       <table class="table" id="t2ex">
         {$contentTable}
     </div>
-    <button id="export">Exporter</button>
+  </div>
 HTML
   );
 }

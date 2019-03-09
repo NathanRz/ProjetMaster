@@ -1,6 +1,8 @@
 
 html,body{
-	margin:0;
+	margin: 0 !important;
+  padding: 0 !important;
+  width: 100%;
 	font-family: Amiko, Arial, sans-serif;
 	font-size: 0.9em;
 	font-weight: 400;
@@ -8,6 +10,7 @@ html,body{
 	line-height: 1.5;
 	color:#8082a0;
 	background:#03041a;
+	overflow-x: hidden;
 }
 
 p {
@@ -332,4 +335,10 @@ drop input[type="image"]{
 .rowCours:hover{
 	background-color: #43456b;
 	border-radius: 1px;
+}
+
+#dropBox{
+	height: 200px;
+	border: 2px dashed grey;
+	border-radius: 8px;
 }

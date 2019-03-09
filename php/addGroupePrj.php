@@ -23,7 +23,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         Etudiant::addGroupToEtud($e->getId(),$_POST['grpTD'][$i]);
         Etudiant::addGroupToEtud($e->getId(),$_POST['grpTP'][$i]);
         $etudiant = Etudiant::getEtudiantById($e->getId(), $_POST['idMod']);
-        var_dump($etudiant);
         array_push($etu, $etudiant);
       }
     //sinon on l'insert dans la table étudiant et on l'ajoute au tableau

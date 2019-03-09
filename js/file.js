@@ -47,7 +47,7 @@ function ajax_file_upload(file_obj, id) {
         if(file_img["length"] != 0)
           form_data.append('imgDesc', file_img[0], file_img[0]["name"]);
         if(file_src["length"] != 0)
-          form_data.append('srcFile', file_src[0], file_src [0]["name"]);
+          form_data.append('srcFile', file_src[0], file_src[0]["name"]);
         $.ajax({
             type: 'POST',
             url: 'php/addFileDrop.php',
@@ -110,7 +110,7 @@ function ajax_file_upload(file_obj, id) {
                                       "</a>"+
                                     "</div>"+
                                     "<div class='col-1 text-center'>"+
-                                      "<a data-id = '{$file->getId()}' href='#' data-toggle='modal' data-target='#modalRemove'>"+
+                                      "<a data-id ='"+ res[i]['idFichier'] +"' href='#' data-toggle='modal' data-target='#modalRemove'>"+
                                         "<img class='removePng' src='img/remove.png' width='32' height='32' alt ='Supprimer ce CM'>"+
                                       "</a>"+
                                     "</div>"+

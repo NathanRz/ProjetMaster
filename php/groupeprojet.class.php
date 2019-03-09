@@ -32,6 +32,9 @@ class GroupeProjet{
 
   protected $projet;
 
+  protected $idGroupe;
+
+  protected $horaire;
   /**
   * Getter sur les etudiants du groupe de projet
   * @return array etudiants les étudiants
@@ -66,6 +69,14 @@ class GroupeProjet{
 
   public function getProjet(){
     return $this->projet;
+  }
+
+  public function getIdGroupe(){
+    return $this->idGroupe;
+  }
+
+  public function getHoraire(){
+    return $this->horaire;
   }
 
   /**
@@ -176,7 +187,7 @@ SQL
   */
   public static function addGroupePrj($idMod, $etu){
     $stmt = myPDO::getInstance()->prepare(<<<SQL
-      INSERT INTO groupeprojet VALUES(null,:idM,null,null)
+      INSERT INTO groupeprojet VALUES(null,:idM,null,null,null)
 SQL
 );
     $stmt->execute(array(':idM' => secureInput($idMod)));
