@@ -8,12 +8,14 @@ if(isset($_SESSION['password']) && !empty($_SESSION['password']) && ($_SESSION['
 
 $p = new BootstrapPage("Enseignements");
 $p->appendContent(Layout::nav(1));
+
 $grps = GroupeProjet::getGroupePrjByMod($_GET["id"]);
 if(Admin::isConnected()){
   $contentTable = <<<HTML
     <thead>
       <tr>
-        <th scope="col">#</th>
+        <th scope="col">Horaire</th>
+        <th scope="col">Groupe de passage</th>
         <th scope="col">Nom</th>
         <th scope="col">Prénom</th>
         <th scope="col">TD</th>
@@ -26,18 +28,22 @@ if(Admin::isConnected()){
     </thead>
     <tbody>
 HTML;
+  $id = 0;
   foreach ($grps as $grp) {
+
     $cpt = 0;
     foreach($grp->getEtudiants() as $etu) {
       if($cpt == 0){
-        $span = "<td scope ='row' rowspan=" . count($grp->getEtudiants()) . ">" . $grp->getIdGroupePrj() . "</td>";
+        $horaire = $grp->getHoraire() != null ? $grp->getHoraire() : "Pas encore défini";
+        $span = "<td scope ='row' rowspan=" . count($grp->getEtudiants()) . ">" . $horaire . "</td>";
+        $span .="<td class='grpHo' id='grpHo". $grp->getIdGroupePrj() ."' scope ='row' rowspan=" . count($grp->getEtudiants()) . ">" . Groupe::getGroupeById($grp->getIdGroupe())->getLib() . "</td>";
       } else{
         $span="";
       }
 
       $contentTable.= <<<HTML
 
-      <tr>
+      <tr class="testClick">
         {$span}
         <td>{$etu->getNom()}</td>
         <td>{$etu->getPrenom()}</td>
@@ -67,7 +73,9 @@ HTML;
 
       $contentTable.="</tr>";
       $cpt++;
+
     }
+    $id++;
   }
 
   $contentTable .=<<<HTML
@@ -93,6 +101,54 @@ HTML
 
     $p->appendJs(<<<JAVASCRIPT
 
+      var idGrp;
+      function activate(){
+        $(".testClick").on("click",'.grpHo',function(){
+          var active = "#" + $(this).attr("id");
+          $(".testClick").off("click");
+          var id = $("#inputId").val();
+          idGrp = active.substr(6);
+          $(active).empty();
+          $.ajax({
+            type: 'GET',
+            url: 'php/getGrpPass.php',
+            contentType: false,
+            processData: false,
+            data: "id=" + id+"&idGrp="+idGrp,
+            success:function(response) {
+              var grp = JSON.parse(response);
+              var options="";
+              for(var i in Object.keys(grp)){
+                options += "<option value='"+ Object.keys(grp)[i] +"'>"+ grp[Object.keys(grp)[i]] +"</option>";
+              }
+              var select =  "<select onchange='updateHoraire(this)' name='passage'>"+
+                              "<option value=''></option>" +
+                              options +
+                            "</select>";
+              $(active).append(select);
+            }
+          });
+        });
+      }
+      activate();
+
+
+      function updateHoraire(select){
+        var newGrp = select.value;
+        $.ajax({
+          type: 'GET',
+          url: 'php/updatePassage.php',
+          contentType: false,
+          processData: false,
+          data: "idGrpPrj=" + idGrp +"&idGrpPass="+newGrp,
+          success:function(response) {
+            $("#grpHo" + idGrp).empty();
+            $("#grpHo" + idGrp).append(response);
+            activate();
+          }
+        });
+      }
+
       $("#export").on("click", function(){
         var id = $("#inputId").val();
         $.ajax({
@@ -115,7 +171,8 @@ JAVASCRIPT
   $contentTable = <<<HTML
     <thead>
       <tr>
-        <th scope="col">#</th>
+        <th scope="col">Horaire</th>
+        <th scope="col">Groupe de Passage</th>
         <th scope="col">Nom</th>
         <th scope="col">Prénom</th>
         <th scope="col">TD</th>
@@ -129,8 +186,11 @@ HTML;
 foreach ($grps as $grp) {
   $cpt = 0;
   foreach($grp->getEtudiants() as $etu) {
+    $span="";
     if($cpt == 0){
-      $span = "<td scope ='row' rowspan=" . count($grp->getEtudiants()) . ">" . $grp->getIdGroupePrj() . "</td>";
+      $horaire = $grp->getHoraire() != null ? $grp->getHoraire() : "Pas encore défini";
+      $span = "<td scope ='row' rowspan='" . count($grp->getEtudiants()) . "'>" . $horaire . "</td>";
+      $span .= "<td scope ='row' rowspan='" . count($grp->getEtudiants()) . "'>" . Groupe::getGroupeById($grp->getIdGroupe())->getLib() . "</td>";
     } else{
       $span="";
     }

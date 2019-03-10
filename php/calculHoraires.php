@@ -60,8 +60,4 @@ SQL
   $stmt->execute(array(':hor' => $h['horaire'],
                        ':id' => $h['idGroupePrj']));
 }
-
-
-
-
-//header('Location: ../groupeProjet.php?id='.$_GET['id']);
+header('Location: ../groupeProjet.php?id='.$_GET['id']);
