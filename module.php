@@ -508,9 +508,14 @@ JAVASCRIPT
 
   }
 
+  $date = date("d/m/Y", strtotime($mod->getEndDate()));
+
+  $p->appendContent(<<<HTML
+  <div class='alert alert-warning'>Vous avez jusqu'au {$date} pour rendre votre projet.</div>
+HTML
+  );
   //Closing the topDiv
   $p->appendContent("</div>");
 
-  $mod = Module::getModuleById($_GET['id']);
   echo $p->toHTML();
 }
