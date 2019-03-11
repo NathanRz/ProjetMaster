@@ -77,7 +77,7 @@ HTML;
           $src = <<<HTML
           <a href="{$file->getCheminSource()}">
             <p class="fileDesc rowCours">
-              <img class="pr-1" src="img/logo-pdf.png" height="32" width="32"/>
+              <img class="pr-1" src="img/logo-zip.png" height="32" width="32"/>
               {$nomSrc}
             </p>
           </a>
@@ -193,7 +193,7 @@ HTML;
       $src = <<<HTML
       <a href="{$file->getCheminSource()}">
         <p class="fileDesc rowCours">
-          <img class="pr-1" src="img/logo-pdf.png" height="32" width="32"/>
+          <img class="pr-1" src="img/logo-zip.png" height="32" width="32"/>
           {$nomSrc}
         </p>
       </a>

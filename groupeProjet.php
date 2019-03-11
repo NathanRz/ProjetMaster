@@ -67,7 +67,7 @@ HTML;
               $contentTable .="<td scope ='row' rowspan='" .  count($grp->getEtudiants()) . "'class='bg-danger'>Projet non rendu</td>";
               $contentTable .="<td scope ='row' rowspan='" .  count($grp->getEtudiants()) . "'class='bg-danger'>Projet non rendu</td>";
               $contentTable .="<td scope ='row' rowspan='" .  count($grp->getEtudiants()) . "'class='bg-danger'>Projet non rendu</td>";
-              $contentTable .="<td scope ='row' rowspan='" .  count($grp->getEtudiants()) . "'class='bg-danger'>-</td>";
+              $contentTable .="<td scope ='row' rowspan='" .  count($grp->getEtudiants()) . "'>-</td>";
             }
         }
 
@@ -93,8 +93,8 @@ HTML;
       <form action="" name="export">
         <input type="hidden" id="inputId" value="{$_GET['id']}"/>
       </form>
-      <button class="fancy-button" id="export">Exporter sous Excel</button>
-      <button class="fancy-button"><a href="php/calculHoraires.php?id={$mod->getId()}">Générer les horaires</a></button>
+      <a href="php/exportExcel.php?id={$mod->getId()}"><button class="fancy-button">Exporter sous Excel</button></a>
+      <a href="php/calculHoraires.php?id={$mod->getId()}"><button class="fancy-button">Générer les horaires</button></a>
     </div>
 HTML
     );
@@ -158,7 +158,7 @@ HTML
             processData: false,
             data: "id=" + id,
             success:function(response) {
-
+              console.log(response);
             }
         });
       });
@@ -217,7 +217,7 @@ HTML;
       } else{
           if($cpt == 0){
             $contentTable .="<td scope ='row' rowspan='" .  count($grp->getEtudiants()) . "'class='bg-danger'>Projet non rendu</td>";
-            $contentTable .="<td scope ='row' rowspan='" .  count($grp->getEtudiants()) . "'class='bg-danger'>-</td>";
+            $contentTable .="<td scope ='row' rowspan='" .  count($grp->getEtudiants()) . "'>-</td>";
           }
       }
 
@@ -237,7 +237,7 @@ HTML;
     <div class="container container-edit">
       <h2>Groupes de projet</h2>
 
-      <table class="table" id="t2ex">
+      <table class="table">
         {$contentTable}
     </div>
   </div>
