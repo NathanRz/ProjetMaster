@@ -27,10 +27,17 @@ if(Admin::isConnected()){
           <div class="row">
             <div class="col-md-6">
               <fieldset>
+                <legend>Changer la description du module</legend>
+                <div class="form-group">
+                    <label for="desc">Description : </label>
+                    <input type="text" name="desc" class="fancy-input" value="{$m->getDesc()}">
+                </div>
+              </fieldset>
+              <fieldset>
                 <legend>Changer le mot de passe du module</legend>
                 <div class="form-group">
                     <label for="pass">Mot de passe : </label>
-                    <input type="password" name="passMod" class="fancy-input">
+                    <input type="text" name="passMod" class="fancy-input" value="{$m->getPassModule()}">
                 </div>
               </fieldset>
               <fieldset>

@@ -154,6 +154,7 @@ SQL
   }
 
   static public function removeGroup($idGrp){
+
     $stmt = myPDO::getInstance()->prepare(<<<SQL
 
 			DELETE FROM groupe
@@ -161,6 +162,8 @@ SQL
 SQL
 );
 		$stmt->execute(array( ':id' => secureInput($idGrp)));
+
+
 
   }
 

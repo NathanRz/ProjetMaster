@@ -57,6 +57,15 @@ SQL
           }
         }
     }
+		if(isset($_POST['desc']) && !empty($_POST['desc'])){
+      $stmt = myPDO::getInstance()->prepare(<<<SQL
+        UPDATE module SET descModule = :descr
+        WHERE idModule = :id
+SQL
+    );
+      $stmt->execute(array(':descr' => secureInput($_POST['desc']),
+                           ':id'   => secureInput($_POST['idMod'])));
+    }
 
     if(isset($_POST['passMod']) && !empty($_POST['passMod'])){
       $stmt = myPDO::getInstance()->prepare(<<<SQL
