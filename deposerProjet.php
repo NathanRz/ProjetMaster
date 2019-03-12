@@ -63,6 +63,7 @@ if(isset($_GET['id']) && !empty($_GET['id'])){
 
               <div id="dropBox" class="col-12 mt-4 text-center">
                 <label for="img"><a href="" id="upload_link"><strong>Choisissez un fichier</strong></a><span> ou deplacez le ici</span>.</label>
+                <input type="file" id="upload" name="img">
               </div>
 
               <div id="rowImg" class="row rowImg mb-4 ">
@@ -107,17 +108,16 @@ HTML
 
           $("#upload_link").on("click", function(e){
               e.preventDefault();
-              console.log("test");
-              $("#upload:hidden").trigger('click');
+              $("#upload").trigger('click');
           });
 
-          $("#dropBox").on('drop', function(e){
-            $(this).css('background', "");
+          $("#upload").on('change', function(e){
             e.preventDefault();
-            var image = e.originalEvent.dataTransfer.files;
+            var image = document.forms['depoFich'].img.files;
+            console.log(image);
             createFormData(image);
             var img = document.createElement("img");
-            img.className ="img-fluid";
+            img.className ="img-fluid imgPrj";
             var reader = new FileReader();
             reader.onload = function(event){
                 //console.log(event);
@@ -125,7 +125,27 @@ HTML
             }
             reader.readAsDataURL(image[0]);
             var imgHold = document.createElement('div');
-            imgHold.className = "col-md-3 mb-1";
+            imgHold.className = "col-md-3 mb-2";
+            imgHold.append(img);
+            $("#rowImg").prepend(imgHold);
+          });
+
+          $("#dropBox").on('drop', function(e){
+            $(this).css('background', "");
+            e.preventDefault();
+            var image = e.originalEvent.dataTransfer.files;
+            console.log(image);
+            createFormData(image);
+            var img = document.createElement("img");
+            img.className ="img-fluid imgPrj";
+            var reader = new FileReader();
+            reader.onload = function(event){
+                //console.log(event);
+                img.src = event.target.result;
+            }
+            reader.readAsDataURL(image[0]);
+            var imgHold = document.createElement('div');
+            imgHold.className = "col-md-3 mb-2";
             imgHold.append(img);
             $("#rowImg").prepend(imgHold);
           });

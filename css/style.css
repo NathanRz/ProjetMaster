@@ -239,7 +239,7 @@ drop input[type="image"]{
 	text-align: center;
 }
 
-.box #upload{
+#upload{
 	display: none;
 }
 
@@ -313,12 +313,7 @@ drop input[type="image"]{
 	margin-top: 5%;
 }
 
-#addImgPrj{
-	position: relative;
-  display: flex;
-  flex-direction: column;
-	padding: 2% 2% 2% 2%;
-	text-align:center;
+.imgPrj{
 	border: 1px solid #0fd9b6;
 	box-shadow: 0 0 30px 0 rgba(15,217,182,.36);
 }
