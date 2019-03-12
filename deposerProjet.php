@@ -32,6 +32,8 @@ if(isset($_GET['id']) && !empty($_GET['id'])){
 
       $p->appendContent(<<<HTML
         <div class='container container-edit'>
+            <div id="alertPrj">
+            </div>
             <h1>Dépôt de projet</h1>
             <form id="formDepot" clas="md-form" name="depoFich" method="POST" action="php/addProject.php" enctype="multipart/form-data">
               <div class="row">
@@ -174,7 +176,7 @@ HTML
           var formU = document.forms['depoFich'];
             formImage.append('binom', formU.binom.value);
             formImage.append('idMod', formU.idMod.value);
-          console.log(formImage);
+          //console.log(formImage);
           $.ajax({
             url: "php/addProject.php",
             type: "POST",
@@ -183,7 +185,8 @@ HTML
             cache: false,
             processData: false,
             success: function(data){
-              $("#addImgPrj").html(data);
+              $("#alertPrj").append("<div class='alert alert-success'>Projet déposé avec <strong>succès</strong>, vous allez être redirigé vers la liste des groupes de projets</div>");
+              setTimeout(function(){ window.location = "./groupeProjet.php?id={$mod->getId()}"; }, 3000);
             }
           });
         }
