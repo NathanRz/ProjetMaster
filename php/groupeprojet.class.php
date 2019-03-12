@@ -318,4 +318,29 @@ SQL
 
     return $grps;
   }
+
+  /**
+  * Retourne tous les groupes de projets qui n'ont pas encore rendu de projet d'un module avec leurs étudiants
+  * @param int idMod
+  * @return array grps
+  */
+
+  public static function getGroupePrjByModProj($idMod){
+    $stmt = myPDO::getInstance()->prepare(<<<SQL
+      SELECT * FROM  groupeprojet
+      WHERE idModule = :id
+      AND idProjet IS NULL
+SQL
+);
+    $stmt->execute(array(':id' => secureInput($idMod)));
+    $stmt->setFetchMode(PDO::FETCH_CLASS, "GroupeProjet");
+    $grps = $stmt->fetchAll();
+
+    foreach ($grps as $g) {
+      $g->etudiants = Etudiant::getEtudiantsByGrpPrj($g->getIdGroupePrj(),$idMod);
+      $g->projet = Projet::getProjetByIdGrp($g->getIdGroupePrj());
+    }
+
+    return $grps;
+  }
 }

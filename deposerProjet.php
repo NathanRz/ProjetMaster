@@ -14,12 +14,17 @@ if(isset($_GET['id']) && !empty($_GET['id'])){
   if($now > $date){
     if(isset($_SESSION['password']) && !empty($_SESSION['password']) && ($_SESSION['password']) == $mod->getPassModule() || Admin::isConnected()){
 
-      $grps = GroupeProjet::getGroupePrjByMod($_GET['id']);
+      $grps = GroupeProjet::getGroupePrjByModProj($_GET['id']);
       $options = "";
+
       foreach ($grps as $g) {
         $options .= "<option value='" . $g->getIdGroupePrj() . "'>";
-        foreach ($g->getEtudiants() as $e) {
-          $options .= $e->getNom() . " " . $e->getPrenom() . " - ";
+        $etuArr = $g->getEtudiants();
+        for($i = 0; $i < sizeof($etuArr); $i++) {
+          if($i != sizeof($etuArr)-1)
+            $options .= $etuArr[$i]->getNom() . " " . $etuArr[$i]->getPrenom() . " - ";
+          else
+            $options .= $etuArr[$i]->getNom() . " " . $etuArr[$i]->getPrenom();
         }
 
         $options .="</option>";
@@ -63,7 +68,7 @@ if(isset($_GET['id']) && !empty($_GET['id'])){
               <div id="rowImg" class="row rowImg mb-4 ">
               </div>
 
-              <input type="submit" id="postData" value="Envoyer">
+              <input class="fancy-button" type="submit" id="postData" value="Envoyer">
             </form>
         </div>
 
