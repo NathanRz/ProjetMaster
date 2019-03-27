@@ -158,7 +158,6 @@ HTML
             processData: false,
             data: "id=" + id,
             success:function(response) {
-              console.log(response);
             }
         });
       });

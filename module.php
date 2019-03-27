@@ -70,7 +70,6 @@ HTML;
           <img class="imgFile" src="{$file->getCheminImg()}" width="64" height="64">
 HTML;
         }
-
         if($file->getCheminSource() != NULL){
           $extSrc = substr($file->getCheminSource(),strpos($file->getCheminSource(),"."));
           $nomSrc = basename($file->getCheminSource(), $extSrc);
@@ -203,7 +202,7 @@ HTML;
     if($file->getTypeFichier() == "CM"){
       $cmPart .= <<<HTML
         <div class="cours">
-          <div class="row mb-2">
+          <div class="row mb-2  no-gutters">
             <div class="col-md-1">
               {$img}
             </div>
@@ -215,10 +214,13 @@ HTML;
                 </p>
               </a>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-4">
               {$src}
             </div>
-            <div class="col-md-1 text-center">
+            <div class="col-md-2 text-center">
+              <a data-id = "{$file->getId()}" href="#" data-toggle="modal" data-target="#myModalEditCM">
+                <img class='' src="img/edit.svg" width="36" height="36" alt ="Editer ce CM">
+              </a>
               <a data-id = "{$file->getId()}" href="#" data-toggle="modal" data-target="#modalRemove">
                 <img class="removePng" src="img/remove.png" width="32" height="32" alt ="Supprimer ce CM">
               </a>
@@ -238,10 +240,13 @@ HTML;
               <p class="fileDesc rowCours"><img class="pr-1" src="img/logo-pdf.png" height="32" width="32"/>{$file->getDescFichier()}</p>
             </a>
           </div>
-          <div class="col-md-5">
+          <div class="col-md-4">
             {$src}
           </div>
-          <div class="col-md-1 text-center">
+          <div class="col-md-2 text-center">
+            <a data-id = "{$file->getId()}" href="#" data-toggle="modal" data-target="#myModalEditTDTP">
+              <img class='' src="img/edit.svg" width="36" height="36" alt ="Editer ce TD">
+            </a>
             <a data-id = "{$file->getId()}" href="#" data-toggle="modal" data-target="#modalRemove">
               <img class="removePng" src="img/remove.png" width="32" height="32" alt ="Supprimer ce TD">
             </a>
@@ -261,10 +266,13 @@ HTML;
                 <p class="fileDesc rowCours"><img class="pr-1" src="img/logo-pdf.png" height="32" width="32"/>{$file->getDescFichier()}</p>
               </a>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-4">
               {$src}
             </div>
-            <div class="col-md-1 text-center">
+            <div class="col-md-2 text-center">
+              <a data-id = "{$file->getId()}" href="#" data-toggle="modal" data-target="#myModalEditTDTP">
+                <img class='' src="img/edit.svg" width="36" height="36" alt ="Editer ce TP">
+              </a>
               <a data-id = "{$file->getId()}" href="#" data-toggle="modal" data-target="#modalRemove">
                 <img class="removePng" src="img/remove.png" width="32" height="32" alt ="Supprimer ce TP">
               </a>
@@ -277,7 +285,6 @@ HTML;
     $p->appendContent($cmPart . "</div>");
     $p->appendContent($tdPart . "</div>");
     $p->appendContent($tpPart . "</div>");
-
     $p->appendContent(<<<HTML
       <div class="modal" id="myModalCM">
         <div class="modal-dialog">
@@ -305,6 +312,86 @@ HTML;
               </div>
                 <input name="typeFile" type="hidden" value="CM" />
                 <input name="idModule" type="hidden" value="{$mod->getId()}" />
+            </div>
+
+              <!-- Modal footer -->
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-success">Valider</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Annuler</button>
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="modal" id="myModalEditCM">
+        <div class="modal-dialog">
+          <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title">Édition d'un CM</h4>
+            </div>
+
+            <form name="editCM" method="POST" action="php/editFile.php" enctype="multipart/form-data">
+            <!-- Modal body -->
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="addedFile">Fichier:</label>
+                <input class= "fancy-input" id="addedFile" name="addedFile" type="file" accept="application/pdf" />
+              </div>
+              <div class="form-group">
+                <label for="descFile">Description:</label>
+                <input class= "fancy-input" id="descFile" name="descFile" type="text" placeholder="Description du fichier" required="required"/>
+              </div>
+              <div class="form-group">
+                <label for="imgDesc">Image:</label>
+                <input class= "fancy-input" id="imgDesc" name="imgDesc" type="file" accept="image/*" />
+              </div>
+                <input name="idFichier" type="hidden" value="" />
+            </div>
+
+              <!-- Modal footer -->
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-success">Valider</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Annuler</button>
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="modal" id="myModalEditTDTP">
+        <div class="modal-dialog">
+          <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title">Édition d'un CM</h4>
+            </div>
+
+            <form name="editCM" method="POST" action="php/editFile.php" enctype="multipart/form-data">
+            <!-- Modal body -->
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="addedFile">Fichier:</label>
+                <input class= "fancy-input" id="addedFile" name="addedFile" type="file" accept="application/pdf" />
+              </div>
+              <div class="form-group">
+                <label for="descFile">Description:</label>
+                <input class= "fancy-input" id="descFile" name="descFile" type="text" placeholder="Description du fichier" required="required"/>
+              </div>
+              <div class="form-group">
+                <label for="imgDesc">Image:</label>
+                <input class= "fancy-input" id="imgDesc" name="imgDesc" type="file" accept="image/*" />
+              </div>
+              <div class="form-group">
+                <label for="srcFile">Sources:</label>
+                <input class= "fancy-input" id="srcFile" name="srcFile" type="file" accept=".zip" />
+              </div>
+                <input name="idFichier" type="hidden" value="" />
             </div>
 
               <!-- Modal footer -->
@@ -442,6 +529,46 @@ HTML
     	$('#modalRemove').on('show.bs.modal',function(e){
     		var idFichier = $(e.relatedTarget).data('id');
     		$(e.currentTarget).find('input[name="idFichier"]').val(idFichier);
+      });
+
+      $('#myModalEdit').on('show.bs.modal',function(e){
+    		var idFichier = $(e.relatedTarget).data('id');
+        $.ajax({
+            type: 'GET',
+            url: 'php/getFileInfo.php',
+            contentType: false,
+            processData: false,
+            data: "idFichier=" + idFichier,
+            success:function(response) {
+              var result = JSON.parse(response);
+              var fileTest = new File(["file"],result["cheminFichier"]);
+              $(e.currentTarget).find('input[name="descFile"]').val(result["descFichier"]);
+              $(e.currentTarget).find('input[name="descFile"]').val(result["descFichier"]);
+              $(e.currentTarget).find('input[name="idFichier"]').val(idFichier);
+
+            }
+        });
+
+      });
+
+      $('#myModalEditTDTP').on('show.bs.modal',function(e){
+    		var idFichier = $(e.relatedTarget).data('id');
+        $.ajax({
+            type: 'GET',
+            url: 'php/getFileInfo.php',
+            contentType: false,
+            processData: false,
+            data: "idFichier=" + idFichier,
+            success:function(response) {
+              var result = JSON.parse(response);
+              var fileTest = new File(["file"],result["cheminFichier"]);
+              $(e.currentTarget).find('input[name="descFile"]').val(result["descFichier"]);
+              $(e.currentTarget).find('input[name="descFile"]').val(result["descFichier"]);
+              $(e.currentTarget).find('input[name="idFichier"]').val(idFichier);
+
+            }
+        });
+
       });
 
       $(".drop").on('drop', function(e) {
