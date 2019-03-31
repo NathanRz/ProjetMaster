@@ -89,14 +89,19 @@ class Groupe{
   }
 
   /**
-  * Getter sur l'identifiant du projet
-  * @return int $idProjet l'id du projet
+  * Getter sur l'horaire de début du TD/TP
+  * @return int $horaireDeb l'horaire de début du TD/TP
   */
   public function getHoraire(){
     return $this->horaireDeb;
   }
 
 
+  /**
+  * Récupérer le groupe par son identifiant
+  * @param int $id l'id du groupe
+  * @return Groupe $res le groupe
+  */
   static public function getGroupeById($id){
 		$stmt = myPDO::getInstance()->prepare(<<<SQL
 
@@ -113,6 +118,10 @@ SQL
 		return $res;
 	}
 
+  /**
+  * Récupérer tous les groupes
+  * @return array $res les groupes
+  */
   static public function getAllGroupes(){
 
 
@@ -129,6 +138,11 @@ SQL
 		return $res;
 	}
 
+  /**
+  * Récupérer tous les groupes d'un module
+  * @param int $idModule l'id du module
+  * @return array $res les groupes
+  */
   static public function getAllGrpForModule($idModule){
 
 
@@ -146,6 +160,12 @@ SQL
 		return $res;
 	}
 
+  /**
+  * Récupérer tous les groupes d'un certain type d'un module
+  * @param int $idModule l'id du module
+  * @param int $type le type de groupe
+  * @return array $res les groupes
+  */
   static public function getAllGrpForModuleByType($idModule,$type){
 
 
@@ -165,7 +185,12 @@ SQL
 		return $res;
 	}
 
-  //ajouter en fonction de idMod
+  /**
+  * Récupérer les groupes de TD d'un étudiant pour un module
+  * @param int $idEtu l'id de l'étudiant
+  * @param int $idMod l'id du module
+  * @return array $res les groupes
+  */
   static public function getGrpTDByIdEtu($idEtu, $idMod){
     $stmt = myPDO::getInstance()->prepare(<<<SQL
       SELECT * FROM groupe g, membre m, etudiant e
@@ -183,7 +208,12 @@ SQL
     return $stmt->fetch();
   }
 
-  //ajouter en fonction de idMod
+  /**
+  * Récupérer les groupes de TP d'un étudiant pour un module
+  * @param int $idEtu l'id de l'étudiant
+  * @param int $idMod l'id du module
+  * @return array $res les groupes
+  */
   static public function getGrpTPByIdEtu($idEtu, $idMod){
     $stmt = myPDO::getInstance()->prepare(<<<SQL
       SELECT * FROM groupe g, membre m, etudiant e
@@ -201,6 +231,10 @@ SQL
     return $stmt->fetch();
   }
 
+  /**
+  * Supprimer un groupe de TP/TD
+  * @param int $idGrp l'id du groupe
+  */
   static public function removeGroup($idGrp){
 
     $stmt = myPDO::getInstance()->prepare(<<<SQL
@@ -215,6 +249,14 @@ SQL
 
   }
 
+  /**
+  * Ajouter un groupe de TP/TD
+  * @param int $idMod l'id du module
+  * @param string $lib le libellé
+  * @param int $type le type de groupe
+  * @param Time $horaire l'horaire de début
+  * @param string $duree la durée du TP/TD
+  */
   static public function addGroup($idMod, $lib, $type, $horaire, $duree){
       $stmt = myPDO::getInstance()->prepare(<<<SQL
         INSERT INTO groupe VALUES(null, :idMod, :lib, :type, :horaire, :duree)
