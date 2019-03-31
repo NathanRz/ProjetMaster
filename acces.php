@@ -44,8 +44,6 @@ HTML
       var id = formAcc.idMod.value;
       var pass = formAcc.pass.value;
 
-      console.log('Valeurs: ' + id + ', ' + pass);
-
       $.ajax({
         method: "POST",
         url: "php/verifPass.php",

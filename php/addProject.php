@@ -7,7 +7,6 @@ require_once("utils.php");
 if($_SERVER["REQUEST_METHOD"] == "POST"){
 
   $mod = Module::getModuleById($_POST['idMod']);
-  //var_dump($_POST);
   $grp = GroupeProjet::getGroupePrjById($_POST['binom'],$mod->getId());
 
   //Si il n'y a pas déjà un projet déposé par ce groupe.

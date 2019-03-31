@@ -116,13 +116,11 @@ HTML
           $("#upload").on('change', function(e){
             e.preventDefault();
             var image = document.forms['depoFich'].img.files;
-            console.log(image);
             createFormData(image);
             var img = document.createElement("img");
             img.className ="img-fluid imgPrj";
             var reader = new FileReader();
             reader.onload = function(event){
-                //console.log(event);
                 img.src = event.target.result;
             }
             reader.readAsDataURL(image[0]);
@@ -136,13 +134,11 @@ HTML
             $(this).css('background', "");
             e.preventDefault();
             var image = e.originalEvent.dataTransfer.files;
-            console.log(image);
             createFormData(image);
             var img = document.createElement("img");
             img.className ="img-fluid imgPrj";
             var reader = new FileReader();
             reader.onload = function(event){
-                //console.log(event);
                 img.src = event.target.result;
             }
             reader.readAsDataURL(image[0]);
@@ -176,7 +172,6 @@ HTML
           var formU = document.forms['depoFich'];
             formImage.append('binom', formU.binom.value);
             formImage.append('idMod', formU.idMod.value);
-          //console.log(formImage);
           $.ajax({
             url: "php/addProject.php",
             type: "POST",

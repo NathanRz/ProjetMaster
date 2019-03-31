@@ -5,8 +5,6 @@ require_once "utils.php";
 
 if(Admin::isConnected()){
 	if($_SERVER["REQUEST_METHOD"] == "POST"){
-    var_dump($_POST);
-    var_dump($_FILES);
 
     $fichier = Fichier::getFichierById($_POST['idFichier']);
     $q = array();
@@ -68,7 +66,6 @@ if(Admin::isConnected()){
         }
 
           $nameSrc = $nameFile . "_Sources.zip";
-          var_dump($nameSrc);
 
           if($pathCurrentSrc != ""){
             if(unlink("../" . $pathCurrentSrc)){

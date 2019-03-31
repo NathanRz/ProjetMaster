@@ -26,9 +26,6 @@ SQL
 
 $grps = GroupeProjet::getGroupePrjByMod($mod->getId());
 $dureeProjet = strtotime($mod->getDuree());
-//var_dump($dureeProjet);
-
-//echo date('i', $dureeProjet);
 
 usort($grps,"cmp");
 

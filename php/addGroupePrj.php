@@ -12,7 +12,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     if($e != null){
       //on verfie qu'aucun des étudiants n'a deja de groupe de projet pour ce module
       $res = GroupeProjet::getGroupePrjByModAndEtu($_POST['idMod'],$e->getId());
-      //var_dump($res);
       //si il appartient deja a un groupe pour ce module STOP
       if($res != null){
         exit("Impossible d'ajouter un nouveau groupe: un des membres du groupe fait déjà parti d'un groupe de projet pour ce module.");

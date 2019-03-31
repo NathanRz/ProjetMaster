@@ -350,6 +350,7 @@ HTML;
               </div>
                 <input name="idFichier" type="hidden" value="" />
             </div>
+            <div class='alert alert-warning m-2' style="font-size:0.8rem;">Si le champ "Image" est laissé vide, l'image déjà présente sera supprimée.</div>
 
               <!-- Modal footer -->
               <div class="modal-footer">
@@ -393,7 +394,8 @@ HTML;
               </div>
                 <input name="idFichier" type="hidden" value="" />
             </div>
-
+            <div class='alert alert-warning m-2' style="font-size:0.8rem;">Si le champ "Image" est laissé vide, l'image déjà présente sera supprimée.</div>
+            
               <!-- Modal footer -->
               <div class="modal-footer">
                 <button type="submit" class="btn btn-success">Valider</button>

@@ -111,7 +111,6 @@ if(isset($_GET['id']) && !empty($_GET['id'])){
       });
 
       $("body").on('click', 'a.delEtuRow', function(e){
-        console.log($("#rowsEtu").last());
         $(".addedEtu").last().fadeOut(300, function(){jQuery(this).remove()});
       });
     </script>

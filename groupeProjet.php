@@ -43,7 +43,7 @@ HTML;
 
       $contentTable.= <<<HTML
 
-      <tr class="testClick">
+      <tr class="clickGroupe">
         {$span}
         <td>{$etu->getNom()}</td>
         <td>{$etu->getPrenom()}</td>
@@ -95,6 +95,8 @@ HTML;
       </form>
       <a href="php/exportExcel.php?id={$mod->getId()}"><button class="fancy-button">Exporter sous Excel</button></a>
       <a href="php/calculHoraires.php?id={$mod->getId()}"><button class="fancy-button">Générer les horaires</button></a>
+
+      <div class='alert alert-warning mt-5'>Cliquez sur un groupe de passage pour le changer.</div>
     </div>
 HTML
     );
@@ -103,9 +105,9 @@ HTML
 
       var idGrp;
       function activate(){
-        $(".testClick").on("click",'.grpHo',function(){
+        $(".clickGroupe").on("click",'.grpHo',function(){
           var active = "#" + $(this).attr("id");
-          $(".testClick").off("click");
+          $(".clickGroupe").off("click");
           var id = $("#inputId").val();
           idGrp = active.substr(6);
           $(active).empty();

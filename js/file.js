@@ -75,7 +75,6 @@ function ajax_file_upload(file_obj, id) {
                         "</a>";
 
               $(".drop#" + id).append(title);
-              console.log(res[0]);
               for(i =0; i < res.length;i++){
                 if(res[i]["typeFichier"] == id){
                   var img="";
