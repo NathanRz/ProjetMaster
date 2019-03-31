@@ -344,4 +344,31 @@ SQL
 
     return $grps;
   }
+
+  static public function getGroupePrjByEtu($idEtu){
+    $stmt = myPDO::getInstance()->prepare(<<<SQL
+      SELECT * FROM  groupeprojet g, appartenir a
+      WHERE a.idGroupePrj = g.idGroupePrj
+      AND a.idEtudiant = :id
+SQL
+);
+
+    $stmt->execute(array(':id' => secureInput($idEtu)));
+    $stmt->setFetchMode(PDO::FETCH_CLASS, "GroupeProjet");
+    $grps = $stmt->fetchAll();
+
+    return $grps;
+  }
+
+  static public function removeGrpPrj($idGrpPrj){
+    $prj = Projet::getProjetByIdGrp($idGrpPrj);
+    if($prj)
+      Projet::removeProjet($prj);
+
+    $stmt = myPDO::getInstance()->prepare(<<<SQL
+      DELETE FROM groupeprojet WHERE idGroupePrj = :id
+SQL
+);
+    $stmt->execute(array(':id' => secureInput($idGrpPrj)));
+  }
 }

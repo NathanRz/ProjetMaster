@@ -3,40 +3,84 @@
 include_once("autoload.include.php");
 require_once("utils.php");
 
+/**
+* Classe Groupe
+* Map les données de la groupe
+*/
 class Groupe{
-
-  protected $idGroupe;
-  protected $idModule;
-  protected $libGroupe;
-
   /**
   * 1 = TD / 2 = TP
   */
+
+  /**
+	* @var int $idGroupe l'id du groupe
+	*/
+  protected $idGroupe;
+  /**
+	* @var int $idModule l'id du module
+	*/
+  protected $idModule;
+  /**
+	* @var string $libGroupe le libellé du groupe
+	*/
+  protected $libGroupe;
+  /**
+	* @var int $typeGroupe le type de groupe(1:TD / 2:TP)
+	*/
   protected $typeGroupe;
+  /**
+	* @var Time $horaireDeb l'horaire de début du TP/TD
+	*/
   protected $horaireDeb;
+  /**
+	* @var Time $duree la durée d'un TP/TD
+	*/
   protected $duree;
 
+  /**
+  * Getter sur l'identifiant du groupe
+  * @return int $idGroupe l'id du groupe
+  */
   public function getId(){
     return $this->idGroupe;
   }
 
+  /**
+  * Getter sur l'identifiant du module
+  * @return int $idModule l'id du module
+  */
   public function getIdModule(){
     return $this->idModule;
   }
 
+  /**
+  * Getter sur le libellé du groupe
+  * @return string $libGroupe le libellé
+  */
   public function getLib(){
     return $this->libGroupe;
   }
 
-
+  /**
+  * Getter sur le type de groupe
+  * @return int $typeGroupe le type de groupe
+  */
   public function getType(){
     return $this->typeGroupe;
   }
 
+  /**
+  * Getter sur la durée du TP/TD
+  * @return Time $duree la durée du TP/TD
+  */
   public function getDuree(){
     return $this->duree;
   }
 
+  /**
+  * Getter sur le type de groupe
+  * @return string "TD/TP" le type de groupe au format string
+  */
   public function getTypeString(){
     if($this->typeGroupe == 1)
       return "TD";
@@ -44,6 +88,10 @@ class Groupe{
     return "TP";
   }
 
+  /**
+  * Getter sur l'identifiant du projet
+  * @return int $idProjet l'id du projet
+  */
   public function getHoraire(){
     return $this->horaireDeb;
   }

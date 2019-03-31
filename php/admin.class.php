@@ -26,7 +26,7 @@ class Admin {
      * Identifiant base de données
      * @var string $id
      */
-    protected $id = null ;
+    protected $idAdmin = null ;
 
     /**
      * Login
@@ -49,7 +49,7 @@ class Admin {
 
     //Getters
     public function getId(){
-        return $this->id;
+        return $this->idAdmin;
     }
 
     public function getUsername(){
