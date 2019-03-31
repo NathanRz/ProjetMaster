@@ -145,7 +145,7 @@ HTML;
     $p->appendContent($tdPart . "</div>");
     $p->appendContent($tpPart . "</div>");
   } else {
-  $p->appendJsUrl("js/file.js");
+  $p->appendJsUrl("js/scripts/file.js");
   $cmPart = <<<HTML
     <div class = "drop" id ="CM">
       <h2>Cours magistraux</h2>
@@ -395,7 +395,7 @@ HTML;
                 <input name="idFichier" type="hidden" value="" />
             </div>
             <div class='alert alert-warning m-2' style="font-size:0.8rem;">Si le champ "Image" est laissé vide, l'image déjà présente sera supprimée.</div>
-            
+
               <!-- Modal footer -->
               <div class="modal-footer">
                 <button type="submit" class="btn btn-success">Valider</button>
