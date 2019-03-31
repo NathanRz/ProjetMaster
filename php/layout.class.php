@@ -50,7 +50,9 @@ class Layout{
 HTML;
 		if(Admin::isConnected()){
 			$a = Admin::createFromSession();
+			$nav .= "<li class='nav-item'><a class='nav-link' href='administration.php'>Administration</a></li>";
 			$nav .= "<li class='nav-item'>" . Admin::logoutForm("Déconnexion", "logout.php") . "</li>";
+			$nav .= "<li class='nav-item'><a class='nav-link' href='#' data-toggle='modal' data-target='#passModal'><img src='img/gear.png' style='color:white' width='15'/></a></li>";
 		}else{
 			if($id == 3)
 				$nav .= "<li class='nav-item'><a class='nav-link' href='formLogin.php'>Administration</a></li>";
@@ -60,6 +62,34 @@ HTML;
 
 		$nav .= <<<HTML
 						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="modal" id="passModal">
+				<div class="modal-dialog">
+					<div class="modal-content">
+
+						<!-- Modal Header -->
+						<div class="modal-header">
+							<h4 class="modal-title">Changer de mot de passe</h4>
+						</div>
+
+						<form name="addMod" method="POST" action="php/changePass.php" enctype="multipart/form-data">
+							<!-- Modal body -->
+							<div class="modal-body">
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+						       		<label for="lib">Nouveau mot de passe:</label>
+											<input class="fancy-input" type="password" name="pass">
+										</div>
+									</div>
+									<div class="col-md-12">
+										<input class="fancy-button" type="submit">
+									</div>
+								</div>
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>
