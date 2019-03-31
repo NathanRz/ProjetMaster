@@ -1,0 +1,18 @@
+#############################################
+######### Dossier ProjetMaster ##############
+#############################################
+
+ - Contient les sources du projet
+ - Pour configurer la base de données il suffit simplement
+   de changer la chaine de connection dans le fichier 
+   "php/mypdo.include.php" à la ligne 5.
+
+#############################################
+############# Dossier docs ##################
+#############################################
+
+ - Contient la documentation pour les différentes classes PHP
+ - Pour générer la documentation il suffit de rentrer la commande
+   "php phpdox-0.11.2.phar" dans une invite de commande.
+ - La configuration de la génération de la documentation se situe
+   dans le fichier "phpdox.xml"
