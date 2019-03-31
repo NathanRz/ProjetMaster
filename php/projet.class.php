@@ -146,11 +146,5 @@ SQL
 
       if(file_exists("../" . $prj->getImages()) && unlink("../" . $prj->getImages())){};
 
-
-      /*$stmt = myPDO::getInstance()->prepare(<<<SQL
-        DELETE FROM projet WHERE idProjet = :id
-SQL
-);
-      $stmt->execute(array(':id' => secureInput($prj->getIdProjet())));*/
     }
 }
