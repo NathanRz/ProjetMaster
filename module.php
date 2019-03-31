@@ -64,10 +64,9 @@ HTML;
       foreach ($mods as $file){
         $img="";
         $src="";
-        $nomFic = substr($file->getNomFichier(), 0, strrpos($file->getNomFichier(), "."));
         if($file->getCheminImg() != NULL){
           $img.=<<<HTML
-          <img class="imgFile" src="{$file->getCheminImg()}" width="64" height="64">
+          <img class="img-fluid" src="{$file->getCheminImg()}" width="64" height="64">
 HTML;
         }
         if($file->getCheminSource() != NULL){
@@ -86,7 +85,7 @@ HTML;
         if($file->getTypeFichier() == "CM"){
           $cmPart .= <<<HTML
           <div class="cours">
-            <div class="row mb-2">
+            <div class="row mb-2 no-gutters align-items-center">
               <div class="col-md-1">
                 {$img}
               </div>
@@ -106,7 +105,7 @@ HTML;
 
           $tdPart .= <<<HTML
           <div class="cours">
-            <div class="row mb-2">
+            <div class="row mb-2  no-gutters align-items-center">
               <div class="col-md-1">
                 {$img}
               </div>
@@ -125,7 +124,7 @@ HTML;
         } else if($file->getTypeFichier() == "TP"){
               $tpPart .= <<<HTML
               <div class="cours">
-                <div class="row mb-2">
+                <div class="row mb-2 no-gutters align-items-center">
                   <div class="col-md-1">
                     {$img}
                   </div>
@@ -179,10 +178,9 @@ HTML;
   foreach ($mods as $file){
     $img="";
     $src="";
-    $nomFic = substr($file->getNomFichier(), 0, strrpos($file->getNomFichier(), "."));
     if($file->getCheminImg() != NULL){
       $img =<<<HTML
-      <img class="imgFile" src="{$file->getCheminImg()}" width="64" height="64" >
+      <img class="img-fluid" src="{$file->getCheminImg()}" width="64" height="64" >
 HTML;
     }
 
@@ -202,8 +200,8 @@ HTML;
     if($file->getTypeFichier() == "CM"){
       $cmPart .= <<<HTML
         <div class="cours">
-          <div class="row mb-2  no-gutters">
-            <div class="col-md-1">
+          <div class="row mb-2 no-gutters align-items-center">
+            <div class="col-md-1 text-center">
               {$img}
             </div>
             <div class="col-md-5">
@@ -222,7 +220,7 @@ HTML;
                 <img class='' src="img/edit.svg" width="36" height="36" alt ="Editer ce CM">
               </a>
               <a data-id = "{$file->getId()}" href="#" data-toggle="modal" data-target="#modalRemove">
-                <img class="removePng" src="img/remove.png" width="32" height="32" alt ="Supprimer ce CM">
+                <img src="img/remove.png" width="32" height="32" alt ="Supprimer ce CM">
               </a>
             </div>
           </div>
@@ -231,7 +229,7 @@ HTML;
     } else if($file->getTypeFichier() =="TD"){
       $tdPart .= <<<HTML
       <div class="cours">
-        <div class="row mb-2">
+        <div class="row mb-2 no-gutters align-items-center">
           <div class="col-md-1">
             {$img}
           </div>
@@ -248,7 +246,7 @@ HTML;
               <img class='' src="img/edit.svg" width="36" height="36" alt ="Editer ce TD">
             </a>
             <a data-id = "{$file->getId()}" href="#" data-toggle="modal" data-target="#modalRemove">
-              <img class="removePng" src="img/remove.png" width="32" height="32" alt ="Supprimer ce TD">
+              <img src="img/remove.png" width="32" height="32" alt ="Supprimer ce TD">
             </a>
           </div>
         </div>
@@ -257,7 +255,7 @@ HTML;
       } else if($file->getTypeFichier() == "TP"){
         $tpPart .= <<<HTML
         <div class="cours">
-          <div class="row mb-2">
+          <div class="row mb-2 no-gutters align-items-center">
             <div class="col-md-1">
               {$img}
             </div>
@@ -274,7 +272,7 @@ HTML;
                 <img class='' src="img/edit.svg" width="36" height="36" alt ="Editer ce TP">
               </a>
               <a data-id = "{$file->getId()}" href="#" data-toggle="modal" data-target="#modalRemove">
-                <img class="removePng" src="img/remove.png" width="32" height="32" alt ="Supprimer ce TP">
+                <img src="img/remove.png" width="32" height="32" alt ="Supprimer ce TP">
               </a>
             </div>
           </div>
@@ -338,6 +336,7 @@ HTML;
             <!-- Modal body -->
             <div class="modal-body">
               <div class="form-group">
+                <input name ="idModule" type="hidden" value="{$mod->getId()}" />
                 <label for="addedFile">Fichier:</label>
                 <input class= "fancy-input" id="addedFile" name="addedFile" type="file" accept="application/pdf" />
               </div>
@@ -376,6 +375,7 @@ HTML;
             <!-- Modal body -->
             <div class="modal-body">
               <div class="form-group">
+                <input name ="idModule" type="hidden" value="{$mod->getId()}" />
                 <label for="addedFile">Fichier:</label>
                 <input class= "fancy-input" id="addedFile" name="addedFile" type="file" accept="application/pdf" />
               </div>
@@ -531,7 +531,7 @@ HTML
     		$(e.currentTarget).find('input[name="idFichier"]').val(idFichier);
       });
 
-      $('#myModalEdit').on('show.bs.modal',function(e){
+      $('#myModalEditCM').on('show.bs.modal',function(e){
     		var idFichier = $(e.relatedTarget).data('id');
         $.ajax({
             type: 'GET',
@@ -643,6 +643,7 @@ HTML
   );
   //Closing the topDiv
   $p->appendContent("</div>");
+  $p->appendContent(Layout::footer());
 
   echo $p->toHTML();
 }

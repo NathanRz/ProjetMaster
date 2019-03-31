@@ -305,6 +305,7 @@ SQL
     $stmt = myPDO::getInstance()->prepare(<<<SQL
       SELECT * FROM  groupeprojet
       WHERE idModule = :id
+      ORDER BY horaire, idGroupePrj
 SQL
 );
     $stmt->execute(array(':id' => secureInput($idMod)));

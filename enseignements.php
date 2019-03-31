@@ -5,7 +5,6 @@ include_once("php/autoload.include.php");
 
 
 $p = new BootstrapPage("Enseignements");
-$pdo = myPDO::getInstance();
 
 $p->appendContent(Layout::nav(1));
 $mods = Module::getModules();

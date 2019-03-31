@@ -111,7 +111,7 @@ function ajax_file_upload(file_obj, id) {
                                     "</div>"+
                                     "<div class='col-1 text-center'>"+
                                       "<a data-id ='"+ res[i]['idFichier'] +"' href='#' data-toggle='modal' data-target='#modalRemove'>"+
-                                        "<img class='removePng' src='img/remove.png' width='32' height='32' alt ='Supprimer ce CM'>"+
+                                        "<img src='img/remove.png' width='32' height='32' alt ='Supprimer ce CM'>"+
                                       "</a>"+
                                     "</div>"+
                                   "</div>"+

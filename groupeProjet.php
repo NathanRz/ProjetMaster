@@ -87,7 +87,7 @@ HTML;
     <div class="container container-edit">
       <h2>Groupes de projet</h2>
 
-      <table class="table">
+      <table class="table table-responsive">
       {$contentTable}
 
       <form action="" name="export">
@@ -236,7 +236,7 @@ HTML;
     <div class="container container-edit">
       <h2>Groupes de projet</h2>
 
-      <table class="table">
+      <table class="table table-responsive">
         {$contentTable}
     </div>
   </div>

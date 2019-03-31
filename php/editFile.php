@@ -41,7 +41,6 @@ if(Admin::isConnected()){
       }
 
       $nameImg = $nameFile . "_Image" . $extImage;
-      var_dump($nameImg);
 
       if($pathCurrentImg != ""){
         if(unlink("../" . $pathCurrentImg)){
@@ -57,7 +56,7 @@ if(Admin::isConnected()){
       $newPathImg="";
     }
 
-    if(trim($_FILES['srcFile']['tmp_name']) !== ""){
+    if(array_key_exists('srcFile', $_FILES) && trim($_FILES['srcFile']['tmp_name']) !== ""){
         $q[] = "cheminSource = :cheminSource";
 
         if(trim($_FILES['addedFile']['tmp_name']) !== ""){
@@ -88,7 +87,6 @@ if(Admin::isConnected()){
       $comma= ",";
 
     $query = "UPDATE fichier SET descFichier = :descFichier" . $comma . implode(", ", $q) . " WHERE idFichier = :idFichier";
-    var_dump($newPathSrc);
     $stmt = myPDO::getInstance()->prepare($query);
     $stmt->bindParam(":idFichier", $_POST["idFichier"]);
     $stmt->bindParam(":descFichier", $_POST["descFile"]);
@@ -97,10 +95,12 @@ if(Admin::isConnected()){
       $stmt->bindParam(":nomFichier", $_FILES["addedFile"]["name"]);
       $stmt->bindParam(":cheminFichier", $newPathFile);
     }
-    if(trim($_FILES['srcFile']['tmp_name']) !== ""){
+    if(array_key_exists('srcFile', $_FILES) && trim($_FILES['srcFile']['tmp_name']) !== ""){
       $stmt->bindParam(":cheminSource", $newPathSrc);
     }
     $stmt->execute();
 
   }
+
+	header('Location: ../module.php?id='. $_POST['idModule']);
 }
